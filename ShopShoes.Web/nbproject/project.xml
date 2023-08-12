@@ -7,14 +7,6 @@
             <minimum-ant-version>1.6.5</minimum-ant-version>
             <web-module-libraries>
                 <library dirs="200">
-                    <file>${reference.ShopShoes_AccesoADatos.jar}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library dirs="200">
-                    <file>${reference.ShopShoes_EntidadesDeNegocio.jar}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library dirs="200">
                     <file>${file.reference.mssql-jdbc-11.2.3.jre18.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
@@ -27,23 +19,6 @@
                 <root id="test.src.dir" name="Test Packages"/>
             </test-roots>
         </data>
-        <references xmlns="http://www.netbeans.org/ns/ant-project-references/1">
-            <reference>
-                <foreign-project>ShopShoes_AccesoADatos</foreign-project>
-                <artifact-type>jar</artifact-type>
-                <script>build.xml</script>
-                <target>jar</target>
-                <clean-target>clean</clean-target>
-                <id>jar</id>
-            </reference>
-            <reference>
-                <foreign-project>ShopShoes_EntidadesDeNegocio</foreign-project>
-                <artifact-type>jar</artifact-type>
-                <script>build.xml</script>
-                <target>jar</target>
-                <clean-target>clean</clean-target>
-                <id>jar</id>
-            </reference>
-        </references>
+        <references xmlns="http://www.netbeans.org/ns/ant-project-references/1"/>
     </configuration>
 </project>
