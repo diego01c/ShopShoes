@@ -9,7 +9,7 @@ package shopshoes.entidadesdenegocio;
  * @author alexg
  */
 public class Client {
-    private int ClientId;
+    private int Id;
     private int IdUser;
     private String ClientName;
     private String LastName;
@@ -19,8 +19,8 @@ public class Client {
     public Client() {
     }
 
-    public Client(int ClientId, int IdUser, String ClientName, String LastName, String TelefoneNumber, String ClientAddress) {
-        this.ClientId = ClientId;
+    public Client(int Id, int IdUser, String ClientName, String LastName, String TelefoneNumber, String ClientAddress) {
+        this.Id = Id;
         this.IdUser = IdUser;
         this.ClientName = ClientName;
         this.LastName = LastName;
@@ -29,11 +29,11 @@ public class Client {
     }
 
     public int getClientId() {
-        return ClientId;
+        return Id;
     }
 
-    public void setClientId(int ClientId) {
-        this.ClientId = ClientId;
+    public void setClientId(int Id) {
+        this.Id = Id;
     }
 
     public int getIdUser() {

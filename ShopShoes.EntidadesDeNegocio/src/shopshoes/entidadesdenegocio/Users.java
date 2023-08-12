@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  * @author alexg
  */
 public class Users {
-    private int UsersId;
+    private int Id;
     private int IdRol;
     private String UserName;
     private String Pass;
@@ -21,8 +21,8 @@ public class Users {
     public Users() {
     }
 
-    public Users(int UsersId, int IdRol, String UserName, String Pass, LocalDateTime RegistrationDate, String Mail) {
-        this.UsersId = UsersId;
+    public Users(int Id, int IdRol, String UserName, String Pass, LocalDateTime RegistrationDate, String Mail) {
+        this.Id = Id;
         this.IdRol = IdRol;
         this.UserName = UserName;
         this.Pass = Pass;
@@ -31,11 +31,11 @@ public class Users {
     }
 
     public int getUsersId() {
-        return UsersId;
+        return Id;
     }
 
-    public void setUsersId(int UsersId) {
-        this.UsersId = UsersId;
+    public void setUsersId(int Id) {
+        this.Id = Id;
     }
 
     public int getIdRol() {

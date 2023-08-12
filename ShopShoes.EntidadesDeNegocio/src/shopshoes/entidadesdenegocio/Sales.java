@@ -9,7 +9,7 @@ package shopshoes.entidadesdenegocio;
  * @author alexg
  */
 public class Sales {
-    private int SalesId;
+    private int Id;
     private int IdProduct;
     private int IdPaymentMethod;
     private int IdClient;
@@ -19,8 +19,8 @@ public class Sales {
     public Sales() {
     }
 
-    public Sales(int SalesId, int IdProduct, int IdPaymentMethod, int IdClient, int Amount, int Total) {
-        this.SalesId = SalesId;
+    public Sales(int Id, int IdProduct, int IdPaymentMethod, int IdClient, int Amount, int Total) {
+        this.Id = Id;
         this.IdProduct = IdProduct;
         this.IdPaymentMethod = IdPaymentMethod;
         this.IdClient = IdClient;
@@ -29,11 +29,11 @@ public class Sales {
     }
 
     public int getSalesId() {
-        return SalesId;
+        return Id;
     }
 
-    public void setSalesId(int SalesId) {
-        this.SalesId = SalesId;
+    public void setSalesId(int Id) {
+        this.Id = Id;
     }
 
     public int getIdProduct() {
