@@ -9,7 +9,6 @@ package shopshoes.accesoadatos;
  * @author MINEDUCYT
  */
 
-import java.awt.Image;
 import java.util.*;
 import java.sql.*;
 import shopshoes.entidadesdenegocio.*;
