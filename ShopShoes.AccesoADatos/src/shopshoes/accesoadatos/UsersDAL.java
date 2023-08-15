@@ -36,9 +36,10 @@ public class UsersDAL {
         throw ex;
         }
     }
-        static String obtenerCampos()
+    
+    static String obtenerCampos()
     {
-        return "p.Id, p.IdRol, p.UserName, p.RegistrationDate, p.Mail";
+        return "u.Id, u.IdRol, u.UserName, u.RegistrationDate, u.Mail";
     }
     
     private static String obtenerSelect(Users pUsers)
@@ -56,7 +57,7 @@ public class UsersDAL {
     
     private static String agregarOrderBy(Users pUsers)
     {
-        String sql = " Order by p.Id Desc";
+        String sql = " Order by u.Id Desc";
         if(pUsers.getTop_aux()> 0 && 
         ComunDB.TIPODB == ComunDB.TipoDB.MYSQL)
         {
@@ -64,6 +65,7 @@ public class UsersDAL {
         }
         return sql;
     }
+    
     private static boolean existeLogin(Users pUsers) throws Exception {
         boolean existe = false;
         ArrayList<Users> usuarios = new ArrayList();
@@ -97,6 +99,7 @@ public class UsersDAL {
         return existe; //Devolver la variable "existe" con el valor true o false si existe o no el Login en la tabla de Usuario de la base de datos
 
     }
+    
     public static int crear(Users pUsers) throws Exception
     {
         int result;
@@ -137,6 +140,7 @@ public class UsersDAL {
         }
         return result;
     }
+    
     static int asignarDatosResultSet(Users pUsuario, ResultSet pResultSet, int pIndex) throws Exception {
         //  SELECT u.Id(indice 1), u.IdRol(indice 2), u.Nombre(indice 3), u.Apellido(indice 4), u.Login(indice 5), 
         // u.Estatus(indice 6), u.FechaRegistro(indice 7) * FROM Usuario
@@ -152,6 +156,7 @@ public class UsersDAL {
         pUsuario.setMail(pResultSet.getString(pIndex)); // index 5
         return pIndex;
     }
+    
      private static void obtenerDatos(PreparedStatement pPS, ArrayList<Users> pUsers) throws Exception {
         try (ResultSet resultSet = ComunDB.obtenerResulSet(pPS);) { // obtener el ResultSet desde la clase ComunDB
             while (resultSet.next()) { // Recorrer cada una de la fila que regresa la consulta  SELECT de la tabla Usuario
@@ -165,6 +170,7 @@ public class UsersDAL {
             throw ex;// enviar al siguiente metodo el error al obtener ResultSet de la clase ComunDB   en el caso que suceda 
         }
      }
+     
      public static Users login(Users pUsers) throws Exception
     {
         Users usuario = new Users();

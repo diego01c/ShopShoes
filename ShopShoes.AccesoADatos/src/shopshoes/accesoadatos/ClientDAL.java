@@ -18,7 +18,7 @@ import shopshoes.entidadesdenegocio.Client;
 public class ClientDAL {
      static String obtenerCampos()
     {
-        return "p.Id, p.IdCategory, p.ProductName, p.Cost, p.ProductDescription, p.ProductImage";
+        return "c.Id, c.IdUsers, c.ClientName, c.LastName, c.TelefoneNumber, c.ClientAddress";
     }
     
     private static String obtenerSelect(Client pClient)
@@ -30,13 +30,13 @@ public class ClientDAL {
         {
             sql += "Top " + pClient.getTop_aux() + " ";
         }
-        sql += (obtenerCampos() + " From Products p");
+        sql += (obtenerCampos() + " From Client c");
         return sql;
     }
     
     private static String agregarOrderBy(Client pClient)
     {
-        String sql = " Order by p.Id Desc";
+        String sql = " Order by c.Id Desc";
         if(pClient.getTop_aux()> 0 && 
         ComunDB.TIPODB == ComunDB.TipoDB.MYSQL)
         {
