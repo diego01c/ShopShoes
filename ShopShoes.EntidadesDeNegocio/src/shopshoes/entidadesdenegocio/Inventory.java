@@ -16,11 +16,12 @@ public class Inventory {
     private int Departures;
     private double Profits;
     private byte InventoryStatus;
+    private int TopAux;
 
     public Inventory() {
     }
 
-    public Inventory(int Id, int IdProduct, int Stock, int Tickets, int Departures, double Profits, byte InventoryStatus) {
+    public Inventory(int Id, int IdProduct, int Stock, int Tickets, int Departures, double Profits, byte InventoryStatus, int TopAux) {
         this.Id = Id;
         this.IdProduct = IdProduct;
         this.Stock = Stock;
@@ -28,6 +29,8 @@ public class Inventory {
         this.Departures = Departures;
         this.Profits = Profits;
         this.InventoryStatus = InventoryStatus;
+        this.TopAux = TopAux;
+        
     }
 
     public int getId() {
@@ -78,7 +81,7 @@ public class Inventory {
         this.Profits = Profits;
     }
 
-    public int getInventoryStatus() {
+    public byte getInventoryStatus() {
         return InventoryStatus;
     }
 
@@ -86,5 +89,11 @@ public class Inventory {
         this.InventoryStatus = InventoryStatus;
     }
     
-    
+    public int getTopAux() {
+        return TopAux;
+    }
+
+    public void setTopAux(byte TopAux) {
+        this.TopAux = TopAux;
+    }
 }

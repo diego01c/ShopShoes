@@ -16,18 +16,20 @@ public class Products {
     private String ProductName;
     private double Cost;
     private String ProductDescription;
-    private Image ProductImage;
+    private Byte ProductImage;
+    private int TopAux;
 
     public Products() {
     }
 
-    public Products(int Id, int IdCategory, String ProductName, double Cost, String ProductDescription, Image ProductImage) {
+    public Products(int Id, int IdCategory, String ProductName, double Cost, String ProductDescription, Byte ProductImage, int TopAux) {
         this.Id = Id;
         this.IdCategory = IdCategory;
         this.ProductName = ProductName;
         this.Cost = Cost;
         this.ProductDescription = ProductDescription;
         this.ProductImage = ProductImage;
+        this.TopAux = TopAux;
     }
 
     public int getId() {
@@ -70,12 +72,20 @@ public class Products {
         this.ProductDescription = ProductDescription;
     }
 
-    public Image getProductImage() {
+    public Byte getProductImage() {
         return ProductImage;
     }
 
-    public void setProductImage(Image ProductImage) {
+    public void setProductImage(Byte ProductImage) {
         this.ProductImage = ProductImage;
+    }
+    
+    public int getTopAux() {
+        return TopAux;
+    }
+
+    public void setTopAux(byte TopAux) {
+        this.TopAux = TopAux;
     }
     
 }

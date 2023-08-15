@@ -12,14 +12,16 @@ public class Discount {
     private int Id;
     private String DiscountRate;
     private byte DiscountStatus;
+    private int TopAux;
 
     public Discount() {
     }
 
-    public Discount(int Id, String DiscountRate, byte DiscountStatus) {
+    public Discount(int Id, String DiscountRate, byte DiscountStatus, int TopAux) {
         this.Id = Id;
         this.DiscountRate = DiscountRate;
         this.DiscountStatus = DiscountStatus;
+        this.TopAux = TopAux;
     }
 
     public int getId() {
@@ -44,6 +46,14 @@ public class Discount {
 
     public void setDiscountStatus(byte DiscountStatus) {
         this.DiscountStatus = DiscountStatus;
+    }
+    
+    public int getTopAux() {
+        return TopAux;
+    }
+
+    public void setTopAux(byte TopAux) {
+        this.TopAux = TopAux;
     }
     
 }
