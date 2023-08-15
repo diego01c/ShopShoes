@@ -15,24 +15,26 @@ public class Client {
     private String LastName;
     private String TelefoneNumber;
     private String ClientAddress;
+    private int top_aux;
 
     public Client() {
     }
 
-    public Client(int Id, int IdUser, String ClientName, String LastName, String TelefoneNumber, String ClientAddress) {
+    public Client(int Id, int IdUser, String ClientName, String LastName, String TelefoneNumber, String ClientAddress, int top_aux) {
         this.Id = Id;
         this.IdUser = IdUser;
         this.ClientName = ClientName;
         this.LastName = LastName;
         this.TelefoneNumber = TelefoneNumber;
         this.ClientAddress = ClientAddress;
+        this.top_aux = top_aux;
     }
 
-    public int getClientId() {
+    public int getId() {
         return Id;
     }
 
-    public void setClientId(int Id) {
+    public void setId(int Id) {
         this.Id = Id;
     }
 
@@ -75,6 +77,15 @@ public class Client {
     public void setClientAddress(String ClientAddress) {
         this.ClientAddress = ClientAddress;
     }
+
+    public int getTop_aux() {
+        return top_aux;
+    }
+
+    public void setTop_aux(int top_aux) {
+        this.top_aux = top_aux;
+    }
     
+
     
 }

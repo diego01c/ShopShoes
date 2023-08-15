@@ -15,24 +15,26 @@ public class Sales {
     private int IdClient;
     private int Amount;
     private int Total;
+    private int top_aux;
 
     public Sales() {
     }
 
-    public Sales(int Id, int IdProduct, int IdPaymentMethod, int IdClient, int Amount, int Total) {
+    public Sales(int Id, int IdProduct, int IdPaymentMethod, int IdClient, int Amount, int Total, int top_aux) {
         this.Id = Id;
         this.IdProduct = IdProduct;
         this.IdPaymentMethod = IdPaymentMethod;
         this.IdClient = IdClient;
         this.Amount = Amount;
         this.Total = Total;
+        this.top_aux = top_aux;
     }
 
-    public int getSalesId() {
+    public int getId() {
         return Id;
     }
 
-    public void setSalesId(int Id) {
+    public void setId(int Id) {
         this.Id = Id;
     }
 
@@ -74,6 +76,14 @@ public class Sales {
 
     public void setTotal(int Total) {
         this.Total = Total;
+    }
+
+    public int getTop_aux() {
+        return top_aux;
+    }
+
+    public void setTop_aux(int top_aux) {
+        this.top_aux = top_aux;
     }
     
     

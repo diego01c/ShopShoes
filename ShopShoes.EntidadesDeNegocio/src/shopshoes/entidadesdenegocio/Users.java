@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package shopshoes.entidadesdenegocio;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 
 /**
@@ -15,26 +15,30 @@ public class Users {
     private int IdRol;
     private String UserName;
     private String Pass;
-    private LocalDateTime RegistrationDate;
+    private LocalDate RegistrationDate;
     private String Mail;
+    private String confirmPassword_aux;
+   private int top_aux;
 
     public Users() {
     }
 
-    public Users(int Id, int IdRol, String UserName, String Pass, LocalDateTime RegistrationDate, String Mail) {
+    public Users(int Id, int IdRol, String UserName, String Pass, LocalDate RegistrationDate, String Mail, int top_aux, String confirmPassword_aux) {
         this.Id = Id;
         this.IdRol = IdRol;
         this.UserName = UserName;
         this.Pass = Pass;
         this.RegistrationDate = RegistrationDate;
         this.Mail = Mail;
+        this.top_aux = top_aux;
+        this.confirmPassword_aux = confirmPassword_aux;
     }
 
-    public int getUsersId() {
+    public int getId() {
         return Id;
     }
 
-    public void setUsersId(int Id) {
+    public void setId(int Id) {
         this.Id = Id;
     }
 
@@ -62,11 +66,11 @@ public class Users {
         this.Pass = Pass;
     }
 
-    public LocalDateTime getRegistrationDate() {
+    public LocalDate getRegistrationDate() {
         return RegistrationDate;
     }
 
-    public void setRegistrationDate(LocalDateTime RegistrationDate) {
+    public void setRegistrationDate(LocalDate RegistrationDate) {
         this.RegistrationDate = RegistrationDate;
     }
 
@@ -77,6 +81,21 @@ public class Users {
     public void setMail(String Mail) {
         this.Mail = Mail;
     }
+
+    public void setTop_aux(int top_aux) {
+        this.top_aux = top_aux;
+    }
+
+    public int getTop_aux() {
+        return top_aux;
+    }
     
+    public String getConfirmPassword_aux() {
+        return confirmPassword_aux;
+    }
+
+    public void setConfirmPassword_aux(String confirmPassword_aux) {
+        this.confirmPassword_aux = confirmPassword_aux;
+    }    
     
 }
