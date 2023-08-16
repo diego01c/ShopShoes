@@ -12,13 +12,16 @@ public class Administrator {
     private int Id;
     private int IdUser;
     private String AdministratorName;
+    private int   top_aux;
     
     public Administrator(){
     }
-    public Administrator(int Id, int IdUser,String AdministratorName){
+    public Administrator(int Id, int IdUser,String AdministratorName,int top_aux){
         this.Id =Id;
         this.IdUser =IdUser;
         this.AdministratorName = AdministratorName;
+        this.top_aux = top_aux;
+        
     }
     public int getId() {
         return Id;
@@ -39,7 +42,17 @@ public class Administrator {
      public String getAdministratorName() {
         return AdministratorName;
     }
+     
     public void setAdministratortName(String AdministratorName) {
         this.AdministratorName = AdministratorName;
     }   
+    
+     public int getTop_aux() {
+        return top_aux;
+    }
+
+    public void setTop_aux(int top_aux) {
+        this.top_aux = top_aux;
+    }  
+    
 }

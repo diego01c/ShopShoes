@@ -8,54 +8,54 @@ package shopshoes.accesoadatos;
  *
  * @author MINEDUCYT
  */
-
-import java.util.*;
 import java.sql.*;
-import shopshoes.entidadesdenegocio.*;
+import java.util.ArrayList;
+import shopshoes.entidadesdenegocio.Category;
 
-public class DiscountDAL {
-    static String obtenerCampos()
-    {
-        return "d.Id, d.DiscountRate, d.DiscountStatus";
-    } 
+public class CategoryDAL {
     
-    private static String obtenerSelect(Discount pDiscount)
+ static String obtenerCampos()
+     {
+         return"p.Id,p.pCategoryName,p.CategoryImage";
+     }
+ 
+  private static String obtenerSelect(Category pCategory)
     {
         String sql;
         sql = "Select ";
-        if(pDiscount.getTopAux() > 0 && 
+        if(pCategory.getTop_aux() > 0 && 
            ComunDB.TIPODB == ComunDB.TipoDB.SQLSERVER)
         {
-            sql += "Top " + pDiscount.getTopAux() + " ";
+            sql += "Top " + pCategory.getTop_aux() + " ";
         }
-        sql += (obtenerCampos() + " From Discount d");
+        sql += (obtenerCampos() + " From Category p");
         return sql;
     }
-    
-    private static String agregarOrderBy(Discount pDiscount)
+  
+  private static String agregarOrderBy(Category pCategory)
     {
-        String sql = " Order by d.Id Desc";
-        if(pDiscount.getTopAux()> 0 && 
+        String sql = " Order by p.Id Desc";
+        if(pCategory.getTop_aux()> 0 && 
         ComunDB.TIPODB == ComunDB.TipoDB.MYSQL)
         {
-            sql += "Limit " + pDiscount.getTopAux()+ " ";
+            sql += "Limit " + pCategory.getTop_aux()+ " ";
         }
         return sql;
     }
-    
-    public static int crear(Discount pDiscount) throws Exception
+  
+ public static int crear(Category pCategory) throws Exception
     {
         int result;
         String sql;
             try(Connection conn = ComunDB.obtenerConexion();)
             {
-                sql = "Insert Into Discount(DiscountRate, DiscountStatus) "
-                        + "Values(?,?)";
+                sql = "Insert Into Category( CategoryName,CategoryImage) "
+                        + "Values(?,?,?,?,?)";
                 try(PreparedStatement st = 
                     ComunDB.createPreparedStatement(conn, sql);)
                 {
-                    st.setString(1, pDiscount.getDiscountRate());
-                    st.setByte(2, pDiscount.getDiscountStatus());
+                    st.setString(1, pCategory.getCategoryName());
+                    st.setByte(2, pCategory.getCategoryImage());
                     result = st.executeUpdate();
                     st.close();
                 }
@@ -71,23 +71,26 @@ public class DiscountDAL {
         
         return result;
     }
-    
-    public static int modificar(Discount pDiscount) throws Exception 
+ 
+ public static int modificar(Category pCategory) throws Exception 
     {
         int result;
         String sql;
         try(Connection conn = ComunDB.obtenerConexion();)
         {
-            sql = "Update Discount Set DiscountRate = ?, DiscountStatus = ? Where Id = ?";
+            sql = "Update Category Set IdUser = ?, CategoryName= ?"
+                    + " Where Id = ?";
             try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
             {
-                ps.setString(1, pDiscount.getDiscountRate());
-                ps.setByte(2, pDiscount.getDiscountStatus());
-                ps.setInt(3, pDiscount.getId());
-                result = ps.executeUpdate();
+                
+              ps.setInt(1, pCategory.getId());
+              ps.setString(2, pCategory.getCategoryName());
+              
+                  result = ps.executeUpdate();
                 ps.close();
             }
-            catch(Exception ex)
+            
+             catch(Exception ex)
             {
                 throw ex;
             }
@@ -98,18 +101,17 @@ public class DiscountDAL {
         }
         return result;
     }
-    
-    
-    public static int eliminar(Discount pDiscount) throws Exception
+
+  public static int eliminar(Category pCategory) throws Exception
     {
         int result;
         String sql;
         try(Connection conn = ComunDB.obtenerConexion();)
         {
-            sql = "Delete From Discount Where Id = ?";
+            sql = "Delete From Category Where Id = ?";
             try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
             {
-                ps.setInt(1, pDiscount.getId());
+                ps.setInt(1, pCategory.getId());
                 result = ps.executeUpdate();
                 ps.close();
             }
@@ -124,46 +126,43 @@ public class DiscountDAL {
         }
         return result;
     }
-    
-    static int asignarDatosResultSet(Discount pDiscount, ResultSet pResultSet, int pIndex) throws Exception {
+  
+   static int asignarDatosResultSet(Category pCategory, ResultSet pResultSet, int pIndex) throws Exception {
         //  SELECT u.Id(indice 1), u.IdRol(indice 2), u.Nombre(indice 3), u.Apellido(indice 4), u.Login(indice 5), 
         // u.Estatus(indice 6), u.FechaRegistro(indice 7) * FROM Usuario
         pIndex++;
-        pDiscount.setId(pResultSet.getInt(pIndex)); // index 1
+        pCategory.setId(pResultSet.getInt(pIndex)); // index 1
+          pCategory.setCategoryName(pResultSet.getString(pIndex)); // index 3
         pIndex++;
-        pDiscount.setDiscountRate(pResultSet.getString(pIndex)); // index 2
-        pIndex++;
-        pDiscount.setDiscountStatus(pResultSet.getByte(pIndex)); // index 3
         return pIndex;
     }
-
-     private static void obtenerDatos(PreparedStatement pPS, ArrayList<Discount> pDiscounts) throws Exception {
+   
+ private static void obtenerDatos(PreparedStatement pPS, ArrayList<Category> pCategorys) throws Exception {
         try (ResultSet resultSet = ComunDB.obtenerResulSet(pPS);) { // obtener el ResultSet desde la clase ComunDB
             while (resultSet.next()) { // Recorrer cada una de la fila que regresa la consulta  SELECT de la tabla Usuario
-                Discount discount = new Discount();
+                Category Category = new Category();
                 // Llenar las propiedaddes de la Entidad Usuario con los datos obtenidos de la fila en el ResultSet
-                asignarDatosResultSet(discount, resultSet, 0);
-                pDiscounts.add(discount); // agregar la entidad Usuario al ArrayList de Usuario
+                asignarDatosResultSet(Category, resultSet, 0);
+                pCategorys.add(Category); // agregar la entidad Usuario al ArrayList de Usuario
             }
             resultSet.close(); // cerrar el ResultSet
         } catch (SQLException ex) {
             throw ex;// enviar al siguiente metodo el error al obtener ResultSet de la clase ComunDB   en el caso que suceda 
         }
     }
-     
  
-    public static Discount obtenerPorId(Discount pDiscount) throws Exception
+      public static Category obtenerPorId(Category pCategory) throws Exception
     {
-        Discount discount = new Discount();
-        ArrayList<Discount> discounts = new ArrayList();
+        Category category = new Category();
+        ArrayList<Category> categories = new ArrayList();
         try(Connection conn = ComunDB.obtenerConexion();)
         {
-            String sql = obtenerSelect(pDiscount);
+            String sql = obtenerSelect(pCategory);
             sql += " Where Id = ?";
             try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
             {
-                ps.setInt(1, pDiscount.getId());
-                obtenerDatos(ps, discounts);
+                ps.setInt(1, pCategory.getId());
+                obtenerDatos(ps, categories);
                 ps.close();
             }
             catch(Exception ex)
@@ -175,24 +174,23 @@ public class DiscountDAL {
         {
             throw ex;
         }
-        if(discounts.size() > 0)
+        if(categories.size() > 0)
         {
-            discount = discounts.get(0);
+           category= categories.get(0);
         }
-        return discount;
+        return category;
     }
-
-    
-    public static ArrayList<Discount> obtenerTodos() throws Exception
+      
+    public static ArrayList<Category> obtenerTodos() throws Exception
     {
-        ArrayList<Discount> discounts = new ArrayList();
+        ArrayList<Category> Category = new ArrayList();
         try(Connection conn = ComunDB.obtenerConexion();)
         {
-            String sql = obtenerSelect(new Discount());
-            sql += agregarOrderBy(new Discount());
+            String sql = obtenerSelect(new Category());
+            sql += agregarOrderBy(new Category());
             try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
             {
-                obtenerDatos(ps, discounts);
+                obtenerDatos(ps, Category);
                 ps.close();
             }
             catch(Exception ex)
@@ -205,7 +203,10 @@ public class DiscountDAL {
             throw ex;
         }
         
-        return discounts;
+        return Category;
     }
-    
 }
+
+      
+      
+

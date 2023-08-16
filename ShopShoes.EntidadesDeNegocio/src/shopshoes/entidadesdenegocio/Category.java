@@ -12,15 +12,17 @@ import java.awt.Image;
 public class Category {
     private int Id;
     private String CategoryName;
-    private Image CategoryImage;
+    private Byte CategoryImage;
+     private int   top_aux;
     
     public Category(){   
 }
 
-public Category(int Id, String CategoryName, Image CategoryImage){
+public Category(int Id, String CategoryName, Byte CategoryImage,int top_aux){
     this.Id = Id;
     this.CategoryName = CategoryName;
-    this.CategoryImage =CategoryImage;
+    this.CategoryImage = CategoryImage;
+     this.top_aux = top_aux;
 } 
      public int getId() {
         return Id;
@@ -30,7 +32,7 @@ public Category(int Id, String CategoryName, Image CategoryImage){
         this.Id = Id;
     }
     
-    public String CategoryName() {
+    public String getCategoryName() {
         return CategoryName;
     }
 
@@ -38,13 +40,20 @@ public Category(int Id, String CategoryName, Image CategoryImage){
         this.CategoryName = CategoryName;
     }
     
-      public Image getCategoryImage() {
+      public Byte getCategoryImage() {
         return CategoryImage;
     }
 
-    public void setCategoryImage(Image CategoryImage) {
+    public void setCategoryImage(Byte CategoryImage) {
         this.CategoryImage = CategoryImage;
     }
     
+       public int getTop_aux() {
+        return top_aux;
+    }
+
+    public void setTop_aux(int top_aux) {
+        this.top_aux = top_aux;
+    }  
 }
  

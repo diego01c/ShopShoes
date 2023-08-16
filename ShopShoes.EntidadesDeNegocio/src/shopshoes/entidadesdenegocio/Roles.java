@@ -12,13 +12,14 @@ public class Roles {
     
     private int Id;
     private String RolesName;
-    
+    private int top_aux;
     public Roles(){
     }
     
-    public  Roles(int Id,String RolesName){
+    public  Roles(int Id,String RolesName, int top_aux){
         this.Id =Id;
         this.RolesName =RolesName;
+        this.top_aux = top_aux;
     }
     
     public int getId() {
@@ -29,7 +30,7 @@ public class Roles {
         this.Id = Id;
     }
     
-     public String getRolestName() {
+     public String getRolesName() {
         return RolesName;
     }
 
@@ -37,5 +38,12 @@ public class Roles {
         this.RolesName = RolesName;
     }
     
+     public int getTop_aux() {
+        return top_aux;
+    }
+
+    public void setTop_aux(int top_aux) {
+        this.top_aux = top_aux;
+    }
    
 }
