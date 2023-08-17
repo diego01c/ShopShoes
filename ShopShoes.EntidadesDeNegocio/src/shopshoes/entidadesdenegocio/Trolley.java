@@ -12,15 +12,17 @@ public class Trolley {
 private int Id;
     private int IdClient;
     private int IdProduct;
+    private int Top_aux;
     
     public Trolley (){
         
     }
     
-    public Trolley (int Id, int IdClient, int IdProduct){
+    public Trolley (int Id, int IdClient, int IdProduct, int Top_aux){
         this.Id = Id;
         this.IdClient = IdClient;
         this.IdProduct = IdProduct;
+        this.Top_aux = Top_aux;
     }
     
      public int getId() {
@@ -39,7 +41,7 @@ private int Id;
         this.IdClient = IdClient;
     }
     
-     public int getProduct() {
+     public int getIdProduct() {
         return IdProduct;
     }
 
@@ -47,4 +49,11 @@ private int Id;
         this.IdProduct = IdProduct;
     }    
     
+     public int getTop_aux() {
+        return Top_aux;
+    }
+
+    public void setTop_aux(int top_aux) {
+        this.Top_aux = top_aux;
+    }
 }

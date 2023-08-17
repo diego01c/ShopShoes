@@ -12,16 +12,17 @@ public class PaymentMethod {
     private int Id;
     private String PaymentMethodName;
     private String PaymentMethodDescription;
+    private int Top_aux;
     
     public PaymentMethod() {
         
     }
     
-    public PaymentMethod (int Id, String PaymentMethodName, String PaymentMethodDescription){
+    public PaymentMethod (int Id, String PaymentMethodName, String PaymentMethodDescription,int Top_aux ){
         this.Id = Id;
         this.PaymentMethodName = PaymentMethodName;
         this.PaymentMethodDescription = PaymentMethodDescription;
-        
+        this.Top_aux = Top_aux;
     }
     
     public int getId(){
@@ -46,6 +47,14 @@ public class PaymentMethod {
     
     public void setPaymentMethodDescription(String PaymentMethodDescription) {
         this.PaymentMethodDescription = PaymentMethodDescription;
+    }
+    
+     public int getTop_aux() {
+        return Top_aux;
+    }
+
+    public void setTop_aux(int top_aux) {
+        this.Top_aux = top_aux;
     }
     
 }
