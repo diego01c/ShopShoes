@@ -16,7 +16,7 @@ import shopshoes.entidadesdenegocio.Trolley;
 public class TrolleyDAL {
     
      static String obtenerCampos() {
-        return " pId, pIdClient, pIdProduct";
+        return " p.Id, p.IdClient, p.IdProduct";
     }
     
      private static String obtenerSelect(Trolley pTrolley)
