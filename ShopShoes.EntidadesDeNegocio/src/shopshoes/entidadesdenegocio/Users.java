@@ -19,11 +19,12 @@ public class Users {
     private String Mail;
     private String confirmPassword_aux;
    private int top_aux;
+   private Roles rol;
 
     public Users() {
     }
 
-    public Users(int Id, int IdRol, String UserName, String Pass, LocalDate RegistrationDate, String Mail, int top_aux, String confirmPassword_aux) {
+    public Users(int Id, int IdRol, String UserName, String Pass, LocalDate RegistrationDate, String Mail, int top_aux, String confirmPassword_aux, Roles rol) {
         this.Id = Id;
         this.IdRol = IdRol;
         this.UserName = UserName;
@@ -32,6 +33,7 @@ public class Users {
         this.Mail = Mail;
         this.top_aux = top_aux;
         this.confirmPassword_aux = confirmPassword_aux;
+        this.rol = rol;
     }
 
     public int getId() {
@@ -97,5 +99,13 @@ public class Users {
     public void setConfirmPassword_aux(String confirmPassword_aux) {
         this.confirmPassword_aux = confirmPassword_aux;
     }    
+    
+    public Roles getRol() {
+        return rol;
+    }
+
+    public void setRol(Roles rol) {
+        this.rol = rol;
+    }
     
 }
