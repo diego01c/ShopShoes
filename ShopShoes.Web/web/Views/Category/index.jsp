@@ -34,50 +34,46 @@
             <div class="row">
                 <div class="paginationjs">
                     <div style="overflow: auto;">
-                                <%
-                                for(Category category:categories)
-                                {
-                                   int tempNumPage = numPage;
-                                   if(numPage > 1)
-                                   {
-                                        countReg++;
-                                        double divTempNumPage = (double) countReg / (double) numReg;
-                                        tempNumPage = (int) Math.ceil(divTempNumPage);
-                                   }
+                        <%
+                        for(Category category:categories)
+                        {
+                           int tempNumPage = numPage;
+                           if(numPage > 1)
+                           {
+                                countReg++;
+                                double divTempNumPage = (double) countReg / (double) numReg;
+                                tempNumPage = (int) Math.ceil(divTempNumPage);
+                           }
                                 
-                 %>
-                                    <div class="col s4">
-      <div class="card white" data-page="<%=tempNumPage%>">
-        <div class="card-content black-text">
-          <span class="card-title"><%=category.getCategoryName()%></span>
-          <center><img src="<%=category.getCategoryImage()%>" height="200"/></center>
-         
-        </div>
-        <div class="card-action">
-         <a href="Products?accion=index&id=<%=category.getId()%>" 
-                                                   title="Añadir" class="btn-floating btn-large waves-effect waves-light purple">
-                                                    <i class="material-icons">remove_red_eye</i>
-                                                </a>
-        </div>
-      </div>
-    </div>
-                                   
-                                    
-                                <%}%>
-                                </div> 
-                         
-                    </div>
+                        %>
+                        <div class="col s4">
+                            <div class="card white" data-page="<%=tempNumPage%>">
+                                <div class="card-content black-text">
+                                    <span class="card-title"><%=category.getCategoryName()%></span>
+                                    <center><img src="<%=category.getCategoryImage()%>" height="200"/></center>
+                                </div>
+                                <div class="card-action">
+                                    <a href="Products?accion=index&id=<%=category.getId()%>" 
+                                       title="Añadir" class="btn-floating btn-large waves-effect waves-light purple">
+                                        <i class="material-icons">remove_red_eye</i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <%}%>
+                    </div> 
                 </div>
             </div>
-            <div class="row">
-                <div class="col 112 s12">
-                    <jsp:include page="/Views/Shared/paginacion.jsp">
-                        <jsp:param name="numPage" value="<%=numPage%>"/>
-                    </jsp:include> 
-                </div>
+        </div>
+        <div class="row">
+            <div class="col 112 s12">
+                <jsp:include page="/Views/Shared/paginacion.jsp">
+                    <jsp:param name="numPage" value="<%=numPage%>"/>
+                </jsp:include> 
             </div>
-        </main>
-        <jsp:include page="/Views/Shared/footerBody.jsp" />
-    </body>
+        </div>
+    </main>
+    <jsp:include page="/Views/Shared/footerBody.jsp" />
+</body>
 </html>
 

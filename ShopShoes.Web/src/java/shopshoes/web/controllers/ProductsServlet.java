@@ -56,6 +56,29 @@ public class ProductsServlet extends HttpServlet {
         return product;
     }
     
+    private Products obtenerProductDetails(HttpServletRequest request)
+    {
+        String accion = Utilidad.getParameter(request, "accion", "index");
+        Products product = new Products();
+        if(accion.equals("create") == false)
+        {
+            //Obtiene el parametro de Id del request y asigna el valor a la propiedad 
+            //Id de la instancia
+            product.setId(Integer.parseInt(Utilidad.getParameter(request, "id",
+                    "0")));
+        }
+        product.setProductName(Utilidad.getParameter(request, "ProductName", ""));
+        if(accion.equals("index"))
+        {
+            product.setTopAux(Integer.parseInt(Utilidad.getParameter(request, 
+                    "TopAux", "10")));
+            product.setTopAux(product.getTopAux() == 0 ? Integer.MAX_VALUE: product.getTopAux());
+        }
+        return product;
+    }
+    
+    
+    
     protected void doGetRequestIndex(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try
@@ -123,7 +146,7 @@ public class ProductsServlet extends HttpServlet {
             throws ServletException, IOException {
         try
         {
-            Products product = obtenerProduct(request);
+            Products product = obtenerProductDetails(request);
             Products product_result = ProductsDAL.obtenerPorId(product);
             if(product_result.getId() > 0)
             {

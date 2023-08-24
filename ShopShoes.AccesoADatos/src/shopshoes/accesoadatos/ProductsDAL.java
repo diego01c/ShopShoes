@@ -16,7 +16,7 @@ import shopshoes.entidadesdenegocio.*;
 public class ProductsDAL {
     static String obtenerCampos()
     {
-        return "p.Id, p.IdCategory, p.ProductName, p.Cost, p.ProductDescription, p.ProductImage";
+        return "p.Id, p.IdCategory, p.ProductName, p.Cost, p.ProductDescription, p.ProductImage, p.DetailImageOne, p.DetailImageTwo, p.DetailImageThree, p.Brand, p.Specifications, p.Status";
     }
     
     private static String obtenerSelect(Products pProducts)
@@ -49,8 +49,8 @@ public class ProductsDAL {
         String sql;
             try(Connection conn = ComunDB.obtenerConexion();)
             {
-                sql = "Insert Into Products(IdCategory, ProductName, Cost, ProductDescription, ProductImage) "
-                        + "Values(?,?,?,?,?)";
+                sql = "Insert Into Products(IdCategory, ProductName, Cost, ProductDescription, ProductImage, DetailImageOne, DetailImageTwo, DetailImageThree, Brand, Specifications, Status) "
+                        + "Values(?,?,?,?,?,?,?,?,?,?,?)";
                 try(PreparedStatement st = 
                     ComunDB.createPreparedStatement(conn, sql);)
                 {
@@ -59,6 +59,12 @@ public class ProductsDAL {
                     st.setDouble(3, pProducts.getCost());
                     st.setString(4, pProducts.getProductDescription());
                     st.setString(5, pProducts.getProductImage());
+                    st.setString(6, pProducts.getDetailImageOne());
+                    st.setString(7, pProducts.getDetailImageTwo());
+                    st.setString(8, pProducts.getDetailImageThree());
+                    st.setString(9, pProducts.getBrand());
+                    st.setString(10, pProducts.getSpecifications());
+                    st.setString(11, pProducts.getStatus());
                     result = st.executeUpdate();
                     st.close();
                 }
@@ -81,7 +87,7 @@ public class ProductsDAL {
         String sql;
         try(Connection conn = ComunDB.obtenerConexion();)
         {
-            sql = "Update Products Set IdCategory = ?, ProductName = ?, Cost = ?, ProductDescription = ?, ProductImage = ?"
+            sql = "Update Products Set IdCategory = ?, ProductName = ?, Cost = ?, ProductDescription = ?, ProductImage = ?, DetailImageOne = ?, DetailImageTwo = ?, DetailImageThree = ?, Brand = ?, Specifications = ?, Status = ?"
                     + " Where Id = ?";
             try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
             {
@@ -90,7 +96,13 @@ public class ProductsDAL {
                 ps.setDouble(3, pProducts.getCost());
                 ps.setString(4, pProducts.getProductDescription());
                 ps.setString(5, pProducts.getProductImage());
-                ps.setInt(6, pProducts.getId());
+                ps.setString(6, pProducts.getDetailImageOne());
+                ps.setString(7, pProducts.getDetailImageTwo());
+                ps.setString(8, pProducts.getDetailImageThree());
+                ps.setString(9, pProducts.getBrand());
+                ps.setString(10, pProducts.getSpecifications());
+                ps.setString(11, pProducts.getStatus());
+                ps.setInt(12, pProducts.getId());
                 result = ps.executeUpdate();
                 ps.close();
             }
@@ -147,6 +159,18 @@ public class ProductsDAL {
         pProducts.setProductDescription(pResultSet.getString(pIndex)); // index 5
         pIndex++;
         pProducts.setProductImage(pResultSet.getString(pIndex)); // index 6
+        pIndex++;
+        pProducts.setDetailImageOne(pResultSet.getString(pIndex)); 
+        pIndex++;
+        pProducts.setDetailImageTwo(pResultSet.getString(pIndex)); 
+        pIndex++;
+        pProducts.setDetailImageThree(pResultSet.getString(pIndex)); 
+        pIndex++;
+        pProducts.setBrand(pResultSet.getString(pIndex)); 
+        pIndex++;
+        pProducts.setSpecifications(pResultSet.getString(pIndex)); 
+        pIndex++;
+        pProducts.setStatus(pResultSet.getString(pIndex)); 
         return pIndex;
     }
 

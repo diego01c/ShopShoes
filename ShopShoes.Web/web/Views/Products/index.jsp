@@ -34,50 +34,47 @@
             <div class="row">
                 <div class="paginationjs">
                     <div style="overflow: auto;">
-                                <%
-                                for(Products product:products)
-                                {
-                                   int tempNumPage = numPage;
-                                   if(numPage > 1)
-                                   {
-                                        countReg++;
-                                        double divTempNumPage = (double) countReg / (double) numReg;
-                                        tempNumPage = (int) Math.ceil(divTempNumPage);
-                                   }
+                        <%
+                        for(Products product:products)
+                        {
+                           int tempNumPage = numPage;
+                           if(numPage > 1)
+                           {
+                                countReg++;
+                                double divTempNumPage = (double) countReg / (double) numReg;
+                                tempNumPage = (int) Math.ceil(divTempNumPage);
+                           }
                                 
-                 %>
-                                    <div class="col s4">
-      <div class="card white" data-page="<%=tempNumPage%>">
-        <div class="card-content black-text">
-          <span class="card-title"><%=product.getProductName()%></span>
-          <center><img src="<%=product.getProductImage()%>" height="200"/></center>
-         
-          <p>$<%=product.getCost()%></p>
-        </div>
-        <div class="card-action">
-         <a href="Rol?accion=edit&id=<%=product.getId()%>" 
-                                                   title="Añadir" class="btn-floating btn-large waves-effect waves-light purple">
-                                                    <i class="material-icons">add_shopping_cart</i>
-                                                </a>
-        </div>
-      </div>
-    </div>
-                                   
-                                    
-                                <%}%>
-                                </div> 
-                         
-                    </div>
+                        %>
+                        <div class="col s4">
+                            <div class="card white" data-page="<%=tempNumPage%>">
+                                <div class="card-content black-text">
+                                    <span class="card-title"><%=product.getProductName()%></span>
+                                    <center><img src="<%=product.getProductImage()%>" height="200"/></center>
+
+                                    <p>$<%=product.getCost()%></p>
+                                </div>
+                                <div class="card-action">
+                                    <a href="Products?accion=details&id=<%=product.getId()%>" 
+                                       title="Añadir" class="btn-floating btn-large waves-effect waves-light purple">
+                                        <i class="material-icons">add_shopping_cart</i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <%}%>
+                    </div> 
                 </div>
             </div>
-            <div class="row">
-                <div class="col 112 s12">
-                    <jsp:include page="/Views/Shared/paginacion.jsp">
-                        <jsp:param name="numPage" value="<%=numPage%>"/>
-                    </jsp:include> 
-                </div>
+        </div>
+        <div class="row">
+            <div class="col 112 s12">
+                <jsp:include page="/Views/Shared/paginacion.jsp">
+                    <jsp:param name="numPage" value="<%=numPage%>"/>
+                </jsp:include> 
             </div>
-        </main>
-        <jsp:include page="/Views/Shared/footerBody.jsp" />
-    </body>
+        </div>
+    </main>
+    <jsp:include page="/Views/Shared/footerBody.jsp" />
+</body>
 </html>
