@@ -67,7 +67,7 @@ public class SessionUser {
         }
         else
         {
-            response.sendRedirect("Usuario?accion=login");
+            response.sendRedirect("User?accion=login");
         }
     }
     

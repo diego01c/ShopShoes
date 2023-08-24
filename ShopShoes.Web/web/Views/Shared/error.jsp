@@ -1,14 +1,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="shopshoes.web.utils.*"%>
-<% if (SessionUser.isAuth(request) == false) {
-         response.sendRedirect("User?accion=login");
-    }
-%>
 <!DOCTYPE html>
 <html>
     <head>        
         <jsp:include page="/Views/Shared/title.jsp" />
-        <title>Home</title>
+        <title>Error de la aplicación</title>
 
     </head>
     <body>
@@ -16,8 +11,8 @@
         <main class="container"> 
             <div class="row">
                 <div class="col l12 s12">
-                    <h1>Bienvenidos</h1> 
-                    <span>Al sistema para aprender a como colocarle seguridad a sus aplicaciones web</span> 
+                    <h4>Succedio el siguiente error en la aplicación</h4> 
+                    <span style="color: red"><%= request.getAttribute("error") %></span> 
                 </div>
             </div>            
         </main>

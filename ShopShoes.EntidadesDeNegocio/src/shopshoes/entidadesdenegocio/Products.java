@@ -16,13 +16,13 @@ public class Products {
     private String ProductName;
     private double Cost;
     private String ProductDescription;
-    private Byte ProductImage;
+    private String ProductImage;
     private int TopAux;
 
     public Products() {
     }
 
-    public Products(int Id, int IdCategory, String ProductName, double Cost, String ProductDescription, Byte ProductImage, int TopAux) {
+    public Products(int Id, int IdCategory, String ProductName, double Cost, String ProductDescription, String ProductImage, int TopAux) {
         this.Id = Id;
         this.IdCategory = IdCategory;
         this.ProductName = ProductName;
@@ -72,11 +72,11 @@ public class Products {
         this.ProductDescription = ProductDescription;
     }
 
-    public Byte getProductImage() {
+    public String getProductImage() {
         return ProductImage;
     }
 
-    public void setProductImage(Byte ProductImage) {
+    public void setProductImage(String ProductImage) {
         this.ProductImage = ProductImage;
     }
     
@@ -84,7 +84,7 @@ public class Products {
         return TopAux;
     }
 
-    public void setTopAux(byte TopAux) {
+    public void setTopAux(int TopAux) {
         this.TopAux = TopAux;
     }
     

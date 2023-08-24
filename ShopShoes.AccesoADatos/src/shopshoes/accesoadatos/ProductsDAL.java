@@ -58,7 +58,7 @@ public class ProductsDAL {
                     st.setString(2, pProducts.getProductName());
                     st.setDouble(3, pProducts.getCost());
                     st.setString(4, pProducts.getProductDescription());
-                    st.setByte(5, pProducts.getProductImage());
+                    st.setString(5, pProducts.getProductImage());
                     result = st.executeUpdate();
                     st.close();
                 }
@@ -89,7 +89,7 @@ public class ProductsDAL {
                 ps.setString(2, pProducts.getProductName());
                 ps.setDouble(3, pProducts.getCost());
                 ps.setString(4, pProducts.getProductDescription());
-                ps.setByte(5, pProducts.getProductImage());
+                ps.setString(5, pProducts.getProductImage());
                 ps.setInt(6, pProducts.getId());
                 result = ps.executeUpdate();
                 ps.close();
@@ -146,7 +146,7 @@ public class ProductsDAL {
         pIndex++;
         pProducts.setProductDescription(pResultSet.getString(pIndex)); // index 5
         pIndex++;
-        pProducts.setProductImage(pResultSet.getByte(pIndex)); // index 6
+        pProducts.setProductImage(pResultSet.getString(pIndex)); // index 6
         return pIndex;
     }
 
@@ -205,6 +205,65 @@ public class ProductsDAL {
             sql += agregarOrderBy(new Products());
             try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
             {
+                obtenerDatos(ps, products);
+                ps.close();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+        catch(SQLException ex)
+        {
+            throw ex;
+        }
+        
+        return products;
+    }
+    
+    static void querySelect(Products pProducts, ComunDB.UtilQuery pUtilQuery) throws Exception
+    {
+        PreparedStatement statement = pUtilQuery.getStatement();
+        if(pProducts.getIdCategory() > 0)
+        {
+            pUtilQuery.AgregarWhereAnd(" p.IdCategory = ? ");
+            if(statement != null)
+            {
+                statement.setInt(pUtilQuery.getNumWhere(), 
+                        pProducts.getIdCategory());
+            }
+        }
+        
+        if(pProducts.getProductName() != null && 
+           pProducts.getProductName().trim().isEmpty() == false)
+        {
+            pUtilQuery.AgregarWhereAnd(" p.Nombre Like ? ");
+            if(statement != null)
+            {
+                statement.setString(pUtilQuery.getNumWhere(), 
+                        "%" + pProducts.getProductName() + "%");
+            }
+        }
+    }
+    
+    public static ArrayList<Products> buscar(Products pProducts) throws Exception
+    {
+        ArrayList<Products> products = new ArrayList();
+        try(Connection conn = ComunDB.obtenerConexion();)
+        {
+            String sql = obtenerSelect(pProducts);
+            ComunDB comundb = new ComunDB();
+            ComunDB.UtilQuery utilQuery = 
+            comundb.new UtilQuery(sql,null,0);
+            querySelect(pProducts, utilQuery);
+            sql = utilQuery.getSQL();
+            sql += agregarOrderBy(pProducts);
+            try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
+            {
+                utilQuery.setStatement(ps);
+                utilQuery.setSQL(null);
+                utilQuery.setNumWhere(0);
+                querySelect(pProducts, utilQuery);
                 obtenerDatos(ps, products);
                 ps.close();
             }

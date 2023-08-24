@@ -16,7 +16,7 @@ public class CategoryDAL {
     
  static String obtenerCampos()
      {
-         return"p.Id,p.pCategoryName,p.CategoryImage";
+         return"p.Id, p.CategoryName, p.CategoryImage";
      }
  
   private static String obtenerSelect(Category pCategory)
@@ -55,7 +55,7 @@ public class CategoryDAL {
                     ComunDB.createPreparedStatement(conn, sql);)
                 {
                     st.setString(1, pCategory.getCategoryName());
-                    st.setByte(2, pCategory.getCategoryImage());
+                    st.setString(2, pCategory.getCategoryImage());
                     result = st.executeUpdate();
                     st.close();
                 }
@@ -130,27 +130,28 @@ public class CategoryDAL {
    static int asignarDatosResultSet(Category pCategory, ResultSet pResultSet, int pIndex) throws Exception {
         //  SELECT u.Id(indice 1), u.IdRol(indice 2), u.Nombre(indice 3), u.Apellido(indice 4), u.Login(indice 5), 
         // u.Estatus(indice 6), u.FechaRegistro(indice 7) * FROM Usuario
-        pIndex++;
+         pIndex++;
         pCategory.setId(pResultSet.getInt(pIndex)); // index 1
-          pCategory.setCategoryName(pResultSet.getString(pIndex)); // index 3
         pIndex++;
+        pCategory.setCategoryName(pResultSet.getString(pIndex)); // index 2
+        pIndex++;
+        pCategory.setCategoryImage(pResultSet.getString(pIndex)); // index 3
         return pIndex;
     }
    
- private static void obtenerDatos(PreparedStatement pPS, ArrayList<Category> pCategorys) throws Exception {
+  private static void obtenerDatos(PreparedStatement pPS, ArrayList<Category> pCategory) throws Exception {
         try (ResultSet resultSet = ComunDB.obtenerResulSet(pPS);) { // obtener el ResultSet desde la clase ComunDB
             while (resultSet.next()) { // Recorrer cada una de la fila que regresa la consulta  SELECT de la tabla Usuario
-                Category Category = new Category();
+                Category category = new Category();
                 // Llenar las propiedaddes de la Entidad Usuario con los datos obtenidos de la fila en el ResultSet
-                asignarDatosResultSet(Category, resultSet, 0);
-                pCategorys.add(Category); // agregar la entidad Usuario al ArrayList de Usuario
+                asignarDatosResultSet(category, resultSet, 0);
+                pCategory.add(category); // agregar la entidad Usuario al ArrayList de Usuario
             }
             resultSet.close(); // cerrar el ResultSet
         } catch (SQLException ex) {
             throw ex;// enviar al siguiente metodo el error al obtener ResultSet de la clase ComunDB   en el caso que suceda 
         }
     }
- 
       public static Category obtenerPorId(Category pCategory) throws Exception
     {
         Category category = new Category();
@@ -204,6 +205,65 @@ public class CategoryDAL {
         }
         
         return Category;
+    }
+    
+    static void querySelect(Category pCategory, ComunDB.UtilQuery pUtilQuery) throws Exception
+    {
+        PreparedStatement statement = pUtilQuery.getStatement();
+        if(pCategory.getId() > 0)
+        {
+            pUtilQuery.AgregarWhereAnd(" p.Id = ? ");
+            if(statement != null)
+            {
+                statement.setInt(pUtilQuery.getNumWhere(), 
+                        pCategory.getId());
+            }
+        }
+        
+        if(pCategory.getCategoryName() != null && 
+           pCategory.getCategoryName().trim().isEmpty() == false)
+        {
+            pUtilQuery.AgregarWhereAnd(" p.Nombre Like ? ");
+            if(statement != null)
+            {
+                statement.setString(pUtilQuery.getNumWhere(), 
+                        "%" + pCategory.getCategoryName() + "%");
+            }
+        }
+    }
+    
+    public static ArrayList<Category> buscar(Category pCategory) throws Exception
+    {
+        ArrayList<Category> categories = new ArrayList();
+        try(Connection conn = ComunDB.obtenerConexion();)
+        {
+            String sql = obtenerSelect(pCategory);
+            ComunDB comundb = new ComunDB();
+            ComunDB.UtilQuery utilQuery = 
+            comundb.new UtilQuery(sql,null,0);
+            querySelect(pCategory, utilQuery);
+            sql = utilQuery.getSQL();
+            sql += agregarOrderBy(pCategory);
+            try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
+            {
+                utilQuery.setStatement(ps);
+                utilQuery.setSQL(null);
+                utilQuery.setNumWhere(0);
+                querySelect(pCategory, utilQuery);
+                obtenerDatos(ps, categories);
+                ps.close();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+        catch(SQLException ex)
+        {
+            throw ex;
+        }
+        
+        return categories;
     }
 }
 

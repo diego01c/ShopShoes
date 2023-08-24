@@ -19,8 +19,8 @@ public class ComunDB {
     //propiedad del SGBD que estamos utilizando
     static int TIPODB = TipoDB.SQLSERVER;
     static String connectionURL = "jdbc:sqlserver://localhost:1433;"
-            + "database=SysSeguridad;"
-            + "user=sa"
+            + "database=ShopShoes;"
+            + "user=sa;"
             + "password=12345sql;"
             + "loginTimeOut=30;encrypt=false;trustServerCertificate=false";
            // + "integraedSecurity=true";
@@ -29,10 +29,10 @@ public class ComunDB {
     de base de datos*/
     public static Connection obtenerConexion() throws SQLException
     {
-        /*DriverManager.registerDriver(new 
-        com.microsoft.sqlserver.jdbc.SQLServerDriver());*/
+        DriverManager.registerDriver(new 
+        com.microsoft.sqlserver.jdbc.SQLServerDriver());
         Connection connect = DriverManager.getConnection(
-                connectionURL);
+               connectionURL);
         return connect;
     }
     /*

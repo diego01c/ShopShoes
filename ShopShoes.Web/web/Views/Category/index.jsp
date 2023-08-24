@@ -1,21 +1,21 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="shopshoes.entidadesdenegocio.Products"%>
+<%@page import="shopshoes.entidadesdenegocio.Category"%>
 <%@page import="java.util.ArrayList"%>
-<%ArrayList<Products> products = (ArrayList<Products>) request.getAttribute("products");
+<%ArrayList<Category> categories = (ArrayList<Category>) request.getAttribute("categories");
     int numPage = 1;
     int numReg = 10;
     int countReg = 0;
-    if(products == null)
+    if(categories == null)
     {
-        products = new ArrayList();
+        categories = new ArrayList();
     }
     else
-        if(products.size() > numReg)
+        if(categories.size() > numReg)
         {
-            double divNumPage = (double) products.size() / (double) numReg;
+            double divNumPage = (double) categories.size() / (double) numReg;
             numPage = (int) Math.ceil(divNumPage);
         }
-    String strTop_aux = request.getParameter("TopAux");
+    String strTop_aux = request.getParameter("Top_aux");
     int top_aux = 10;
     if(strTop_aux != null && strTop_aux.trim().length() > 0)
     {
@@ -35,7 +35,7 @@
                 <div class="paginationjs">
                     <div style="overflow: auto;">
                                 <%
-                                for(Products product:products)
+                                for(Category category:categories)
                                 {
                                    int tempNumPage = numPage;
                                    if(numPage > 1)
@@ -49,15 +49,14 @@
                                     <div class="col s4">
       <div class="card white" data-page="<%=tempNumPage%>">
         <div class="card-content black-text">
-          <span class="card-title"><%=product.getProductName()%></span>
-          <center><img src="<%=product.getProductImage()%>" height="200"/></center>
+          <span class="card-title"><%=category.getCategoryName()%></span>
+          <center><img src="<%=category.getCategoryImage()%>" height="200"/></center>
          
-          <p>$<%=product.getCost()%></p>
         </div>
         <div class="card-action">
-         <a href="Rol?accion=edit&id=<%=product.getId()%>" 
+         <a href="Products?accion=index&id=<%=category.getId()%>" 
                                                    title="Añadir" class="btn-floating btn-large waves-effect waves-light purple">
-                                                    <i class="material-icons">add_shopping_cart</i>
+                                                    <i class="material-icons">remove_red_eye</i>
                                                 </a>
         </div>
       </div>
@@ -81,3 +80,4 @@
         <jsp:include page="/Views/Shared/footerBody.jsp" />
     </body>
 </html>
+

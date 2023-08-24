@@ -179,10 +179,10 @@ public class UsersDAL {
         try(Connection conn = ComunDB.obtenerConexion();)
         {
             String sql = obtenerSelect(pUsers);
-            sql += " Where u.Mail = ? And u.Pass = ? And ";
+            sql += " Where u.UserName = ? And u.Pass = ?";
             try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
             {
-                ps.setString(1, pUsers.getMail());
+                ps.setString(1, pUsers.getUserName());
                 ps.setString(2, password);
                 obtenerDatos(ps, usuarios);
                 ps.close();
