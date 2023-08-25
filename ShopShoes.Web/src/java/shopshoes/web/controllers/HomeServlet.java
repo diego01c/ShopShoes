@@ -11,6 +11,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import shopshoes.accesoadatos.UsersDAL;
+import shopshoes.entidadesdenegocio.Users;
+import shopshoes.web.utils.Utilidad;
 
 /**
  *
@@ -18,6 +24,7 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "HomeServlet", urlPatterns = {"/Home"})
 public class HomeServlet extends HttpServlet {
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -27,7 +34,7 @@ public class HomeServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void doGetResquestIndex(HttpServletRequest request, 
+    protected void doGetResquestIndex(HttpServletRequest request,
             HttpServletResponse response)
             throws ServletException, IOException {
         request.getRequestDispatcher("index.jsp").forward(request, response);
@@ -47,4 +54,5 @@ public class HomeServlet extends HttpServlet {
             throws ServletException, IOException {
         doGetResquestIndex(request, response);
     }
+
 }

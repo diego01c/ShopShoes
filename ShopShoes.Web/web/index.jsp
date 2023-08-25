@@ -4,6 +4,7 @@
          response.sendRedirect("User?accion=login");
     }
 %>
+
 <!DOCTYPE html>
 <html>
     <head>        
@@ -18,6 +19,7 @@
                 <div class="col l12 s12">
                     <h1>Bienvenidos</h1> 
                     <span>Al sistema para aprender a como colocarle seguridad a sus aplicaciones web</span> 
+                    
                 </div>
             </div>            
         </main>
