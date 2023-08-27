@@ -49,8 +49,8 @@ public class CategoryDAL {
         String sql;
             try(Connection conn = ComunDB.obtenerConexion();)
             {
-                sql = "Insert Into Category( CategoryName,CategoryImage) "
-                        + "Values(?,?,?,?,?)";
+                sql = "Insert Into Category(CategoryName, CategoryImage) "
+                        + "Values(?,?)";
                 try(PreparedStatement st = 
                     ComunDB.createPreparedStatement(conn, sql);)
                 {
@@ -78,13 +78,14 @@ public class CategoryDAL {
         String sql;
         try(Connection conn = ComunDB.obtenerConexion();)
         {
-            sql = "Update Category Set IdUser = ?, CategoryName= ?"
+            sql = "Update Category Set CategoryName = ?, CategoryImage= ?"
                     + " Where Id = ?";
             try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
             {
                 
-              ps.setInt(1, pCategory.getId());
-              ps.setString(2, pCategory.getCategoryName());
+              ps.setString(1, pCategory.getCategoryName());
+              ps.setString(2, pCategory.getCategoryImage());
+              ps.setInt(3, pCategory.getId());
               
                   result = ps.executeUpdate();
                 ps.close();
@@ -152,17 +153,18 @@ public class CategoryDAL {
             throw ex;// enviar al siguiente metodo el error al obtener ResultSet de la clase ComunDB   en el caso que suceda 
         }
     }
-      public static Category obtenerPorId(Category pCategory) throws Exception
+      public static Category obtenerPorId(int id) throws Exception
     {
         Category category = new Category();
         ArrayList<Category> categories = new ArrayList();
         try(Connection conn = ComunDB.obtenerConexion();)
         {
-            String sql = obtenerSelect(pCategory);
-            sql += " Where Id = ?";
+            String sql = "Select " + (obtenerCampos() + " From Category p"); // obtener la consulta SELECT de la tabla Usuario
+            // Concatenar a la consulta SELECT de la tabla Usuario el WHERE  para comparar el campo Id
+            sql += " WHERE p.Id=?";
             try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
             {
-                ps.setInt(1, pCategory.getId());
+                ps.setInt(1, id);
                 obtenerDatos(ps, categories);
                 ps.close();
             }
@@ -180,6 +182,34 @@ public class CategoryDAL {
            category= categories.get(0);
         }
         return category;
+    }
+      
+      public static ArrayList<Category> obtenerPorName(String id) throws Exception
+    {
+        Category category = new Category();
+        ArrayList<Category> categories = new ArrayList();
+        try(Connection conn = ComunDB.obtenerConexion();)
+        {
+            String sql = "Select " + (obtenerCampos() + " From Category p"); // obtener la consulta SELECT de la tabla Usuario
+            // Concatenar a la consulta SELECT de la tabla Usuario el WHERE  para comparar el campo Id
+            sql += " WHERE p.CategoryName Like ?";
+            try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
+            {
+                ps.setString(1, "%"+id+"%");
+                obtenerDatos(ps, categories);
+                ps.close();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+        catch(SQLException ex)
+        {
+            throw ex;
+        }
+ 
+        return categories;
     }
       
     public static ArrayList<Category> obtenerTodos() throws Exception

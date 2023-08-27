@@ -35,173 +35,139 @@ public class ProductsServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private Products obtenerProduct(HttpServletRequest request)
-    {
+    private Products obtenerProduct(HttpServletRequest request) {
         String accion = Utilidad.getParameter(request, "accion", "index");
         Products product = new Products();
-        if(accion.equals("create") == false)
-        {
+        if (accion.equals("create") == false) {
             //Obtiene el parametro de Id del request y asigna el valor a la propiedad 
             //Id de la instancia
             product.setIdCategory(Integer.parseInt(Utilidad.getParameter(request, "id",
                     "0")));
         }
         product.setProductName(Utilidad.getParameter(request, "ProductName", ""));
-        if(accion.equals("index"))
-        {
-            product.setTopAux(Integer.parseInt(Utilidad.getParameter(request, 
+        if (accion.equals("index")) {
+            product.setTopAux(Integer.parseInt(Utilidad.getParameter(request,
                     "TopAux", "10")));
-            product.setTopAux(product.getTopAux() == 0 ? Integer.MAX_VALUE: product.getTopAux());
+            product.setTopAux(product.getTopAux() == 0 ? Integer.MAX_VALUE : product.getTopAux());
         }
         return product;
     }
-    
-    private Products obtenerProductDetails(HttpServletRequest request)
-    {
+
+    private Products obtenerProductDetails(HttpServletRequest request) {
         String accion = Utilidad.getParameter(request, "accion", "index");
         Products product = new Products();
-        if(accion.equals("create") == false)
-        {
+        if (accion.equals("create") == false) {
             //Obtiene el parametro de Id del request y asigna el valor a la propiedad 
             //Id de la instancia
             product.setId(Integer.parseInt(Utilidad.getParameter(request, "id",
                     "0")));
         }
         product.setProductName(Utilidad.getParameter(request, "ProductName", ""));
-        if(accion.equals("index"))
-        {
-            product.setTopAux(Integer.parseInt(Utilidad.getParameter(request, 
+        if (accion.equals("index")) {
+            product.setTopAux(Integer.parseInt(Utilidad.getParameter(request,
                     "TopAux", "10")));
-            product.setTopAux(product.getTopAux() == 0 ? Integer.MAX_VALUE: product.getTopAux());
+            product.setTopAux(product.getTopAux() == 0 ? Integer.MAX_VALUE : product.getTopAux());
         }
         return product;
     }
-    
-    
-    
+
     protected void doGetRequestIndex(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try
-        {
+        try {
             Products product = obtenerProduct(request);
             product.setTopAux(10);
             ArrayList<Products> products = ProductsDAL.buscar(product);
             request.setAttribute("products", products);
             request.setAttribute("TopAux", product.getTopAux());
             request.getRequestDispatcher("Views/Products/index.jsp").forward(request, response);
-        }
-        catch(Exception ex)
-        {
+        } catch (Exception ex) {
             Utilidad.enviarError(ex.getMessage(), request, response);
         }
     }
-    
+
     protected void doPostRequestIndex(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try
-        {
+        try {
             Products product = obtenerProduct(request);
             ArrayList<Products> products = ProductsDAL.buscar(product);
             request.setAttribute("products", products);
             request.setAttribute("TopAux", product.getTopAux());
             request.getRequestDispatcher("Views/Products/index.jsp")
                     .forward(request, response);
-        }
-        catch(Exception ex)
-        {
+        } catch (Exception ex) {
             Utilidad.enviarError(ex.getMessage(), request, response);
         }
     }
-    
+
     protected void doGetRequestCreate(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            request.getRequestDispatcher("Views/Products/create.jsp")
-                    .forward(request, response);
+        request.getRequestDispatcher("Views/Products/create.jsp")
+                .forward(request, response);
     }
-    
+
     protected void doPostRequestCreate(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try
-        {
+        try {
             Products product = obtenerProduct(request);
             int result = ProductsDAL.crear(product);
-            if(result != 0)
-            {
+            if (result != 0) {
                 request.setAttribute("accion", "index");
                 doGetRequestIndex(request, response);
-            }
-            else
-            {
+            } else {
                 Utilidad.enviarError("Error al Guardar el Regisgtro", request, response);
             }
 
-        }
-        catch(Exception ex)
-        {
+        } catch (Exception ex) {
             Utilidad.enviarError(ex.getMessage(), request, response);
         }
     }
-    
+
     protected void requestObtenerPorId(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try
-        {
+        try {
             Products product = obtenerProductDetails(request);
             Products product_result = ProductsDAL.obtenerPorId(product);
-            if(product_result.getId() > 0)
-            {
+            if (product_result.getId() > 0) {
                 request.setAttribute("product", product_result);
-            }
-            else
-            {
-                Utilidad.enviarError("El id: " + product.getId() + " no existe en la tabla rol", 
+            } else {
+                Utilidad.enviarError("El id: " + product.getId() + " no existe en la tabla rol",
                         request, response);
             }
-        }
-        catch(Exception ex)
-        {
+        } catch (Exception ex) {
             Utilidad.enviarError(ex.getMessage(), request, response);
         }
     }
-    
+
     protected void doGetRequestEdit(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            requestObtenerPorId(request, response);
-            request.getRequestDispatcher("Views/Products/edit.jsp")
-                    .forward(request, response);
+        requestObtenerPorId(request, response);
+        request.getRequestDispatcher("Views/Products/edit.jsp")
+                .forward(request, response);
     }
-    
+
     protected void doPostRequestEdit(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try
-        {
+        try {
             Products products = obtenerProduct(request);
             int result = ProductsDAL.modificar(products);
-            if(result != 0)
-            {
+            if (result != 0) {
                 request.setAttribute("accion", "index");
                 doGetRequestIndex(request, response);
-            }
-            else
-            {
+            } else {
                 Utilidad.enviarError("Error al Guardar el Regisgtro", request, response);
             }
 
-        }
-        catch(Exception ex)
-        {
+        } catch (Exception ex) {
             Utilidad.enviarError(ex.getMessage(), request, response);
         }
     }
-    
+
     protected void doGetRequestDetails(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            requestObtenerPorId(request, response);
-            request.getRequestDispatcher("Views/Products/details.jsp")
-                    .forward(request, response);
+        requestObtenerPorId(request, response);
+        request.getRequestDispatcher("Views/Products/details.jsp")
+                .forward(request, response);
     }
-    
-    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -216,10 +182,9 @@ public class ProductsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         SessionUser.authorize(request, response, () -> {
-            String accion = Utilidad.getParameter(request, 
+            String accion = Utilidad.getParameter(request,
                     "accion", "index");
-            switch(accion)
-            {
+            switch (accion) {
                 case "index":
                     request.setAttribute("accion", accion);
                     doGetRequestIndex(request, response);
@@ -256,27 +221,26 @@ public class ProductsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //SessionUser.authorize(request, response, () -> {
-            String accion = Utilidad.getParameter(request, 
-                    "accion", "index");
-            switch(accion)
-            {
-                case "index":
-                    request.setAttribute("accion", accion);
-                    doPostRequestIndex(request, response);
-                    break;
-                case "create":
-                    request.setAttribute("accion", accion);
-                    doPostRequestCreate(request, response);
-                    break;
-                case "edit":
-                    request.setAttribute("accion", accion);
-                    doPostRequestEdit(request, response);
-                    break;
-                default:
-                    request.setAttribute("accion", accion);
-                    doGetRequestIndex(request, response);
-                    break;
-            }
+        String accion = Utilidad.getParameter(request,
+                "accion", "index");
+        switch (accion) {
+            case "index":
+                request.setAttribute("accion", accion);
+                doPostRequestIndex(request, response);
+                break;
+            case "create":
+                request.setAttribute("accion", accion);
+                doPostRequestCreate(request, response);
+                break;
+            case "edit":
+                request.setAttribute("accion", accion);
+                doPostRequestEdit(request, response);
+                break;
+            default:
+                request.setAttribute("accion", accion);
+                doGetRequestIndex(request, response);
+                break;
+        }
         //});
     }
 }

@@ -11,6 +11,7 @@ package shopshoes.accesoadatos;
 
 import java.util.*;
 import java.sql.*;
+import static shopshoes.accesoadatos.ProductsDAL.querySelect;
 import shopshoes.entidadesdenegocio.*;
 
 public class DiscountDAL {
@@ -208,4 +209,64 @@ public class DiscountDAL {
         return discounts;
     }
     
+    static void querySelect(Discount pDiscount, ComunDB.UtilQuery pUtilQuery) throws Exception
+    {
+        PreparedStatement statement = pUtilQuery.getStatement();
+        if(pDiscount.getId()> 0)
+        {
+            pUtilQuery.AgregarWhereAnd(" p.Id = ? ");
+            if(statement != null)
+            {
+                statement.setInt(pUtilQuery.getNumWhere(), 
+                        pDiscount.getId());
+            }
+        }
+        
+        if(pDiscount.getDiscountRate()!= null && 
+           pDiscount.getDiscountRate().trim().isEmpty() == false)
+        {
+            pUtilQuery.AgregarWhereAnd(" p.DiscountRate Like ? ");
+            if(statement != null)
+            {
+                statement.setString(pUtilQuery.getNumWhere(), 
+                        "%" + pDiscount.getDiscountRate()+ "%");
+            }
+        }
+    }
+
+    public static ArrayList<Discount> buscar(Discount pDiscount) throws Exception
+    {
+        ArrayList<Discount> discount = new ArrayList();
+        try(Connection conn = ComunDB.obtenerConexion();)
+        {
+            String sql = obtenerSelect(pDiscount);
+            ComunDB comundb = new ComunDB();
+            ComunDB.UtilQuery utilQuery = 
+            comundb.new UtilQuery(sql,null,0);
+            querySelect(pDiscount, utilQuery);
+            sql = utilQuery.getSQL();
+            sql += agregarOrderBy(pDiscount);
+            try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
+            {
+                utilQuery.setStatement(ps);
+                utilQuery.setSQL(null);
+                utilQuery.setNumWhere(0);
+                querySelect(pDiscount, utilQuery);
+                obtenerDatos(ps, discount);
+                ps.close();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+        catch(SQLException ex)
+        {
+            throw ex;
+        }
+        
+        return discount;
+    }
 }
+    
+

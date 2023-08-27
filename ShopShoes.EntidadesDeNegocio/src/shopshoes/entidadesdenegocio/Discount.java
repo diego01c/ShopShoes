@@ -52,7 +52,7 @@ public class Discount {
         return TopAux;
     }
 
-    public void setTopAux(byte TopAux) {
+    public void setTopAux(int TopAux) {
         this.TopAux = TopAux;
     }
     
