@@ -2,6 +2,12 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group name="ShopShoes"/>
+        <group name="ShopShoes">
+            <file>file:/C:/Users/MINEDUCYT/Documents/mis%20archivos/ShopShoes/ShopShoes.Web/web/Views/Shared/error.jsp</file>
+            <file>file:/C:/Users/MINEDUCYT/Documents/mis%20archivos/ShopShoes/ShopShoes.Web/web/Views/Products/select.jsp</file>
+            <file>file:/C:/Users/MINEDUCYT/Documents/mis%20archivos/ShopShoes/ShopShoes.Web/web/Views/Shared/headerBody.jsp</file>
+            <file>file:/C:/Users/MINEDUCYT/Documents/mis%20archivos/ShopShoes/ShopShoes.Web/src/java/shopshoes/web/controllers/AdministratorServlet.java</file>
+            <file>file:/C:/Users/MINEDUCYT/Documents/mis%20archivos/ShopShoes/ShopShoes.Web/web/Views/Shared/footerBody.jsp</file>
+        </group>
     </open-files>
 </project-private>
