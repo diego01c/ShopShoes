@@ -12,6 +12,7 @@ public class Administrator {
     private int Id;
     private int IdUser;
     private String AdministratorName;
+     private String AdministratorImage;
     private int   top_aux;
     
     public Administrator(){
@@ -20,6 +21,7 @@ public class Administrator {
         this.Id =Id;
         this.IdUser =IdUser;
         this.AdministratorName = AdministratorName;
+         this.AdministratorImage = AdministratorImage;
         this.top_aux = top_aux;
         
     }
@@ -45,7 +47,15 @@ public class Administrator {
      
     public void setAdministratortName(String AdministratorName) {
         this.AdministratorName = AdministratorName;
-    }   
+    }  
+    
+     public String getAdministratorImage() {
+        return AdministratorImage;
+    }
+
+    public void setAdyImage(String AdministratorImage) {
+        this.AdministratorImage = AdministratorImage;
+    }
     
      public int getTop_aux() {
         return top_aux;
