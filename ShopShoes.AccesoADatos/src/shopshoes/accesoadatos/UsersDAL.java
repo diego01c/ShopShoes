@@ -253,4 +253,94 @@ public class UsersDAL {
         }
         return usuario;
     }
+    
+    public static int cambiarPassword(Users pUsuario, String pPasswordAnt) throws Exception {
+        int result;
+        String sql;
+        Users usuarioAnt = new Users();
+        usuarioAnt.setUserName(pUsuario.getUserName());
+        usuarioAnt.setPass(pPasswordAnt);
+        Users usuarioAut = login(usuarioAnt); // Obtenemos el Usuario autorizado validandolo en el metodo de login
+        // Si el usuario que retorno el metodo de login tiene el Id mayor a cero y el Login es igual que el Login del Usuario que viene
+        // en el parametro es un Usuario Autorizado
+        if (usuarioAut.getId() > 0 && usuarioAut.getUserName().equals(pUsuario.getUserName())) {
+            try (Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
+                sql = "UPDATE Users SET Pass=? WHERE Id=?"; // Crear la consulta Update a la tabla de Usuario para poder modificar el Password
+                try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // Obtener el PreparedStatement desde la clase ComunDB
+                    // Agregar el parametro a la consulta donde estan el simbolo ? #1 pero antes encriptar el password para enviarlo encriptado
+                    ps.setString(1, encriptarMD5(pUsuario.getPass())); //
+                    ps.setInt(2, pUsuario.getId()); // Agregar el parametro a la consulta donde estan el simbolo ? #2 
+                    result = ps.executeUpdate(); // Ejecutar la consulta UPDATE en la base de datos
+                    ps.close(); // Cerrar el PreparedStatement
+                } catch (SQLException ex) {
+                    throw ex; // Enviar al siguiente metodo el error al ejecutar PreparedStatement en el caso que suceda
+                }
+                conn.close(); // Cerrar la conexion a la base de datos
+            }
+            catch (SQLException ex) {
+                throw ex;// Enviar al siguiente metodo el error al obtener la conexion  de la clase ComunDB en el caso que suceda
+            }
+        } else {
+            result = 0;
+            // Enviar la excepcion en el caso que el usuario que intenta modificar el password ingresa un password incorrecto
+            throw new RuntimeException("El password actual es incorrecto");
+        }
+        return result; // Retornar el numero de fila afectadas en el UPDATE en la base de datos 
+    }
+    
+    static void querySelect(Users pUsuario, ComunDB.UtilQuery pUtilQuery) throws SQLException {
+        PreparedStatement statement = pUtilQuery.getStatement(); // obtener el PreparedStatement al cual aplicar los parametros
+        if (pUsuario.getId() > 0) { // verificar si se va incluir el campo Id en el filtro de la consulta SELECT de la tabla de Usuario
+            pUtilQuery.AgregarWhereAnd(" u.Id=? "); // agregar el campo Id al filtro de la consulta SELECT y agregar el WHERE o AND
+            if (statement != null) {
+                 // agregar el parametro del campo Id a la consulta SELECT de la tabla de Usuario
+                statement.setInt(pUtilQuery.getNumWhere(), pUsuario.getId());
+            }
+        }
+        // verificar si se va incluir el campo IdRol en el filtro de la consulta SELECT de la tabla de Usuario
+        if (pUsuario.getIdRol() > 0) {
+            pUtilQuery.AgregarWhereAnd(" u.IdRol=? "); // agregar el campo IdRol al filtro de la consulta SELECT y agregar en el WHERE o AND
+            if (statement != null) {
+                 // agregar el parametro del campo IdRol a la consulta SELECT de la tabla de Usuario
+                statement.setInt(pUtilQuery.getNumWhere(), pUsuario.getIdRol());
+            }
+        }
+        // verificar si se va incluir el campo Nombre en el filtro de la consulta SELECT de la tabla de Usuario
+        if (pUsuario.getUserName()!= null && pUsuario.getUserName().trim().isEmpty() == false) {
+            pUtilQuery.AgregarWhereAnd(" u.UserName LIKE ? "); // agregar el campo Nombre al filtro de la consulta SELECT y agregar en el WHERE o AND
+            if (statement != null) {
+                 // agregar el parametro del campo Nombre a la consulta SELECT de la tabla de Usuario
+                statement.setString(pUtilQuery.getNumWhere(), "%" + pUsuario.getUserName()+ "%");
+            }
+        }
+        
+    }
+    
+    public static ArrayList<Users> buscar(Users pUsuario) throws Exception {
+        ArrayList<Users> usuarios = new ArrayList();
+        try (Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
+            String sql = obtenerSelect(pUsuario); // obtener la consulta SELECT de la tabla Usuario
+            ComunDB comundb = new ComunDB();
+            ComunDB.UtilQuery utilQuery = comundb.new UtilQuery(sql, null, 0);
+            querySelect(pUsuario, utilQuery); // Asignar el filtro a la consulta SELECT de la tabla de Usuario 
+            sql = utilQuery.getSQL();
+            sql += agregarOrderBy(pUsuario); // Concatenar a la consulta SELECT de la tabla Usuario el ORDER BY por Id
+            try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // obtener el PreparedStatement desde la clase ComunDB
+                utilQuery.setStatement(ps);
+                utilQuery.setSQL(null);
+                utilQuery.setNumWhere(0);
+                querySelect(pUsuario, utilQuery); // Asignar los parametros al PreparedStatement de la consulta SELECT de la tabla de Usuario
+                obtenerDatos(ps, usuarios); // Llenar el ArrayList de Usuario con las fila que devolvera la consulta SELECT a la tabla de Usuario
+                ps.close(); // Cerrar el PreparedStatement
+            } catch (SQLException ex) {
+                throw ex; // Enviar al siguiente metodo el error al ejecutar PreparedStatement en el caso que suceda
+            }
+            conn.close(); // Cerrar la conexion a la base de datos
+        } 
+        catch (SQLException ex) {
+            throw ex; // Enviar al siguiente metodo el error al obtener la conexion  de la clase ComunDB en el caso que suceda
+        }
+        return usuarios; // Devolver el ArrayList de Usuario
+    }
+    
 }

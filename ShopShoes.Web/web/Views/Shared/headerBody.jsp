@@ -9,7 +9,7 @@
             <li><a href="Home">Inicio</a></li>
             <li><a href="Category">Categorias</a></li>
             <li><a href="User?accion=crearcuenta">CrearCuenta</a></li>
-            <li><a href="Usuario?accion=cambiarpass">Cambiar password</a></li>
+            <li><a href="User?accion=cambiarpass">Cambiar password</a></li>
             <li><a href="User?accion=perfil"><%=session.getAttribute("user")%></a></li>
             <li><a href="User?accion=login">Cerrar sesión</a></li>
                 <%}%>
@@ -22,7 +22,7 @@
     <li><a href="Home">Inicio</a></li>
     <li><a href="Category">Categorias</a></li>
     <li><a href="User?accion=crearcuenta">Rol</a></li>
-    <li><a href="Usuario?accion=cambiarpass">Cambiar password</a></li>
+    <li><a href="User?accion=cambiarpass">Cambiar password</a></li>
     <li><a href="User?accion=login">Cerrar sesión</a></li>
         <%}%>
 </ul>

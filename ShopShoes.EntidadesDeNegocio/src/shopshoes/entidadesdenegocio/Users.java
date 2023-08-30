@@ -11,7 +11,6 @@ import java.time.LocalDate;
  * @author alexg
  */
 public class Users {
-
     private int Id;
     private int IdRol;
     private String UserName;

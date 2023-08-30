@@ -15,13 +15,19 @@ import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import shopshoes.accesoadatos.ClientDAL;
-
 import shopshoes.accesoadatos.UsersDAL;
 import shopshoes.web.utils.*;
 import shopshoes.entidadesdenegocio.Users;
 import shopshoes.accesoadatos.RolesDAL;
 import shopshoes.entidadesdenegocio.Client;
 import shopshoes.entidadesdenegocio.Roles;
+import java.util.Properties;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 /**
  *
@@ -46,6 +52,8 @@ public class UserServlet extends HttpServlet {
         //Llenar objeto usuario desde vista (Nombre)
         usuario.setUserName(Utilidad.getParameter(request, "UserName",
                 ""));
+        usuario.setMail(Utilidad.getParameter(request, "Mail",
+                    ""));
         usuario.setIdRol(Integer.parseInt(Utilidad.getParameter(request,
                 "IdRol", "0")));
 
@@ -110,7 +118,8 @@ public class UserServlet extends HttpServlet {
 
             usuario.setClient(client);
 
-        } else {
+        }
+        else {
             usuario.setId(Integer.parseInt(Utilidad.getParameter(request,
                     "Id", "0")));
         }
@@ -226,6 +235,97 @@ public class UserServlet extends HttpServlet {
             Utilidad.enviarError(ex.getMessage(), request, response);
         }
     }
+    
+    protected void doGetRequestCambiarPassword(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try
+        {
+            Users usuario = new Users();
+            //Buscar el usuario que esta logeado y obtiene el login de la 
+            //variable de session ViDuran
+            usuario.setUserName(SessionUser.getUser(request));
+            Users usuario_result = UsersDAL.buscar(usuario)
+                    .get(0);
+            if(usuario_result.getId() > 0)
+            {
+                request.setAttribute("usuario", usuario_result);
+                request.getRequestDispatcher(
+                        "Views/User/cambiarpass.jsp")
+                    .forward(request, response);
+            }
+            else
+            {
+                Utilidad.enviarError("El login: " + usuario_result.getUserName()+
+                        "no existe en la Base de Datos", request, response);
+            }
+        }
+        catch(Exception ex)
+        {
+            Utilidad.enviarError(ex.getMessage(), request, response);
+        }
+    }
+    
+    
+    protected void doPostCambiarPassword(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try
+        {
+            Users usuario = obtenerUsuario(request);
+            String passActual = Utilidad.getParameter(request,
+                    "passwordActual", "");
+            int result = UsersDAL.cambiarPassword(usuario, 
+                    passActual);
+            if(result != 0)
+            {
+                response.sendRedirect("User?accion=login");
+                String destinatario = usuario.getMail();
+                String remitente = "shopshoesofficial23@gmail.com";
+                String claveemail = "tpkdisggvorihafg";
+                String asunto = "Cambio de contraseña";
+                String cuerpo = "Se cambio tu contraseña. Se cambio tu contraseña, tal como lo pediste. Si no fuiste tu quien solicito el cambio,"
+                        + " tenemos algunos consejos para ayudarte a mantener segura tu cuenta. Para mas informacion, consulta https://support.google.com/accounts/answer/46526?hl=es-419";
+                
+                Properties props = System.getProperties();
+                props.put("mail.smtp.host", "smtp.gmail.com");
+                props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+                props.setProperty("mail.smtp.starttls.enable", "true");
+                props.setProperty("mail.smtp.port", "587");
+                props.setProperty("mail.smtp.user", remitente);
+                props.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
+                props.setProperty("mail.smtp.clave", claveemail);
+                props.setProperty("mail.smtp.auth", "true");
+                
+                
+                
+                Session session = Session.getDefaultInstance(props);
+    MimeMessage message = new MimeMessage(session);
+
+    try {
+        message.setFrom(new InternetAddress(remitente));
+        message.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));   //Se podrían añadir varios de la misma manera
+        message.setSubject(asunto);
+        message.setText(cuerpo);
+        Transport transport = session.getTransport("smtp");
+        transport.connect("smtp.gmail.com", remitente, claveemail);
+        transport.sendMessage(message, message.getAllRecipients());
+        transport.close();
+    }
+    catch (MessagingException me) {
+        me.printStackTrace();   //Si se produce un error
+    }
+                
+            }
+            else
+            {
+                Utilidad.enviarError("Error al cambiar el Password", request, response);
+            }
+
+        }
+        catch(Exception ex)
+        {
+            Utilidad.enviarError(ex.getMessage(), request, response);
+        }
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -257,6 +357,10 @@ public class UserServlet extends HttpServlet {
                     case "perfil":
                         request.setAttribute("accion", accion);
                         doGetRequestPerfil(request, response);
+                        break;
+                    case "cambiarpass":
+                        request.setAttribute("accion", accion);
+                        doGetRequestCambiarPassword(request, response);
                         break;
                 }
             });
@@ -292,6 +396,10 @@ public class UserServlet extends HttpServlet {
                     case "perfil":
                         request.setAttribute("accion", accion);
                         doPostRequestPerfil(request, response);
+                        break;
+                    case "cambiarpass":
+                        request.setAttribute("accion", accion);
+                        doPostCambiarPassword(request, response);
                         break;
                 }
             });

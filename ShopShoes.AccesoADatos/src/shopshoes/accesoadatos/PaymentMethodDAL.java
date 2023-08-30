@@ -99,6 +99,34 @@ public static int crear(PaymentMethod pPaymentMethod) throws Exception
         return result;
     } 
  
+ public static ArrayList<PaymentMethod> obtenerPorName(String id) throws Exception
+    {
+        PaymentMethod payment = new PaymentMethod();
+        ArrayList<PaymentMethod> payments = new ArrayList();
+        try(Connection conn = ComunDB.obtenerConexion();)
+        {
+            String sql = "Select " + (obtenerCampos() + " From PaymentMethod p"); // obtener la consulta SELECT de la tabla Usuario
+            // Concatenar a la consulta SELECT de la tabla Usuario el WHERE  para comparar el campo Id
+            sql += " WHERE p.PaymentMethodName Like ?";
+            try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
+            {
+                ps.setString(1, "%"+id+"%");
+                obtenerDatos(ps, payments);
+                ps.close();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+        catch(SQLException ex)
+        {
+            throw ex;
+        }
+ 
+        return payments;
+    }
+ 
     public static int eliminar(PaymentMethod pPaymentMethod) throws Exception
     {
         int result;
@@ -148,17 +176,16 @@ private static void obtenerDatos(PreparedStatement pPS, ArrayList<PaymentMethod>
             throw ex;// enviar al siguiente metodo el error al obtener ResultSet de la clase ComunDB   en el caso que suceda 
         }
     }
- public static PaymentMethod obtenerPorId(PaymentMethod pPaymentMethod) throws Exception
+ public static PaymentMethod obtenerPorId(int id) throws Exception
     {
         PaymentMethod PaymentMethod = new PaymentMethod();
         ArrayList<PaymentMethod> PaymentMethodd = new ArrayList();
         try(Connection conn = ComunDB.obtenerConexion();)
         {
-            String sql = obtenerSelect(pPaymentMethod);
-            sql += " Where Id = ?";
+            String sql = "Select*From PaymentMethod Where Id = ?";
             try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
             {
-                ps.setInt(1, pPaymentMethod.getId());
+                ps.setInt(1, id);
                 obtenerDatos(ps, PaymentMethodd);
                 ps.close();
             }

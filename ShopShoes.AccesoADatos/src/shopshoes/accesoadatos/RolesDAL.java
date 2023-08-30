@@ -99,6 +99,34 @@ public static int crear(Roles pRoles) throws Exception
         return result;
     } 
  
+ public static ArrayList<Roles> obtenerPorName(String id) throws Exception
+    {
+      
+        ArrayList<Roles> roles = new ArrayList();
+        try(Connection conn = ComunDB.obtenerConexion();)
+        {
+            String sql = "Select " + (obtenerCampos() + " From Roles p"); // obtener la consulta SELECT de la tabla Usuario
+            // Concatenar a la consulta SELECT de la tabla Usuario el WHERE  para comparar el campo Id
+            sql += " WHERE p.RolesName Like ?";
+            try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
+            {
+                ps.setString(1, "%"+id+"%");
+                obtenerDatos(ps, roles);
+                ps.close();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+        catch(SQLException ex)
+        {
+            throw ex;
+        }
+ 
+        return roles;
+    }
+ 
     public static int eliminar(Roles pRoles) throws Exception
     {
         int result;
@@ -148,18 +176,18 @@ private static void obtenerDatos(PreparedStatement pPS, ArrayList<Roles> pRoles)
             throw ex;// enviar al siguiente metodo el error al obtener ResultSet de la clase ComunDB   en el caso que suceda 
         }
     }
- public static Roles obtenerPorId(Roles pRoles) throws Exception
+ public static Roles obtenerPorId(int id) throws Exception
     {
         Roles Roles = new Roles();
-        ArrayList<Roles> Roless = new ArrayList();
+        ArrayList<Roles> roles = new ArrayList();
         try(Connection conn = ComunDB.obtenerConexion();)
         {
-            String sql = obtenerSelect(pRoles);
-            sql += " Where Id = ?";
+           
+            String sql = "Select*from Roles Where Id = ?";
             try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
             {
-                ps.setInt(1, pRoles.getId());
-                obtenerDatos(ps, Roless);
+                ps.setInt(1, id);
+                obtenerDatos(ps, roles);
                 ps.close();
             }
             catch(Exception ex)
@@ -171,9 +199,9 @@ private static void obtenerDatos(PreparedStatement pPS, ArrayList<Roles> pRoles)
         {
             throw ex;
         }
-        if(!Roless.isEmpty())
+        if(!roles.isEmpty())
         {
-           Roles = Roless.get(0);
+           Roles = roles.get(0);
         }
         return Roles;
     }

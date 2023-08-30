@@ -6,27 +6,32 @@ package shopshoes.appdesktop;
 
 import java.awt.Image;
 import java.net.URL;
-import java.awt.event.MouseEvent; 
-import java.awt.event.MouseListener; 
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import shopshoes.accesoadatos.CategoryDAL;
 import shopshoes.entidadesdenegocio.Category;
+import shopshoes.appdesktop.utils.TablaImagen;
 
 /**
  *
  * @author MINEDUCYT
  */
 public class FrmCategorias extends javax.swing.JFrame {
-    DefaultTableModel modelo= new DefaultTableModel();
+    DefaultTableModel modelo= new DefaultTableModel(){
+        public boolean isCellEditable(int row, int column){
+            return false;
+        }
+    };
+    
      int Id = 2;
     /**
      * Creates new form frmCategorias
@@ -38,10 +43,14 @@ public class FrmCategorias extends javax.swing.JFrame {
     
     private void CargarTabla(){
          this.tblCategories = new JTable(modelo);
+         tblCategories.setDefaultRenderer(Object.class, new TablaImagen());
+         
          modelo.setRowCount(0);
         modelo.setColumnCount(0);
        modelo.addColumn("Categoria");
          modelo.addColumn("Imagen");
+         modelo.addColumn("");
+         
         Limpiar();
         try {
             ArrayList<Category> categories = CategoryDAL.obtenerTodos();
@@ -50,18 +59,24 @@ public class FrmCategorias extends javax.swing.JFrame {
                 String url_ = categories.get(i).getCategoryImage();
                 URL url = new URL(url_);
                 image = ImageIO.read(url);
-            JLabel label = new JLabel();
-            this.jScrollPane3.add(label);
-            Icon img = new ImageIcon(image);
-            
-           
-                Object[] fila = new Object[2];
                 
+          
+            ImageIcon img = new ImageIcon(image);
+           
+          
+                Object[] fila = new Object[3];
+                Image imgEscalada = img.getImage().getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_SMOOTH);
+            Icon img_ = new ImageIcon(imgEscalada);
+                JLabel label_ = new JLabel(img_);
+                JButton btn1 = new JButton("Editar");
                 fila[0] = categories.get(i).getCategoryName();
-               
+                fila[1] = label_;
+                fila[2] = btn1;
            
                 this.modelo.addRow(fila);
-                this.tblCategorias.updateUI();
+                this.tblCategories.setRowHeight(170);
+      
+                this.tblCategories.updateUI();
                 this.jScrollPane3.setViewportView(tblCategories);
             }
         } catch (Exception ex) {
@@ -159,6 +174,7 @@ public class FrmCategorias extends javax.swing.JFrame {
     
     private void BuscarCategoria() {
          this.tblCategories = new JTable(modelo); 
+         tblCategories.setDefaultRenderer(Object.class, new TablaImagen());
           modelo.setRowCount(0);
         modelo.setColumnCount(0);
          modelo.addColumn("Categoria");
@@ -173,16 +189,19 @@ public class FrmCategorias extends javax.swing.JFrame {
                 image = ImageIO.read(url);
             JLabel label = new JLabel();
             this.jScrollPane3.add(label);
-            Icon img = new ImageIcon(image);
+            ImageIcon img = new ImageIcon(image);
             
-           
-                Object[] fila = new Object[2];
-                
+           Object[] fila = new Object[2];
+                Image imgEscalada = img.getImage().getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_SMOOTH);
+            Icon img_ = new ImageIcon(imgEscalada);
+                JLabel label_ = new JLabel(img_);
                 fila[0] = categories.get(i).getCategoryName();
-               
+                fila[1] = label_;
            
                 this.modelo.addRow(fila);
-                this.tblCategorias.updateUI();
+                this.tblCategories.setRowHeight(170);
+      
+                this.tblCategories.updateUI();
                 this.jScrollPane3.setViewportView(tblCategories);
             }
         } catch (Exception ex) {
@@ -276,6 +295,9 @@ public class FrmCategorias extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblCategories.setRowHeight(100);
+        tblCategories.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblCategories.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tblCategories.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblCategoriesMouseClicked(evt);
@@ -289,8 +311,8 @@ public class FrmCategorias extends javax.swing.JFrame {
             JPanelCategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JPanelCategoriasLayout.createSequentialGroup()
                 .addGap(31, 31, 31)
-                .addGroup(JPanelCategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane3)
+                .addGroup(JPanelCategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(JPanelCategoriasLayout.createSequentialGroup()
                         .addGroup(JPanelCategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(JPanelCategoriasLayout.createSequentialGroup()
@@ -312,7 +334,7 @@ public class FrmCategorias extends javax.swing.JFrame {
                         .addGroup(JPanelCategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblNameP, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
                             .addComponent(lblName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         JPanelCategoriasLayout.setVerticalGroup(
             JPanelCategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -348,14 +370,14 @@ public class FrmCategorias extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(JPanelCategorias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(127, 127, 127))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(JPanelCategorias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(26, 26, 26))
         );
 
         pack();

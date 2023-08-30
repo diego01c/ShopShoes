@@ -224,4 +224,123 @@ public class InventoryDAL {
         
         return inventories;
     }
+    
+     static void querySelect(Inventory pInventory, ComunDB.UtilQuery pUtilQuery) throws SQLException {
+        PreparedStatement statement = pUtilQuery.getStatement(); // obtener el PreparedStatement al cual aplicar los parametros
+        if (pInventory.getId() > 0) { // verificar si se va incluir el campo Id en el filtro de la consulta SELECT de la tabla de Usuario
+            pUtilQuery.AgregarWhereAnd(" i.Id=? "); // agregar el campo Id al filtro de la consulta SELECT y agregar el WHERE o AND
+            if (statement != null) {
+                 // agregar el parametro del campo Id a la consulta SELECT de la tabla de Usuario
+                statement.setInt(pUtilQuery.getNumWhere(), pInventory.getId());
+            }
+        }
+        // verificar si se va incluir el campo IdRol en el filtro de la consulta SELECT de la tabla de Usuario
+        if (pInventory.getIdProduct()> 0) {
+            pUtilQuery.AgregarWhereAnd(" i.IdProduct=? "); // agregar el campo IdRol al filtro de la consulta SELECT y agregar en el WHERE o AND
+            if (statement != null) {
+                 // agregar el parametro del campo IdRol a la consulta SELECT de la tabla de Usuario
+                statement.setInt(pUtilQuery.getNumWhere(), pInventory.getIdProduct());
+            }
+        }
+        
+        if (pInventory.getDepartures()> 0) {
+            pUtilQuery.AgregarWhereAnd(" i.Departures=? "); // agregar el campo IdRol al filtro de la consulta SELECT y agregar en el WHERE o AND
+            if (statement != null) {
+                 // agregar el parametro del campo IdRol a la consulta SELECT de la tabla de Usuario
+                statement.setInt(pUtilQuery.getNumWhere(), pInventory.getDepartures());
+            }
+        }
+       
+        if (pInventory.getProfits()> 0) {
+            pUtilQuery.AgregarWhereAnd(" i.Profits=? "); // agregar el campo IdRol al filtro de la consulta SELECT y agregar en el WHERE o AND
+            if (statement != null) {
+                 // agregar el parametro del campo IdRol a la consulta SELECT de la tabla de Usuario
+                statement.setDouble(pUtilQuery.getNumWhere(), pInventory.getProfits());
+            }
+        }
+        
+        if (pInventory.getStock()> 0) {
+            pUtilQuery.AgregarWhereAnd(" i.Stock=? "); // agregar el campo IdRol al filtro de la consulta SELECT y agregar en el WHERE o AND
+            if (statement != null) {
+                 // agregar el parametro del campo IdRol a la consulta SELECT de la tabla de Usuario
+                statement.setInt(pUtilQuery.getNumWhere(), pInventory.getStock());
+            }
+        }
+        
+        if (pInventory.getTickets()> 0) {
+            pUtilQuery.AgregarWhereAnd(" i.Tickets=? "); // agregar el campo IdRol al filtro de la consulta SELECT y agregar en el WHERE o AND
+            if (statement != null) {
+                 // agregar el parametro del campo IdRol a la consulta SELECT de la tabla de Usuario
+                statement.setInt(pUtilQuery.getNumWhere(), pInventory.getTickets());
+            }
+        }
+        
+        if (pInventory.getInventoryStatus()> 0) {
+            pUtilQuery.AgregarWhereAnd(" i.InventoryStatus=? "); // agregar el campo Estatus al filtro de la consulta SELECT y agregar en el WHERE o AND
+            if (statement != null) {
+                 // agregar el parametro del campo Estatus a la consulta SELECT de la tabla de Usuario
+                statement.setInt(pUtilQuery.getNumWhere(), pInventory.getInventoryStatus());
+            }
+        }
+    }
+    
+    private static void obtenerDatosIncluirInventory(PreparedStatement pPS, ArrayList<Inventory> pInventory) throws Exception {
+        try (ResultSet resultSet = ComunDB.obtenerResulSet(pPS);) { // obtener el ResultSet desde la clase ComunDB
+            HashMap<Integer, Products> rolMap = new HashMap(); //crear un HashMap para automatizar la creacion de instancias de la clase Rol
+            while (resultSet.next()) { // Recorrer cada una de la fila que regresa la consulta  SELECT de la tabla Usuario JOIN a la tabla de Rol
+                Inventory inventory = new Inventory();
+                 // Llenar las propiedaddes de la Entidad Usuario con los datos obtenidos de la fila en el ResultSet
+                int index = asignarDatosResultSet(inventory, resultSet, 0);
+                if (rolMap.containsKey(inventory.getIdProduct()) == false) { // verificar que el HashMap aun no contenga el Rol actual
+                    Products product = new Products();
+                    // en el caso que el Rol no este en el HashMap se asignara
+                    ProductsDAL.asignarDatosResultSet(product, resultSet, index);
+                    rolMap.put(product.getId(), product); // agregar el Rol al  HashMap
+                    inventory.setProduct(product); // agregar el Rol al Usuario
+                } else {
+                    // En el caso que el Rol existe en el HashMap se agregara automaticamente al Usuario
+                    inventory.setProduct(rolMap.get(inventory.getIdProduct())); 
+                }
+                pInventory.add(inventory); // Agregar el Usuario de la fila actual al ArrayList de Usuario
+            }
+            resultSet.close(); // cerrar el ResultSet
+        } catch (SQLException ex) {
+            throw ex; // enviar al siguiente metodo el error al obtener ResultSet de la clase ComunDB   en el caso que suceda 
+        }
+    }
+    
+    public static ArrayList<Inventory> buscarIncluirProduct(Inventory pInventory) throws Exception {
+        ArrayList<Inventory> inventories = new ArrayList();
+        try (Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
+            String sql = "SELECT "; // Iniciar la variables para el String de la consulta SELECT
+            if (pInventory.getTopAux()> 0 && ComunDB.TIPODB == ComunDB.TipoDB.SQLSERVER) {
+                sql += "TOP " + pInventory.getTopAux()+ " "; // Agregar el TOP en el caso que se este utilizando SQL SERVER
+            }
+            sql += obtenerCampos(); // Obtener los campos de la tabla de Usuario que iran en el SELECT
+            sql += ",";
+            sql += ProductsDAL.obtenerCampos(); // Obtener los campos de la tabla de Rol que iran en el SELECT
+            sql += " FROM Inventory i";
+            sql += " JOIN Products p on (p.Id=i.IdProduct)"; // agregar el join para unir la tabla de Usuario con Rol
+            ComunDB comundb = new ComunDB();
+            ComunDB.UtilQuery utilQuery = comundb.new UtilQuery(sql, null, 0);
+            querySelect(pInventory, utilQuery); // Asignar el filtro a la consulta SELECT de la tabla de Usuario 
+            sql = utilQuery.getSQL();
+            sql += agregarOrderBy(pInventory); // Concatenar a la consulta SELECT de la tabla Usuario el ORDER BY por Id
+            try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // Obtener el PreparedStatement desde la clase ComunDB
+                utilQuery.setStatement(ps);
+                utilQuery.setSQL(null);
+                utilQuery.setNumWhere(0);
+                querySelect(pInventory, utilQuery); // Asignar los parametros al PreparedStatement de la consulta SELECT de la tabla de Usuario
+                obtenerDatosIncluirInventory(ps, inventories);// Llenar el ArrayList de Usuario con las fila que devolvera la consulta SELECT a la tabla de Usuario
+                ps.close(); // Cerrar el PreparedStatement
+            } catch (SQLException ex) {
+                throw ex;// Enviar al siguiente metodo el error al ejecutar PreparedStatement en el caso que suceda
+            }
+            conn.close(); // Cerrar la conexion a la base de datos
+        } catch (SQLException ex) {
+            throw ex;// Enviar al siguiente metodo el error al obtener la conexion  de la clase ComunDB en el caso que suceda
+        }
+        return inventories; // Devolver el ArrayList de Usuario
+    }
+   
 }
