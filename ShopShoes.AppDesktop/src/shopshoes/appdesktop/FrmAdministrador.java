@@ -4,81 +4,115 @@
  */
 package shopshoes.appdesktop;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import shopshoes.accesoadatos.AdministratorDAL;
 import shopshoes.accesoadatos.PaymentMethodDAL;
+import shopshoes.accesoadatos.UsersDAL;
 import shopshoes.appdesktop.utils.TablaImagen;
 import shopshoes.entidadesdenegocio.Administrator;
 import shopshoes.entidadesdenegocio.PaymentMethod;
+import shopshoes.entidadesdenegocio.Users;
 
 /**
  *
  * @author MINEDUCYT
  */
 public class FrmAdministrador extends javax.swing.JFrame {
-DefaultTableModel modelo= new DefaultTableModel(){
-        public boolean isCellEditable(int row, int column){
+    int IdAdmin = 0;
+    int IdUser = 0;
+    LocalDate fecha;
+    String pass;
+    
+
+    DefaultTableModel modelo = new DefaultTableModel() {
+        public boolean isCellEditable(int row, int column) {
             return false;
         }
     };
+
     /**
      * Creates new form FrmMetodosPago
      */
     public FrmAdministrador() {
         initComponents();
+        CargarTabla();
     }
-    
-    private void CargarTabla(){
-         this.tblAdministradores = new JTable(modelo);
-         tblAdministradores.setDefaultRenderer(Object.class, new TablaImagen());
-         
-         modelo.setRowCount(0);
+
+    private void CargarTabla() {
+        this.tblAdministradores = new JTable(modelo);
+        tblAdministradores.setDefaultRenderer(Object.class, new TablaImagen());
+
+        modelo.setRowCount(0);
         modelo.setColumnCount(0);
-       modelo.addColumn("Usuario");
-         modelo.addColumn("Correo");
-          modelo.addColumn("Fecha de Registro");
-           modelo.addColumn("Nombre");
-            modelo.addColumn("Apellido");
-         
+        modelo.addColumn("Usuario");
+        modelo.addColumn("Correo");
+        modelo.addColumn("Fecha de Registro");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Apellido");
+
         Limpiar();
         try {
-            ArrayList<Administrator> administrator = AdministratorDAL.obtenerTodos();
-            for(int i=0; i<administrator.size();i++){
-               
+            Administrator admin = new Administrator();
+            ArrayList<Administrator> administrator = AdministratorDAL.buscarIncluirUsers(admin);
+            for (int i = 0; i < administrator.size(); i++) {
+
                 Object[] fila = new Object[5];
-               
-                fila[0] = administrator.get(i).getAdministratorName();
-                
+
+                fila[0] = administrator.get(i).getUser().getUserName();
+                fila[1] = administrator.get(i).getUser().getMail();
+                fila[2] = administrator.get(i).getUser().getRegistrationDate();
+                fila[3] = administrator.get(i).getAdministratorName();
+                fila[4] = administrator.get(i).getLastName();
+
                 this.modelo.addRow(fila);
-               
+
                 this.tblAdministradores.updateUI();
                 this.jScrollPane1.setViewportView(tblAdministradores);
             }
         } catch (Exception ex) {
-           
+
         }
     }
-    
+
     private void Editar() {
         try {
-            PaymentMethod payment = new PaymentMethod();
-            payment.setId(2);
-            payment.setPaymentMethodName(this.txtUser.getText());
-            payment.setPaymentMethodDescription(this.txtDescripcion.getText());
-            if (payment.getPaymentMethodName().trim().isEmpty() == false && payment.getPaymentMethodDescription().trim().isEmpty() == false) {
-                int metodoEdit = PaymentMethodDAL.modificar(payment);
-                if(metodoEdit != 0){
+            Administrator administrator = new Administrator();
+            administrator.setAdministratorName(this.txtName.getText());
+            administrator.setLastName(this.txtLast.getText());
+            Users user = new Users();
+            user.setMail(this.txtMail.getText());
+            user.setUserName(this.txtUser.getText());
+            user.setRegistrationDate(fecha);
+            user.setIdRol(1);
+            user.setPass(pass);
+            user.setId(IdUser);
+            administrator.setId(IdAdmin);
+            administrator.setUser(user);
+            if (user.getMail().trim().isEmpty() == false && administrator.getLastName().trim().isEmpty() == false) {
+                int metodoCreate_ = UsersDAL.modificar(user);
+                if (metodoCreate_ != 0) {
+                   
+                    int metodoCreate = AdministratorDAL.modificar(administrator);
+                if (metodoCreate != 0) {
                     JOptionPane.showMessageDialog(this, "Actualizado Correctamente");
-                   Limpiar();
-                   CargarTabla();
+                    Limpiar();
+                    CargarTabla();
                 } else {
                     // Mostrar un mensaje al usuario que usa la pantalla  que login y password son incorrectos
-                    JOptionPane.showMessageDialog(this, "No se pudo Modificar");
+                    JOptionPane.showMessageDialog(this, "No se pudo Actualizar");
 
                 }
+                } else {
+                    // Mostrar un mensaje al usuario que usa la pantalla  que login y password son incorrectos
+                    JOptionPane.showMessageDialog(this, "No se pudo Actualizar");
+
+                }
+                
             } else {
                 // Mostrar un mensaje al usuario que usa la pantalla  que login y password son obligatorios
                 JOptionPane.showMessageDialog(this, "Los datos son obligatorios");
@@ -88,31 +122,59 @@ DefaultTableModel modelo= new DefaultTableModel(){
             JOptionPane.showMessageDialog(this, "Sucedio el siguiente error: " + ex.getMessage());
         }
     }
-    
-    private void Limpiar(){
+
+    private void Limpiar() {
         txtUser.setText("");
-        txtDescripcion.setText("");
-       
+        txtMail.setText("");
+        txtName.setText("");
+        txtLast.setText("");
     }
-    
-    
-    
+
     private void Guardar() {
         try {
-            PaymentMethod payment = new PaymentMethod();
-            payment.setPaymentMethodName(this.txtUser.getText());
-            payment.setPaymentMethodDescription(this.txtDescripcion.getText());
-            if (payment.getPaymentMethodName().trim().isEmpty() == false && payment.getPaymentMethodDescription().trim().isEmpty() == false) {
-                int metodoCreate = PaymentMethodDAL.crear(payment);
-                if(metodoCreate != 0){
-                   JOptionPane.showMessageDialog(this, "Guardado Correctamente");
-                   Limpiar();
-                   CargarTabla();
+            Administrator administrator = new Administrator();
+            administrator.setAdministratorName(this.txtName.getText());
+            administrator.setLastName(this.txtLast.getText());
+
+            String Matricula = "";
+            Random rnd = new Random();
+
+            for (int i = 0; i < 7; i++) {
+                if (i < 4) {
+                    Matricula += rnd.nextInt(10);
+                } else {
+                    Matricula += (char) (rnd.nextInt(91) + 65);
+                }
+            }
+
+            Users user = new Users();
+            user.setMail(this.txtMail.getText());
+            user.setUserName(this.txtUser.getText());
+            user.setRegistrationDate(LocalDate.now());
+            user.setIdRol(1);
+            user.setPass(Matricula);
+            administrator.setUser(user);
+            if (user.getMail().trim().isEmpty() == false && administrator.getLastName().trim().isEmpty() == false) {
+                int metodoCreate_ = UsersDAL.crear(user);
+                if (metodoCreate_ != 0) {
+                    Users user_ = UsersDAL.obtenerPorData(user);
+                    administrator.setIdUser(user_.getId());
+                    int metodoCreate = AdministratorDAL.crear(administrator);
+                if (metodoCreate != 0) {
+                    JOptionPane.showMessageDialog(this, "Guardado Correctamente");
+                    Limpiar();
+                    CargarTabla();
                 } else {
                     // Mostrar un mensaje al usuario que usa la pantalla  que login y password son incorrectos
                     JOptionPane.showMessageDialog(this, "No se pudo Guardar");
 
                 }
+                } else {
+                    // Mostrar un mensaje al usuario que usa la pantalla  que login y password son incorrectos
+                    JOptionPane.showMessageDialog(this, "No se pudo Guardar");
+
+                }
+                
             } else {
                 // Mostrar un mensaje al usuario que usa la pantalla  que login y password son obligatorios
                 JOptionPane.showMessageDialog(this, "Los datos son obligatorios");
@@ -122,49 +184,62 @@ DefaultTableModel modelo= new DefaultTableModel(){
             JOptionPane.showMessageDialog(this, "Sucedio el siguiente error: " + ex.getMessage());
         }
     }
-    
+
     private void Seleccionar() {
-        PaymentMethod payment = new PaymentMethod();
+        Administrator admin = new Administrator();
         try {
-            payment = PaymentMethodDAL.obtenerPorId(2);
-             
-            
-            txtUser.setText(payment.getPaymentMethodName());
-            txtDescripcion.setText(payment.getPaymentMethodDescription());
-            
+            admin.setId(2);
+            admin = AdministratorDAL.buscarIncluirUsers2(admin);
+
+            txtUser.setText(admin.getUser().getUserName());
+            txtMail.setText(admin.getUser().getMail());
+            txtName.setText(admin.getAdministratorName());
+            txtLast.setText(admin.getLastName());
+            IdUser = admin.getIdUser();
+            IdAdmin = admin.getId();
+            pass = admin.getUser().getPass();
+            fecha = admin.getUser().getRegistrationDate();
+
         } catch (Exception ex) {
-            
+
         }
-        
+
     }
-    
+
     private void Buscar() {
-         this.tblAdministradores = new JTable(modelo);
-         tblAdministradores.setDefaultRenderer(Object.class, new TablaImagen());
-         
-         modelo.setRowCount(0);
+        this.tblAdministradores = new JTable(modelo);
+        tblAdministradores.setDefaultRenderer(Object.class, new TablaImagen());
+
+        modelo.setRowCount(0);
         modelo.setColumnCount(0);
-       modelo.addColumn("Nombre");
-         modelo.addColumn("Descripcion");
-         
+        modelo.addColumn("Usuario");
+        modelo.addColumn("Correo");
+        modelo.addColumn("Fecha de Registro");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Apellido");
+
         try {
-            ArrayList<PaymentMethod> payments = PaymentMethodDAL.obtenerPorName(txtUser.getText());
-            for(int i=0; i<payments.size();i++){
-              
-                Object[] fila = new Object[2];
-               
-                fila[0] = payments.get(i).getPaymentMethodName();
-                fila[1] = payments.get(i).getPaymentMethodDescription();;
-               
-           
+            Administrator admin = new Administrator();
+            admin.setAdministratorName(txtName.getText());
+            admin.setLastName(txtLast.getText());
+            ArrayList<Administrator> administrator = AdministratorDAL.buscarIncluirUsers(admin);
+            for (int i = 0; i < administrator.size(); i++) {
+
+                Object[] fila = new Object[5];
+
+                fila[0] = administrator.get(i).getUser().getUserName();
+                fila[1] = administrator.get(i).getUser().getMail();
+                fila[2] = administrator.get(i).getUser().getRegistrationDate();
+                fila[3] = administrator.get(i).getAdministratorName();
+                fila[4] = administrator.get(i).getLastName();
+
                 this.modelo.addRow(fila);
-               
+
                 this.tblAdministradores.updateUI();
                 this.jScrollPane1.setViewportView(tblAdministradores);
-          
             }
         } catch (Exception ex) {
-            
+
         }
     }
 

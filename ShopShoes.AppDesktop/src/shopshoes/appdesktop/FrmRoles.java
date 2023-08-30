@@ -29,6 +29,7 @@ DefaultTableModel modelo= new DefaultTableModel(){
      */
     public FrmRoles() {
         initComponents();
+        CargarTabla();
     }
     
     private void CargarTabla(){
@@ -62,7 +63,7 @@ DefaultTableModel modelo= new DefaultTableModel(){
     private void Editar() {
         try {
             Roles roles = new Roles();
-            roles.setId(2);
+            roles.setId(3);
             roles.setRolesName(this.txtNombre.getText());
           
             if (roles.getRolesName().trim().isEmpty() == false) {
@@ -122,7 +123,7 @@ DefaultTableModel modelo= new DefaultTableModel(){
     private void Seleccionar() {
         Roles roles = new Roles();
         try {
-            roles = RolesDAL.obtenerPorId(2);
+            roles = RolesDAL.obtenerPorId2(2);
              
             
             txtNombre.setText(roles.getRolesName());

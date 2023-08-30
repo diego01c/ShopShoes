@@ -42,7 +42,7 @@ public class AdministratorServlet extends HttpServlet {
             Administrator.setId(Integer.parseInt(Utilidad.getParameter(request, "id",
                     "0")));
         }
-        Administrator.setAdministratortName(Utilidad.getParameter(request, "nombre", ""));
+        Administrator.setAdministratorName(Utilidad.getParameter(request, "nombre", ""));
         if (accion.equals("index")) {
             Administrator.setTop_aux(Integer.parseInt(Utilidad.getParameter(request,
                     "top_aux", "10")));
@@ -98,7 +98,7 @@ public class AdministratorServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             Administrator administrator = obtenerAdministrator(request);
-            Administrator administrator_result = AdministratorDAL.obtenerPorId(administrator);
+            Administrator administrator_result = AdministratorDAL.obtenerPorId(2);
             if (administrator_result.getId() > 0) {
                 request.setAttribute("administrator", administrator_result);
             } else {

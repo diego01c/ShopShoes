@@ -49,8 +49,8 @@ public static int crear(Roles pRoles) throws Exception
         String sql;
             try(Connection conn = ComunDB.obtenerConexion();)
             {
-                sql = "Insert Into Roles( RolesName) "
-                        + "Values(?,?,?,?,?)";
+                sql = "Insert Into Roles(RolesName) "
+                        + "Values(?)";
                 try(PreparedStatement st = 
                     ComunDB.createPreparedStatement(conn, sql);)
                 {
@@ -176,7 +176,37 @@ private static void obtenerDatos(PreparedStatement pPS, ArrayList<Roles> pRoles)
             throw ex;// enviar al siguiente metodo el error al obtener ResultSet de la clase ComunDB   en el caso que suceda 
         }
     }
- public static Roles obtenerPorId(int id) throws Exception
+public static Roles obtenerPorId(Roles pRoles) throws Exception
+    {
+        Roles Roles = new Roles();
+        ArrayList<Roles> Roless = new ArrayList();
+        try(Connection conn = ComunDB.obtenerConexion();)
+        {
+            String sql = obtenerSelect(pRoles);
+            sql += " Where Id = ?";
+            try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
+            {
+                ps.setInt(1, pRoles.getId());
+                obtenerDatos(ps, Roless);
+                ps.close();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+        catch(SQLException ex)
+        {
+            throw ex;
+        }
+        if(!Roless.isEmpty())
+        {
+           Roles = Roless.get(0);
+        }
+        return Roles;
+    }
+
+  public static Roles obtenerPorId2(int id) throws Exception
     {
         Roles Roles = new Roles();
         ArrayList<Roles> roles = new ArrayList();
@@ -205,7 +235,6 @@ private static void obtenerDatos(PreparedStatement pPS, ArrayList<Roles> pRoles)
         }
         return Roles;
     }
-
     
     public static ArrayList<Roles> obtenerTodos() throws Exception
     {

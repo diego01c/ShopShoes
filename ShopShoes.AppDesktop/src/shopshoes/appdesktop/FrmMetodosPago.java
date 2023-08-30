@@ -27,6 +27,7 @@ DefaultTableModel modelo= new DefaultTableModel(){
      */
     public FrmMetodosPago() {
         initComponents();
+        CargarTabla();
     }
     
     private void CargarTabla(){
@@ -46,7 +47,7 @@ DefaultTableModel modelo= new DefaultTableModel(){
                 Object[] fila = new Object[2];
                
                 fila[0] = payments.get(i).getPaymentMethodName();
-                fila[1] = payments.get(i).getPaymentMethodDescription();;
+                fila[1] = payments.get(i).getPaymentMethodDescription();
                
            
                 this.modelo.addRow(fila);
@@ -62,7 +63,7 @@ DefaultTableModel modelo= new DefaultTableModel(){
     private void Editar() {
         try {
             PaymentMethod payment = new PaymentMethod();
-            payment.setId(2);
+            payment.setId(1);
             payment.setPaymentMethodName(this.txtNombre.getText());
             payment.setPaymentMethodDescription(this.txtDescripcion.getText());
             if (payment.getPaymentMethodName().trim().isEmpty() == false && payment.getPaymentMethodDescription().trim().isEmpty() == false) {

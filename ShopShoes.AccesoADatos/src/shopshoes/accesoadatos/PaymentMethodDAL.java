@@ -49,13 +49,14 @@ public static int crear(PaymentMethod pPaymentMethod) throws Exception
         String sql;
             try(Connection conn = ComunDB.obtenerConexion();)
             {
-                sql = "Insert Into PaymentMethod( PaymentMethodName) "
-                        + "Values(?,?,?,?,?)";
+                sql = "Insert Into PaymentMethod(PaymentMethodName, PaymentMethodDescription) "
+                        + "Values(?,?)";
                 try(PreparedStatement st = 
                     ComunDB.createPreparedStatement(conn, sql);)
                 {
                    
                     st.setString(1, pPaymentMethod.getPaymentMethodName());
+                    st.setString(2, pPaymentMethod.getPaymentMethodDescription());
                      result = st.executeUpdate();
                     st.close();
                 }
@@ -78,12 +79,13 @@ public static int crear(PaymentMethod pPaymentMethod) throws Exception
         String sql;
         try(Connection conn = ComunDB.obtenerConexion();)
         {
-            sql = "Update PaymentMethod Set PaymentMethodsName = ?"
+            sql = "Update PaymentMethod Set PaymentMethodName = ?, PaymentMethodDescription = ?"
                     + " Where Id = ?";
             try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
             {
                 ps.setString(1, pPaymentMethod.getPaymentMethodName());
-                ps.setInt(2, pPaymentMethod.getId());
+                ps.setString(2, pPaymentMethod.getPaymentMethodDescription());
+                ps.setInt(3, pPaymentMethod.getId());
                 result = ps.executeUpdate();
                 ps.close();
             }
@@ -159,7 +161,8 @@ static int asignarDatosResultSet(PaymentMethod pPaymentMethod, ResultSet pResult
         pPaymentMethod.setId(pResultSet.getInt(pIndex)); // index 1
         pIndex++;
         pPaymentMethod.setPaymentMethodName(pResultSet.getString(pIndex)); // index 3
-         pIndex++;
+        pIndex++;
+        pPaymentMethod.setPaymentMethodDescription(pResultSet.getString(pIndex));
         return pIndex;
     }
 

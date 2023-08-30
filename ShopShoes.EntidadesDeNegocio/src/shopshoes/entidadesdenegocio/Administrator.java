@@ -12,19 +12,22 @@ public class Administrator {
     private int Id;
     private int IdUser;
     private String AdministratorName;
-     private String AdministratorImage;
-    private int   top_aux;
-    
-    public Administrator(){
+     private String LastName;
+     private Users user;
+    private int top_aux;
+
+    public Administrator() {
     }
-    public Administrator(int Id, int IdUser,String AdministratorName,int top_aux){
-        this.Id =Id;
-        this.IdUser =IdUser;
+
+    public Administrator(int Id, int IdUser, String AdministratorName, String LastName, Users user, int top_aux) {
+        this.Id = Id;
+        this.IdUser = IdUser;
         this.AdministratorName = AdministratorName;
-         this.AdministratorImage = AdministratorImage;
+        this.LastName = LastName;
+        this.user = user;
         this.top_aux = top_aux;
-        
     }
+
     public int getId() {
         return Id;
     }
@@ -32,37 +35,46 @@ public class Administrator {
     public void setId(int Id) {
         this.Id = Id;
     }
-    
-      public int getIdUser() {
+
+    public int getIdUser() {
         return IdUser;
     }
 
     public void setIdUser(int IdUser) {
-        this.IdUser= IdUser;
-    }
-    
-     public String getAdministratorName() {
-        return AdministratorName;
-    }
-     
-    public void setAdministratortName(String AdministratorName) {
-        this.AdministratorName = AdministratorName;
-    }  
-    
-     public String getAdministratorImage() {
-        return AdministratorImage;
+        this.IdUser = IdUser;
     }
 
-    public void setAdyImage(String AdministratorImage) {
-        this.AdministratorImage = AdministratorImage;
+    public String getAdministratorName() {
+        return AdministratorName;
     }
-    
-     public int getTop_aux() {
+
+    public void setAdministratorName(String AdministratorName) {
+        this.AdministratorName = AdministratorName;
+    }
+
+    public String getLastName() {
+        return LastName;
+    }
+
+    public void setLastName(String LastName) {
+        this.LastName = LastName;
+    }
+
+    public Users getUser() {
+        return user;
+    }
+
+    public void setUser(Users user) {
+        this.user = user;
+    }
+
+    public int getTop_aux() {
         return top_aux;
     }
 
     public void setTop_aux(int top_aux) {
         this.top_aux = top_aux;
-    }  
+    }
     
+   
 }
