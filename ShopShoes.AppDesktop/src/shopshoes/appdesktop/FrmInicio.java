@@ -4,6 +4,8 @@
  */
 package shopshoes.appdesktop;
 
+import java.awt.Color;
+import javax.swing.JFrame;
 import shopshoes.appdesktop.categories.*;
 import shopshoes.appdesktop.roles.*;
 import shopshoes.appdesktop.paymentmethods.*;
@@ -15,13 +17,34 @@ import shopshoes.appdesktop.inventory.*;
  * @author victo
  */
 public class FrmInicio extends javax.swing.JFrame {
-
+private JFrame currentChildForm;
     /**
      * Creates new form FrmInicio
      */
     public FrmInicio() {
         initComponents();
     }
+    
+     private void OpenChildForm(JFrame childForm)
+        {
+            //open only form
+            if (currentChildForm != null)
+            {
+                contenedor.remove(currentChildForm);
+            }
+            currentChildForm = childForm;
+            //End
+            childForm.setSize(contenedor.getSize());
+           
+            contenedor.add(childForm.getContentPane());
+            
+            
+             contenedor.revalidate();
+    contenedor.repaint();
+   
+    
+   
+        }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,77 +55,143 @@ public class FrmInicio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnAdmin = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
         btnCategoria = new javax.swing.JButton();
         btnMetodo = new javax.swing.JButton();
         btnRoles = new javax.swing.JButton();
         btnInventario = new javax.swing.JButton();
+        btnAdmin = new javax.swing.JButton();
+        contenedor = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        btnAdmin.setText("ADMINISTRADOR");
-        btnAdmin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAdminActionPerformed(evt);
-            }
-        });
+        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
 
+        jPanel2.setBackground(new java.awt.Color(0, 0, 0));
+
+        btnCategoria.setBackground(new java.awt.Color(0, 0, 0));
+        btnCategoria.setForeground(new java.awt.Color(255, 255, 255));
         btnCategoria.setText("CATEGORIAS");
+        btnCategoria.setBorderPainted(false);
+        btnCategoria.setContentAreaFilled(false);
         btnCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCategoriaActionPerformed(evt);
             }
         });
 
+        btnMetodo.setBackground(new java.awt.Color(0, 0, 0));
+        btnMetodo.setForeground(new java.awt.Color(255, 255, 255));
         btnMetodo.setText("METODOS");
+        btnMetodo.setBorderPainted(false);
+        btnMetodo.setContentAreaFilled(false);
         btnMetodo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMetodoActionPerformed(evt);
             }
         });
 
+        btnRoles.setBackground(new java.awt.Color(0, 0, 0));
+        btnRoles.setForeground(new java.awt.Color(255, 255, 255));
         btnRoles.setText("ROLES");
+        btnRoles.setBorderPainted(false);
+        btnRoles.setContentAreaFilled(false);
         btnRoles.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRolesActionPerformed(evt);
             }
         });
 
+        btnInventario.setBackground(new java.awt.Color(0, 0, 0));
+        btnInventario.setForeground(new java.awt.Color(255, 255, 255));
         btnInventario.setText("INVENTARIO");
+        btnInventario.setBorderPainted(false);
+        btnInventario.setContentAreaFilled(false);
         btnInventario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInventarioActionPerformed(evt);
             }
         });
 
+        btnAdmin.setBackground(new java.awt.Color(0, 0, 0));
+        btnAdmin.setForeground(new java.awt.Color(255, 255, 255));
+        btnAdmin.setText("ADMINISTRADOR");
+        btnAdmin.setBorderPainted(false);
+        btnAdmin.setContentAreaFilled(false);
+        btnAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdminActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+            .addComponent(btnCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnMetodo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnRoles, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnInventario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(346, Short.MAX_VALUE)
+                .addComponent(btnAdmin)
+                .addGap(44, 44, 44)
+                .addComponent(btnCategoria)
+                .addGap(45, 45, 45)
+                .addComponent(btnMetodo)
+                .addGap(34, 34, 34)
+                .addComponent(btnRoles)
+                .addGap(34, 34, 34)
+                .addComponent(btnInventario)
+                .addGap(83, 83, 83))
+        );
+
+        contenedor.setBackground(new java.awt.Color(102, 102, 102));
+
+        javax.swing.GroupLayout contenedorLayout = new javax.swing.GroupLayout(contenedor);
+        contenedor.setLayout(contenedorLayout);
+        contenedorLayout.setHorizontalGroup(
+            contenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 806, Short.MAX_VALUE)
+        );
+        contenedorLayout.setVerticalGroup(
+            contenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(85, 85, 85)
+                .addComponent(contenedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(95, 95, 95)
+                .addComponent(contenedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnInventario)
-                    .addComponent(btnRoles)
-                    .addComponent(btnMetodo)
-                    .addComponent(btnCategoria)
-                    .addComponent(btnAdmin))
-                .addContainerGap(484, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(btnAdmin)
-                .addGap(44, 44, 44)
-                .addComponent(btnCategoria)
-                .addGap(46, 46, 46)
-                .addComponent(btnMetodo)
-                .addGap(50, 50, 50)
-                .addComponent(btnRoles)
-                .addGap(29, 29, 29)
-                .addComponent(btnInventario)
-                .addContainerGap(110, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -110,8 +199,7 @@ public class FrmInicio extends javax.swing.JFrame {
 
     private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
         // TODO add your handling code here:
-        FrmAdministrator admin = new FrmAdministrator();
-        admin.setVisible(true);
+       OpenChildForm(new FrmAdministrator());
     }//GEN-LAST:event_btnAdminActionPerformed
 
     private void btnCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriaActionPerformed
@@ -180,5 +268,8 @@ public class FrmInicio extends javax.swing.JFrame {
     private javax.swing.JButton btnInventario;
     private javax.swing.JButton btnMetodo;
     private javax.swing.JButton btnRoles;
+    private javax.swing.JPanel contenedor;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }

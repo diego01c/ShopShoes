@@ -139,6 +139,8 @@ public class FrmLogin extends javax.swing.JFrame {
         btnIniciar.setBackground(new java.awt.Color(0, 0, 0));
         btnIniciar.setForeground(new java.awt.Color(255, 255, 255));
         btnIniciar.setText("Iniciar Sesion");
+        btnIniciar.setBorderPainted(false);
+        btnIniciar.setFocusPainted(false);
         btnIniciar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnIniciarActionPerformed(evt);
@@ -149,6 +151,8 @@ public class FrmLogin extends javax.swing.JFrame {
         btnSalir.setForeground(new java.awt.Color(255, 255, 255));
         btnSalir.setText("X");
         btnSalir.setBorder(null);
+        btnSalir.setContentAreaFilled(false);
+        btnSalir.setFocusPainted(false);
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalirActionPerformed(evt);
