@@ -16,7 +16,7 @@ import shopshoes.entidadesdenegocio.Trolley;
 public class TrolleyDAL {
     
      static String obtenerCampos() {
-        return " p.Id, p.IdClient, p.IdProduct";
+        return " p.Id, p.IdClient, p.IdProduct, p.Quantity, p.StatusTrolley";
     }
     
      private static String obtenerSelect(Trolley pTrolley)
@@ -49,14 +49,15 @@ public class TrolleyDAL {
         String sql;
             try(Connection conn = ComunDB.obtenerConexion();)
             {
-                sql = "Insert Into Trolley(Id,IdClient ,IdProduct ) "
-                        + "Values(?,?,?)";
+                sql = "Insert Into Trolley(IdClient ,IdProduct,Quantity,StatusTrolley ) "
+                        + "Values(?,?,?,?)";
                 try(PreparedStatement st = 
                     ComunDB.createPreparedStatement(conn, sql);)
                 {
-                    st.setInt(1, pTrolley.getId());
-                    st.setInt(2, pTrolley.getIdClient());
-                    st.setInt(3, pTrolley.getIdProduct ());
+                    st.setInt(1, pTrolley.getIdClient());
+                    st.setInt(2, pTrolley.getIdProduct ());
+                    st.setInt(3, pTrolley.getQuantity ());
+                    st.setBoolean(4, true);
                     result = st.executeUpdate();
                     st.close();
                 }
@@ -79,13 +80,15 @@ public class TrolleyDAL {
         String sql;
         try(Connection conn = ComunDB.obtenerConexion();)
         {
-            sql = "Update Trolley Set Id = ?, IdClient = ?, IdProduct = ?"
+            sql = "Update Trolley Set IdClient = ?, IdProduct = ?, Quantity = ?, StatusTrolley = ?"
                     + " Where Id = ?";
             try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
             {
-                ps.setInt(1, pTrolley.getId());
-                ps.setInt(2, pTrolley.getIdClient());
-                ps.setInt(3, pTrolley.getIdProduct());
+                ps.setInt(1, pTrolley.getIdClient());
+                ps.setInt(2, pTrolley.getIdProduct());
+                ps.setInt(3, pTrolley.getQuantity());
+                ps.setBoolean(4, true);
+                ps.setInt(5, pTrolley.getId());
                 result = ps.executeUpdate();
                 ps.close();
             }
@@ -100,7 +103,6 @@ public class TrolleyDAL {
         }
         return result;
     }
-    
     
     public static int eliminar(Trolley pTrolley) throws Exception
     {
@@ -137,6 +139,10 @@ public class TrolleyDAL {
         pIndex++;
         pTrolley.setIdProduct(pResultSet.getInt(pIndex)); // index 3
         pIndex++;
+        pTrolley.setQuantity(pResultSet.getInt(pIndex)); // index 3
+        pIndex++;
+        pTrolley.setStatusTrolley((byte) pResultSet.getInt(pIndex)); // index 3
+        pIndex++;
         
         return pIndex;
     }
@@ -166,7 +172,7 @@ public class TrolleyDAL {
             sql += " Where Id = ?";
             try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
             {
-                ps.setInt(1, pTrolley.getId());
+                ps.setInt(1, pTrolley.getIdClient());
                 obtenerDatos(ps, trolley);
                 ps.close();
             }
@@ -185,8 +191,149 @@ public class TrolleyDAL {
         }
         return Trolley;
     }
+    public static ArrayList<Trolley> obtenerPorIdP(Trolley pTrolley) throws Exception
+    {
+        Trolley Trolley = new Trolley();
+        ArrayList<Trolley> trolley = new ArrayList();
+        try(Connection conn = ComunDB.obtenerConexion();)
+        {
+            String sql = obtenerSelect(pTrolley);
+            sql += " Where IdClient = ?";
+            try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
+            {
+                ps.setInt(1, pTrolley.getIdClient());
+                obtenerDatos(ps, trolley);
+                ps.close();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+        catch(SQLException ex)
+        {
+            throw ex;
+        }
+        return trolley;
+    }
+    public static Trolley obtenerPorIdProduct(Trolley pTrolley) throws Exception
+    {
+        Trolley Trolley = new Trolley();
+        ArrayList<Trolley> trolley = new ArrayList();
+        try(Connection conn = ComunDB.obtenerConexion();)
+        {
+            String sql = obtenerSelect(pTrolley);
+            sql += " Where IdProduct = ? and StatusTrolley = ?";
+            try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
+            {
+                ps.setInt(1, pTrolley.getIdProduct());
+                ps.setBoolean(2, true);
+                obtenerDatos(ps, trolley);
+                ps.close();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+        catch(SQLException ex)
+        {
+            throw ex;
+        }
+        if(!trolley.isEmpty())
+        {
+           Trolley = trolley.get(0);
+        }
+        return Trolley;
+    }
+        public static int obtenerPorTrolley(Trolley pTrolley) throws Exception
+    {
+        Trolley Trolley = new Trolley();
+        int result;
+        ArrayList<Trolley> trolley = new ArrayList();
+        
+        try(Connection conn = ComunDB.obtenerConexion();)
+        {
+            String sql = obtenerSelect(pTrolley);
+            sql += " Where IdProduct = ? and StatusTrolley = ?";
+            try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
+            {
+                ps.setInt(1, pTrolley.getIdProduct());
+                ps.setBoolean(2, true);
+                obtenerDatos(ps, trolley);
+                result = ps.executeUpdate();
+                ps.close();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+        catch(SQLException ex)
+        {
+            throw ex;
+        }
+        if(!trolley.isEmpty())
+        {
+           Trolley = trolley.get(0);
+        }
+        return result;
+    }
+    public static Trolley obtenerPorIdPC(Trolley pTrolley) throws Exception
+    {
+        Trolley Trolley = new Trolley();
+        ArrayList<Trolley> trolley = new ArrayList();
+        try(Connection conn = ComunDB.obtenerConexion();)
+        {
+            String sql = obtenerSelect(pTrolley);
+            sql += " Where IdClient = ? and IdProduct = ? and StatusTrolley = true";
+            try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
+            {
+                ps.setInt(1, pTrolley.getIdClient());
+                ps.setInt(2, pTrolley.getIdProduct());
+                obtenerDatos(ps, trolley);
+                ps.close();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+        catch(SQLException ex)
+        {
+            throw ex;
+        }
+        if(!trolley.isEmpty())
+        {
+           Trolley = trolley.get(0);
+        }
+        return Trolley;
+    }
+    public static int obtenerIdPorIdProduct(Trolley pTrolley) throws Exception
+    {
+        int idProduct = 0;
+        try (Connection conn = ComunDB.obtenerConexion())
+        {
+            String sql = "SELECT IdProduct FROM Trolley WHERE IdProduct = ?";
+            try (PreparedStatement ps = conn.prepareStatement(sql))
+            {
+                ps.setInt(1, pTrolley.getIdProduct());
+                try (ResultSet rs = ps.executeQuery())
+                {
+                    if (rs.next())
+                    {
+                        idProduct = rs.getInt("IdProduct");
+                    }
+                }
+            }
+        }
+        catch (SQLException ex)
+        {
+            throw ex;
+        }
+        return idProduct;
+    }
 
-    
     public static ArrayList<Trolley> obtenerTodos() throws Exception
     {
         ArrayList<Trolley> trolley = new ArrayList();

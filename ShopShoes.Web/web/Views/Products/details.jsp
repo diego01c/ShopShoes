@@ -1,11 +1,17 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="shopshoes.entidadesdenegocio.Products" %>
+<%@page import="shopshoes.entidadesdenegocio.Users" %>
+<%@page import="shopshoes.entidadesdenegocio.Client" %>
+<%@page import="shopshoes.entidadesdenegocio.Inventory" %>
+<%@page import="shopshoes.accesoadatos.InventoryDAL"%>
 <% Products product = (Products) request.getAttribute("product");%>
+<% Users users = (Users) request.getAttribute("users");%>
+<% Client client = (Client) request.getAttribute("client");%>
 <!DOCTYPE html>
 <html>
     <head>
         <jsp:include page="/Views/Shared/title.jsp" />
-        <title>Ver Producto</title>
+        <title>Ver Producto</title>     
     </head>
     <body>
         <jsp:include page="/Views/Shared/headerBody.jsp" />
@@ -77,28 +83,84 @@
                             <p><%=product.getSpecifications()%></p>
                         </div>
                     </div>
-
+                <%
+                    Inventory inventory = new Inventory();
+                    inventory.setIdProduct(product.getId());
+                    Inventory inventoryResult = InventoryDAL.obtenerPorIdProduct(inventory);
+                    int productStock = inventoryResult.getStock();
+                    String stockMessage;
+                    if (productStock > 0) {
+                        stockMessage = "El producto está disponible.";
+                    } else {
+                        stockMessage = "El producto está agotado.";
+                    }
+                %>
                     <div class="row">
                         <div class="col s1">
                         </div>
                         <div class="col s2">
-                            <p><b>Estado: </b></p>
+                            <p><b>Scock: </b></p>
                         </div>
                         <div class="col s8 right-align">
-                            <p><%=product.getStatus()%></p>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col s11 right-align">
-                            <a href="Products?accion=details&id=<%=product.getId()%>" class="waves-effect waves-light btn purple">
-                                <i class="material-icons right">add_shopping_cart</i>Añadir al Carrito
-                            </a>
+                            <p><%=productStock%></p>
                         </div>
                     </div>
                 </div>
             </form>
+            
+            <form action="Trolley" method="post">   
+                <input type="hidden" name="accion" value="create">
+                <input type="hidden" name="idProduct" value="<%=product.getId()%>">
+                <div class="container pt-10">
+                    <div class="row">
+                        <div class="col s4">                 
+                        </div>
+                        <div class="col s1">
+                            <button type="button" class="waves-effect waves-light btn" onclick="decrementQuantity()">Restar</button>
+                        </div>
+                        <div class="col s3">
+                            <input type="number" name="quantity" id="quantity" value="1" min="1" readonly style="text-align: center;" >
+                        </div>
+                        <div class="col s1">
+                            <button type="button" class="waves-effect waves-light btn" onclick="incrementQuantity()">Agregar</button>
+                        </div>
+                    </div>
+                </div>
+                <%
+                    String EstadoBtn = "";
+                    if(productStock==0){
+                        EstadoBtn= "disabled";
+                    }
+                    if(productStock!=0){
+                        EstadoBtn="";
+                    }
+                %>
+                <button type="submit" class="waves-effect waves-light btn purple" <%=EstadoBtn%>>
+                    <i class="material-icons right">add_shopping_cart</i>Añadir al Carrito
+                </button>
+            </form>
         </main>
+        <script>
+            var maxQuantity = <%=productStock%>;// Obtén el valor máximo de la base de datos
+
+            function incrementQuantity() {
+                var quantityInput = document.getElementById("quantity");
+                var currentQuantity = parseInt(quantityInput.value);
+
+                if (currentQuantity < maxQuantity) {
+                    quantityInput.value = currentQuantity + 1;
+                }
+            }
+
+            function decrementQuantity() {
+                var quantityInput = document.getElementById("quantity");
+                var currentQuantity = parseInt(quantityInput.value);
+
+                if (currentQuantity > 1) {
+                    quantityInput.value = currentQuantity - 1;
+                }
+            }
+        </script>
         <jsp:include page="/Views/Shared/footerBody.jsp" />
     </body>
 </html>

@@ -196,7 +196,35 @@ public class InventoryDAL {
         }
         return inventory;
     }
-
+    public static Inventory obtenerPorIdProduct(Inventory pInventory) throws Exception
+    {
+        Inventory inventory = new Inventory();
+        ArrayList<Inventory> inventories = new ArrayList();
+        try(Connection conn = ComunDB.obtenerConexion();)
+        {
+            String sql = obtenerSelect(pInventory);
+            sql += " Where IdProduct = ?";
+            try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
+            {
+                ps.setInt(1, pInventory.getIdProduct());
+                obtenerDatos(ps, inventories);
+                ps.close();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+        catch(SQLException ex)
+        {
+            throw ex;
+        }
+        if(inventories.size() > 0)
+        {
+            inventory = inventories.get(0);
+        }
+        return inventory;
+    }
     
     public static ArrayList<Inventory> obtenerTodos() throws Exception
     {
