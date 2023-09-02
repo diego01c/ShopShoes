@@ -9,20 +9,25 @@ package shopshoes.entidadesdenegocio;
  * @author MINEDUCYT
  */
 public class Trolley {
-private int Id;
+    private int Id;
     private int IdClient;
     private int IdProduct;
+    private int Quantity;
+    private byte StatusTrolley;
     private int Top_aux;
     
     public Trolley (){
         
     }
     
-    public Trolley (int Id, int IdClient, int IdProduct, int Top_aux){
+    public Trolley (int Id, int IdClient, int IdProduct, int Quantity, byte StatusTrolley, int Top_aux){
         this.Id = Id;
         this.IdClient = IdClient;
         this.IdProduct = IdProduct;
+        this.Quantity = Quantity;
+        this.StatusTrolley = StatusTrolley;
         this.Top_aux = Top_aux;
+        
     }
     
      public int getId() {
@@ -48,6 +53,22 @@ private int Id;
     public void setIdProduct(int IdProduct) {
         this.IdProduct = IdProduct;
     }    
+
+    public int getQuantity() {
+        return Quantity;
+    }
+
+    public void setQuantity(int Quantity) {
+        this.Quantity = Quantity;
+    }
+
+    public byte getStatusTrolley() {
+        return StatusTrolley;
+    }
+
+    public void setStatusTrolley(byte StatusTrolley) {
+        this.StatusTrolley = StatusTrolley;
+    }
     
      public int getTop_aux() {
         return Top_aux;
