@@ -237,18 +237,18 @@ public static int modificar(Administrator pAdministrator) throws Exception
         }
         
         if (pAdministrator.getAdministratorName()!= null && pAdministrator.getAdministratorName().trim().isEmpty() == false) {
-            pUtilQuery.AgregarWhereAnd(" p.AdministratorName=? "); // agregar el campo IdRol al filtro de la consulta SELECT y agregar en el WHERE o AND
+            pUtilQuery.AgregarWhereAnd(" p.AdministratorName Like ? "); // agregar el campo IdRol al filtro de la consulta SELECT y agregar en el WHERE o AND
             if (statement != null) {
                  // agregar el parametro del campo IdRol a la consulta SELECT de la tabla de Usuario
-                statement.setString(pUtilQuery.getNumWhere(), pAdministrator.getAdministratorName());
+                statement.setString(pUtilQuery.getNumWhere(), "%"+pAdministrator.getAdministratorName()+"%");
             }
         }
        
         if (pAdministrator.getLastName()!= null && pAdministrator.getLastName().trim().isEmpty() == false) {
-            pUtilQuery.AgregarWhereAnd(" p.LastName=? "); // agregar el campo IdRol al filtro de la consulta SELECT y agregar en el WHERE o AND
+            pUtilQuery.AgregarWhereAnd(" p.LastName Like ? "); // agregar el campo IdRol al filtro de la consulta SELECT y agregar en el WHERE o AND
             if (statement != null) {
                  // agregar el parametro del campo IdRol a la consulta SELECT de la tabla de Usuario
-                statement.setString(pUtilQuery.getNumWhere(), pAdministrator.getLastName());
+                statement.setString(pUtilQuery.getNumWhere(), "%"+pAdministrator.getLastName()+"%");
             }
         }
        

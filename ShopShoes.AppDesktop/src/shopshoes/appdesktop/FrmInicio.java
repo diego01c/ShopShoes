@@ -4,6 +4,12 @@
  */
 package shopshoes.appdesktop;
 
+import shopshoes.appdesktop.categories.*;
+import shopshoes.appdesktop.roles.*;
+import shopshoes.appdesktop.paymentmethods.*;
+import shopshoes.appdesktop.administrator.*;
+import shopshoes.appdesktop.inventory.*;
+
 /**
  *
  * @author victo
@@ -26,21 +32,111 @@ public class FrmInicio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnAdmin = new javax.swing.JButton();
+        btnCategoria = new javax.swing.JButton();
+        btnMetodo = new javax.swing.JButton();
+        btnRoles = new javax.swing.JButton();
+        btnInventario = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        btnAdmin.setText("ADMINISTRADOR");
+        btnAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdminActionPerformed(evt);
+            }
+        });
+
+        btnCategoria.setText("CATEGORIAS");
+        btnCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCategoriaActionPerformed(evt);
+            }
+        });
+
+        btnMetodo.setText("METODOS");
+        btnMetodo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMetodoActionPerformed(evt);
+            }
+        });
+
+        btnRoles.setText("ROLES");
+        btnRoles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRolesActionPerformed(evt);
+            }
+        });
+
+        btnInventario.setText("INVENTARIO");
+        btnInventario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInventarioActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 645, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnInventario)
+                    .addComponent(btnRoles)
+                    .addComponent(btnMetodo)
+                    .addComponent(btnCategoria)
+                    .addComponent(btnAdmin))
+                .addContainerGap(484, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 428, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(btnAdmin)
+                .addGap(44, 44, 44)
+                .addComponent(btnCategoria)
+                .addGap(46, 46, 46)
+                .addComponent(btnMetodo)
+                .addGap(50, 50, 50)
+                .addComponent(btnRoles)
+                .addGap(29, 29, 29)
+                .addComponent(btnInventario)
+                .addContainerGap(110, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
+        // TODO add your handling code here:
+        FrmAdministrator admin = new FrmAdministrator();
+        admin.setVisible(true);
+    }//GEN-LAST:event_btnAdminActionPerformed
+
+    private void btnCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriaActionPerformed
+        // TODO add your handling code here:
+        FrmCategories categoria = new FrmCategories();
+        categoria.setVisible(true);
+    }//GEN-LAST:event_btnCategoriaActionPerformed
+
+    private void btnMetodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMetodoActionPerformed
+        // TODO add your handling code here:
+        FrmPaymentMethods pago = new FrmPaymentMethods();
+        pago.setVisible(true);
+    }//GEN-LAST:event_btnMetodoActionPerformed
+
+    private void btnRolesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRolesActionPerformed
+        // TODO add your handling code here:
+        FrmRoles rol = new FrmRoles();
+        rol.setVisible(true);
+    }//GEN-LAST:event_btnRolesActionPerformed
+
+    private void btnInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioActionPerformed
+        // TODO add your handling code here:
+        FrmInventory inventario = new FrmInventory();
+        inventario.setVisible(true);
+    }//GEN-LAST:event_btnInventarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +175,10 @@ public class FrmInicio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdmin;
+    private javax.swing.JButton btnCategoria;
+    private javax.swing.JButton btnInventario;
+    private javax.swing.JButton btnMetodo;
+    private javax.swing.JButton btnRoles;
     // End of variables declaration//GEN-END:variables
 }

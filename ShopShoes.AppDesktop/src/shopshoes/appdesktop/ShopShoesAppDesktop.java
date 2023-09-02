@@ -14,7 +14,7 @@ public class ShopShoesAppDesktop {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        FrmAdministrador frmLogin = new FrmAdministrador();
+        FrmLogin frmLogin = new FrmLogin();
         frmLogin.setVisible(true);
         // TODO code application logic here
     }

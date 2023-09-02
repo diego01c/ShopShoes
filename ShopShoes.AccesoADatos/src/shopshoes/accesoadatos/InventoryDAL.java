@@ -59,7 +59,7 @@ public class InventoryDAL {
                     st.setInt(3, pInventory.getTickets());
                     st.setInt(4, pInventory.getDepartures());
                     st.setDouble(5, pInventory.getProfits());
-                    st.setByte(6, pInventory.getInventoryStatus());
+                    st.setByte(6, Byte.parseByte("1"));
                     result = st.executeUpdate();
                     st.close();
                 }
@@ -82,16 +82,14 @@ public class InventoryDAL {
         String sql;
         try(Connection conn = ComunDB.obtenerConexion();)
         {
-            sql = "Update Inventory Set IdProduct= ?, Stock = ?, Tickets= ?, Departures = ?, Profits = ?, InventoryStatus = ?"
+            sql = "Update Inventory Set Stock = ?, Tickets= ?"
                     + " Where Id = ?";
             try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
             {
-                 ps.setInt(1, pInventory.getIdProduct());
-                 ps.setInt(2, pInventory.getStock());
-                 ps.setInt(3, pInventory.getTickets());
-                 ps.setInt(4, pInventory.getDepartures());
-                 ps.setDouble(5, pInventory.getProfits());
-                 ps.setByte(6, pInventory.getInventoryStatus());
+                 
+                 ps.setInt(1, pInventory.getStock());
+                 ps.setInt(2, pInventory.getTickets());
+                ps.setInt(3, pInventory.getId());
                 result = ps.executeUpdate();
                 ps.close();
             }
@@ -226,7 +224,9 @@ public class InventoryDAL {
     }
     
      static void querySelect(Inventory pInventory, ComunDB.UtilQuery pUtilQuery) throws SQLException {
-        PreparedStatement statement = pUtilQuery.getStatement(); // obtener el PreparedStatement al cual aplicar los parametros
+         
+        PreparedStatement statement = pUtilQuery.getStatement(); 
+  
         if (pInventory.getId() > 0) { // verificar si se va incluir el campo Id en el filtro de la consulta SELECT de la tabla de Usuario
             pUtilQuery.AgregarWhereAnd(" i.Id=? "); // agregar el campo Id al filtro de la consulta SELECT y agregar el WHERE o AND
             if (statement != null) {
@@ -234,33 +234,10 @@ public class InventoryDAL {
                 statement.setInt(pUtilQuery.getNumWhere(), pInventory.getId());
             }
         }
-        // verificar si se va incluir el campo IdRol en el filtro de la consulta SELECT de la tabla de Usuario
-        if (pInventory.getIdProduct()> 0) {
-            pUtilQuery.AgregarWhereAnd(" i.IdProduct=? "); // agregar el campo IdRol al filtro de la consulta SELECT y agregar en el WHERE o AND
-            if (statement != null) {
-                 // agregar el parametro del campo IdRol a la consulta SELECT de la tabla de Usuario
-                statement.setInt(pUtilQuery.getNumWhere(), pInventory.getIdProduct());
-            }
-        }
         
-        if (pInventory.getDepartures()> 0) {
-            pUtilQuery.AgregarWhereAnd(" i.Departures=? "); // agregar el campo IdRol al filtro de la consulta SELECT y agregar en el WHERE o AND
-            if (statement != null) {
-                 // agregar el parametro del campo IdRol a la consulta SELECT de la tabla de Usuario
-                statement.setInt(pUtilQuery.getNumWhere(), pInventory.getDepartures());
-            }
-        }
        
-        if (pInventory.getProfits()> 0) {
-            pUtilQuery.AgregarWhereAnd(" i.Profits=? "); // agregar el campo IdRol al filtro de la consulta SELECT y agregar en el WHERE o AND
-            if (statement != null) {
-                 // agregar el parametro del campo IdRol a la consulta SELECT de la tabla de Usuario
-                statement.setDouble(pUtilQuery.getNumWhere(), pInventory.getProfits());
-            }
-        }
-        
         if (pInventory.getStock()> 0) {
-            pUtilQuery.AgregarWhereAnd(" i.Stock=? "); // agregar el campo IdRol al filtro de la consulta SELECT y agregar en el WHERE o AND
+            pUtilQuery.AgregarWhereAnd(" p.IdCategory=? "); // agregar el campo IdRol al filtro de la consulta SELECT y agregar en el WHERE o AND
             if (statement != null) {
                  // agregar el parametro del campo IdRol a la consulta SELECT de la tabla de Usuario
                 statement.setInt(pUtilQuery.getNumWhere(), pInventory.getStock());
@@ -282,7 +259,12 @@ public class InventoryDAL {
                 statement.setInt(pUtilQuery.getNumWhere(), pInventory.getInventoryStatus());
             }
         }
+        
+       
+
     }
+     
+     
     
     private static void obtenerDatosIncluirInventory(PreparedStatement pPS, ArrayList<Inventory> pInventory) throws Exception {
         try (ResultSet resultSet = ComunDB.obtenerResulSet(pPS);) { // obtener el ResultSet desde la clase ComunDB
@@ -308,6 +290,7 @@ public class InventoryDAL {
             throw ex; // enviar al siguiente metodo el error al obtener ResultSet de la clase ComunDB   en el caso que suceda 
         }
     }
+
     
     public static ArrayList<Inventory> buscarIncluirProduct(Inventory pInventory) throws Exception {
         ArrayList<Inventory> inventories = new ArrayList();
@@ -342,5 +325,6 @@ public class InventoryDAL {
         }
         return inventories; // Devolver el ArrayList de Usuario
     }
+    
    
 }

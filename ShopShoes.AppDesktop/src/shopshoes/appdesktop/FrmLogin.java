@@ -1,4 +1,3 @@
-
 package shopshoes.appdesktop;
 
 // Importaciones para el funcionamiento de la pantalla de Login
@@ -6,6 +5,7 @@ import shopshoes.appdesktop.utils.*; // importar todas las clases de utilidades 
 import shopshoes.accesoadatos.*; // importar todas la clases de la capa de acceso a datos
 import shopshoes.entidadesdenegocio.*; // importar todas la clases de la capa de entidades de negocio
 import javax.swing.JOptionPane; // importa la clase JOptionPane para mostrar alertas o advertencias a los usuarios
+
 public class FrmLogin extends javax.swing.JFrame {
 
     /**
@@ -28,14 +28,23 @@ public class FrmLogin extends javax.swing.JFrame {
                 Users usuarioAut = UsersDAL.login(usuario); // Autentificar el usuario en la base de datos
                 // Si el Id es mayor a cero y Login que retorno el metodo de login() es igual al login que enviamos es un
                 // usuario autorizado en el sistema
+
                 if (usuarioAut.getId() > 0 && usuarioAut.getUserName().equals(usuario.getUserName())) {
-                    // Llenar la propiedad Id de la clase UsuarioAutorizado para mantenerla en cache en todo el sistema
-                    UsuarioAutorizado.setId(usuarioAut.getId());
-                    // Llenar la propiedad Login de la clase UsuarioAutorizado para mantenerla en cache en todo el sistema
-                    UsuarioAutorizado.setLogin(usuarioAut.getUserName());
-                    FrmCategorias frmInicio = new FrmCategorias(); // Instanciar el formulario de Inicio
-                    frmInicio.setVisible(true); // Mostrar el formulario de Inicio
-                    this.setVisible(false); // Cerrar el formulario del Login
+                    Roles rol = new Roles();
+                    Roles rol_ = new Roles();
+                    rol_.setId(usuarioAut.getIdRol());
+                    rol = RolesDAL.obtenerPorId(rol_);
+                    if ("Administrador".equals(rol.getRolesName())) {
+                        UsuarioAutorizado.setId(usuarioAut.getId());
+                        // Llenar la propiedad Login de la clase UsuarioAutorizado para mantenerla en cache en todo el sistema
+                        UsuarioAutorizado.setLogin(usuarioAut.getUserName());
+                        FrmInicio frmInicio = new FrmInicio(); // Instanciar el formulario de Inicio
+                        frmInicio.setVisible(true); // Mostrar el formulario de Inicio
+                        this.setVisible(false);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "No tiene acceso al sistema");
+                    }
+
                 } else {
                     // Mostrar un mensaje al usuario que usa la pantalla  que login y password son incorrectos
                     JOptionPane.showMessageDialog(this, "El login y password son incorrectos");
@@ -51,6 +60,7 @@ public class FrmLogin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Sucedio el siguiente error: " + ex.getMessage());
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -99,9 +109,9 @@ public class FrmLogin extends javax.swing.JFrame {
                             .addComponent(jLabel1)
                             .addComponent(jLabel2))
                         .addGap(23, 23, 23)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
+                            .addComponent(txtPassword)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(61, 61, 61)
                         .addComponent(btnIniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)

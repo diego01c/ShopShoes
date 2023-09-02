@@ -2,8 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package shopshoes.appdesktop;
+package shopshoes.appdesktop.roles;
 
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -19,11 +22,14 @@ import shopshoes.entidadesdenegocio.Roles;
  * @author MINEDUCYT
  */
 public class FrmRoles extends javax.swing.JFrame {
-DefaultTableModel modelo= new DefaultTableModel(){
-        public boolean isCellEditable(int row, int column){
+
+    int Id = 0;
+    DefaultTableModel modelo = new DefaultTableModel() {
+        public boolean isCellEditable(int row, int column) {
             return false;
         }
     };
+
     /**
      * Creates new form FrmMetodosPago
      */
@@ -31,135 +37,74 @@ DefaultTableModel modelo= new DefaultTableModel(){
         initComponents();
         CargarTabla();
     }
-    
-    private void CargarTabla(){
-         this.tblRoles = new JTable(modelo);
-         tblRoles.setDefaultRenderer(Object.class, new TablaImagen());
-         
-         modelo.setRowCount(0);
+
+    private void CargarTabla() {
+        this.tblRoles = new JTable(modelo);
+        tblRoles.setDefaultRenderer(Object.class, new TablaImagen());
+
+        modelo.setRowCount(0);
         modelo.setColumnCount(0);
-       modelo.addColumn("Nombre");
-        
+        modelo.addColumn("N°");
+        modelo.addColumn("Rol");
+
+       
         Limpiar();
         try {
             ArrayList<Roles> roles = RolesDAL.obtenerTodos();
-            for(int i=0; i<roles.size();i++){
-               
-                Object[] fila = new Object[1];
-               
-                fila[0] = roles.get(i).getRolesName();
-               
-           
+            for (int i = 0; i < roles.size(); i++) {
+
+                Object[] fila = new Object[2];
+
+                fila[0] = roles.get(i).getId();
+                fila[1] = roles.get(i).getRolesName();
+
                 this.modelo.addRow(fila);
-               
+
                 this.tblRoles.updateUI();
                 this.jScrollPane1.setViewportView(tblRoles);
             }
         } catch (Exception ex) {
-           
-        }
-    }
-    
-    private void Editar() {
-        try {
-            Roles roles = new Roles();
-            roles.setId(3);
-            roles.setRolesName(this.txtNombre.getText());
-          
-            if (roles.getRolesName().trim().isEmpty() == false) {
-                int metodoEdit = RolesDAL.modificar(roles);
-                if(metodoEdit != 0){
-                    JOptionPane.showMessageDialog(this, "Actualizado Correctamente");
-                   Limpiar();
-                   CargarTabla();
-                } else {
-                    // Mostrar un mensaje al usuario que usa la pantalla  que login y password son incorrectos
-                    JOptionPane.showMessageDialog(this, "No se pudo Modificar");
 
-                }
-            } else {
-                // Mostrar un mensaje al usuario que usa la pantalla  que login y password son obligatorios
-                JOptionPane.showMessageDialog(this, "Los datos son obligatorios");
-            }
-        } catch (Exception ex) {
-            // Mostrar un mensaje al usuario que usa la pantalla  sucedio un error al momento de autentificar el usuario
-            JOptionPane.showMessageDialog(this, "Sucedio el siguiente error: " + ex.getMessage());
         }
     }
+
     
-    private void Limpiar(){
+
+    private void Limpiar() {
         txtNombre.setText("");
-      
-    }
-    
-    
-    
-    private void Guardar() {
-        try {
-            Roles roles = new Roles();
-            roles.setRolesName(this.txtNombre.getText());
-           
-            if (roles.getRolesName().trim().isEmpty() == false) {
-                int metodoCreate = RolesDAL.crear(roles);
-                if(metodoCreate != 0){
-                   JOptionPane.showMessageDialog(this, "Guardado Correctamente");
-                   Limpiar();
-                   CargarTabla();
-                } else {
-                    // Mostrar un mensaje al usuario que usa la pantalla  que login y password son incorrectos
-                    JOptionPane.showMessageDialog(this, "No se pudo Guardar");
 
-                }
-            } else {
-                // Mostrar un mensaje al usuario que usa la pantalla  que login y password son obligatorios
-                JOptionPane.showMessageDialog(this, "Los datos son obligatorios");
-            }
-        } catch (Exception ex) {
-            // Mostrar un mensaje al usuario que usa la pantalla  sucedio un error al momento de autentificar el usuario
-            JOptionPane.showMessageDialog(this, "Sucedio el siguiente error: " + ex.getMessage());
-        }
     }
+
     
-    private void Seleccionar() {
-        Roles roles = new Roles();
-        try {
-            roles = RolesDAL.obtenerPorId2(2);
-             
-            
-            txtNombre.setText(roles.getRolesName());
-         
-            
-        } catch (Exception ex) {
-            
-        }
-        
-    }
-    
+
+
     private void Buscar() {
-         this.tblRoles = new JTable(modelo);
-         tblRoles.setDefaultRenderer(Object.class, new TablaImagen());
-         
-         modelo.setRowCount(0);
+        this.tblRoles = new JTable(modelo);
+        tblRoles.setDefaultRenderer(Object.class, new TablaImagen());
+
+        modelo.setRowCount(0);
         modelo.setColumnCount(0);
-       modelo.addColumn("Nombre");
-  
-         
+        modelo.addColumn("N°");
+        modelo.addColumn("Rol");
+
+      
         try {
-            ArrayList<Roles> roles = RolesDAL.obtenerPorName(txtNombre.getText());
-            for(int i=0; i<roles.size();i++){
-              
-                Object[] fila = new Object[1];
-               
-                fila[0] = roles.get(i).getRolesName();
-              
+            String id = txtNombre.getText();
+            ArrayList<Roles> roles = RolesDAL.obtenerPorName(id);
+            for (int i = 0; i < roles.size(); i++) {
+
+                Object[] fila = new Object[2];
+
+                fila[0] = roles.get(i).getId();
+                fila[1] = roles.get(i).getRolesName();
+
                 this.modelo.addRow(fila);
-               
+
                 this.tblRoles.updateUI();
                 this.jScrollPane1.setViewportView(tblRoles);
-          
             }
         } catch (Exception ex) {
-            
+
         }
     }
 
@@ -175,10 +120,9 @@ DefaultTableModel modelo= new DefaultTableModel(){
         jScrollPane1 = new javax.swing.JScrollPane();
         tblRoles = new javax.swing.JTable();
         txtNombre = new javax.swing.JTextField();
-        btnGuardar = new javax.swing.JButton();
+        btnNuevo = new javax.swing.JButton();
         btnActu = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
-        LIMPIAR = new javax.swing.JButton();
         btnCargar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -194,12 +138,22 @@ DefaultTableModel modelo= new DefaultTableModel(){
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblRoles.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tblRoles.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblRoles.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblRolesMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tblRolesMousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblRoles);
 
-        btnGuardar.setText("GUARDAR");
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+        btnNuevo.setText("NUEVO");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
+                btnNuevoActionPerformed(evt);
             }
         });
 
@@ -217,13 +171,6 @@ DefaultTableModel modelo= new DefaultTableModel(){
             }
         });
 
-        LIMPIAR.setText("LIMPIAR");
-        LIMPIAR.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LIMPIARActionPerformed(evt);
-            }
-        });
-
         btnCargar.setText("ACTUALIZAR TABLA");
         btnCargar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -236,55 +183,63 @@ DefaultTableModel modelo= new DefaultTableModel(){
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(btnGuardar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnActu)
-                        .addGap(48, 48, 48)
-                        .addComponent(btnBuscar)
-                        .addGap(36, 36, 36)
-                        .addComponent(LIMPIAR))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(btnNuevo)
+                            .addGap(46, 46, 46)
+                            .addComponent(btnActu)
+                            .addGap(39, 39, 39)
                             .addComponent(btnCargar)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 695, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(99, Short.MAX_VALUE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnBuscar))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 695, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGuardar)
-                    .addComponent(btnActu)
-                    .addComponent(btnBuscar)
-                    .addComponent(LIMPIAR))
-                .addGap(27, 27, 27)
-                .addComponent(btnCargar)
-                .addGap(18, 18, 18)
+                .addGap(24, 24, 24)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnNuevo)
+                            .addComponent(btnActu)
+                            .addComponent(btnCargar))
+                        .addGap(56, 56, 56))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBuscar)
+                        .addGap(48, 48, 48))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
-        Guardar();
-    }//GEN-LAST:event_btnGuardarActionPerformed
+        FrmCreateRol rol = new FrmCreateRol();
+        rol.setVisible(true);
+    }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnActuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActuActionPerformed
         // TODO add your handling code here:
-        Editar();
+        if (tblRoles.getSelectedRowCount() != 0) {
+            int index = tblRoles.getSelectedRow();
+        int row = Integer.parseInt(modelo.getValueAt(index, 0).toString());
+        FrmEditRol rol = new FrmEditRol(row);
+        rol.setVisible(true);
+        } 
+        else {
+            JOptionPane.showMessageDialog(this, "Seleccione una fila");
+        }
+        
     }//GEN-LAST:event_btnActuActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -292,15 +247,20 @@ DefaultTableModel modelo= new DefaultTableModel(){
         Buscar();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-    private void LIMPIARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LIMPIARActionPerformed
-        // TODO add your handling code here:
-        Limpiar();
-    }//GEN-LAST:event_LIMPIARActionPerformed
-
     private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
         // TODO add your handling code here:
         CargarTabla();
     }//GEN-LAST:event_btnCargarActionPerformed
+
+    private void tblRolesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblRolesMouseClicked
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null, "");
+    }//GEN-LAST:event_tblRolesMouseClicked
+
+    private void tblRolesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblRolesMousePressed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null, "");
+    }//GEN-LAST:event_tblRolesMousePressed
 
     /**
      * @param args the command line arguments
@@ -339,11 +299,10 @@ DefaultTableModel modelo= new DefaultTableModel(){
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton LIMPIAR;
     private javax.swing.JButton btnActu;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCargar;
-    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnNuevo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblRoles;
     private javax.swing.JTextField txtNombre;

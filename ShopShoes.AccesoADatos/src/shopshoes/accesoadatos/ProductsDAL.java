@@ -87,7 +87,7 @@ public class ProductsDAL {
         String sql;
         try(Connection conn = ComunDB.obtenerConexion();)
         {
-            sql = "Update Products Set IdCategory = ?, ProductName = ?, Cost = ?, ProductDescription = ?, ProductImage = ?, DetailImageOne = ?, DetailImageTwo = ?, DetailImageThree = ?, Brand = ?, Specifications = ?, Status = ?"
+            sql = "Update Products Set IdCategory = ?, ProductName = ?, Cost = ?, ProductDescription = ?, ProductImage = ?, DetailImageOne = ?, DetailImageTwo = ?, DetailImageThree = ?, Brand = ?, Specifications = ?"
                     + " Where Id = ?";
             try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
             {
@@ -101,8 +101,7 @@ public class ProductsDAL {
                 ps.setString(8, pProducts.getDetailImageThree());
                 ps.setString(9, pProducts.getBrand());
                 ps.setString(10, pProducts.getSpecifications());
-                ps.setString(11, pProducts.getStatus());
-                ps.setInt(12, pProducts.getId());
+                ps.setInt(11, pProducts.getId());
                 result = ps.executeUpdate();
                 ps.close();
             }
@@ -116,6 +115,33 @@ public class ProductsDAL {
             throw ex;
         }
         return result;
+    }
+    
+    public static Products obtenerPorData(Products pProducts) throws Exception {
+        Products product = new Products();
+        ArrayList<Products> products = new ArrayList();
+        try (Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
+            String sql = obtenerSelect(pProducts); // obtener la consulta SELECT de la tabla Usuario
+            // Concatenar a la consulta SELECT de la tabla Usuario el WHERE  para comparar el campo Id
+            sql += " WHERE p.ProductName=? AND p.Cost=? AND p.Brand=? AND p.IdCategory=?";
+            try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // obtener el PreparedStatement desde la clase ComunDB
+                ps.setString(1, pProducts.getProductName());
+                ps.setDouble(2, pProducts.getCost());
+ps.setString(3, pProducts.getBrand());
+ps.setInt(4, pProducts.getIdCategory());// agregar el parametro a la consulta donde estan el simbolo ? #1 
+                obtenerDatos(ps, products); // Llenar el ArrayList de Usuario con las fila que devolvera la consulta SELECT a la tabla de Usuario
+                ps.close(); // cerrar el PreparedStatement
+            } catch (SQLException ex) {
+                throw ex; // enviar al siguiente metodo el error al ejecutar PreparedStatement en el caso que suceda
+            }
+            conn.close(); // cerrar la conexion a la base de datos
+        } catch (SQLException ex) {
+            throw ex; // enviar al siguiente metodo el error al obtener la conexion  de la clase ComunDB en el caso que suceda
+        }
+        if (products.size() > 0) { // verificar si el ArrayList de Usuario trae mas de un registro en tal caso solo debe de traer uno
+            product = products.get(0); // Si el ArrayList de Usuario trae un registro o mas obtenemos solo el primero
+        }
+        return product; // devolver el Usuario encontrado por Id 
     }
     
     
