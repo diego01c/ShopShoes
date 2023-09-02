@@ -15,7 +15,7 @@
     </head>
     <body>
         <jsp:include page="/Views/Shared/headerBody.jsp" />
-        <main>
+        <main style="margin-top: 0px">
             <form action="Products" method="post">
                 <input type="hidden" name="accion" 
                        value="<%=request.getAttribute("accion")%>" id="txtHidden">
@@ -32,25 +32,23 @@
                             <h5 class="red-text">$<%=product.getCost()%></h5>
                         </div>
                     </div>
-                        
                     <div class="row">
-                        <div class="col 14 s12">
-                            <center><img src="<%=product.getProductImage()%>" height="150"/></center>
+                        <div class="col s12">
+                            <center><img src="<%=product.getProductImage()%>" height="175" id="mainImage" /></center>
                         </div>
                     </div>
 
                     <div class="row center-align">
                         <div class="col s4">
-                            <img src="<%=product.getDetailImageOne()%>" height="100" />  
+                            <img src="<%=product.getDetailImageOne()%>" height="80" id="detailImageOne" />  
                         </div>
                         <div class="col s4">
-                            <img src="<%=product.getDetailImageTwo()%>" height="100"/>
+                            <img src="<%=product.getDetailImageTwo()%>" height="80" id="detailImageTwo" />
                         </div>
                         <div class="col s4">
-                            <img src="<%=product.getDetailImageThree()%>" height="100"/>
+                            <img src="<%=product.getDetailImageThree()%>" height="80" id="detailImageThree" />
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col s1">
                         </div>
@@ -113,16 +111,15 @@
                 <input type="hidden" name="idProduct" value="<%=product.getId()%>">
                 <div class="container pt-10">
                     <div class="row">
-                        <div class="col s4">                 
+                        <div class="col s3"></div>
+                        <div class="col s2" style="align-items: center;">
+                            <button type="button" style="float: right;" class="waves-effect btn grey darken-4" onclick="decrementQuantity()">Restar</button>
                         </div>
-                        <div class="col s1">
-                            <button type="button" class="waves-effect waves-light btn" onclick="decrementQuantity()">Restar</button>
+                        <div class="col s2">
+                            <input type="number" name="quantity" id="quantity" value="1" min="1" readonly style="text-align: center; border: 1px solid;">
                         </div>
-                        <div class="col s3">
-                            <input type="number" name="quantity" id="quantity" value="1" min="1" readonly style="text-align: center;" >
-                        </div>
-                        <div class="col s1">
-                            <button type="button" class="waves-effect waves-light btn" onclick="incrementQuantity()">Agregar</button>
+                        <div class="col s2">
+                            <button type="button" class="waves-effect btn grey darken-4" onclick="incrementQuantity()">Agregar</button>
                         </div>
                     </div>
                 </div>
@@ -135,11 +132,17 @@
                         EstadoBtn="";
                     }
                 %>
-                <button type="submit" class="waves-effect waves-light btn purple" <%=EstadoBtn%>>
-                    <i class="material-icons right">add_shopping_cart</i>Añadir al Carrito
-                </button>
+                <div class="row">
+                    <div class="col s12">
+                        <button type="submit" class="waves-effect waves-light btn grey darken-4" style="float: right;" <%=EstadoBtn%>>
+                            <i class="material-icons right">add_shopping_cart</i>Añadir al Carrito
+                        </button>
+                    </div>
+                </div>
+
             </form>
         </main>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
             var maxQuantity = <%=productStock%>;// Obtén el valor máximo de la base de datos
 
@@ -159,7 +162,26 @@
                 if (currentQuantity > 1) {
                     quantityInput.value = currentQuantity - 1;
                 }
-            }
+            }         
+            $(document).ready(function () {
+                // Cuando se hace clic en la primera imagen de detalle
+                $("#detailImageOne").click(function () {
+                    var newImageSrc = $(this).attr("src");
+                    $("#mainImage").attr("src", newImageSrc);
+                });
+
+                // Cuando se hace clic en la segunda imagen de detalle
+                $("#detailImageTwo").click(function () {
+                    var newImageSrc = $(this).attr("src");
+                    $("#mainImage").attr("src", newImageSrc);
+                });
+
+                // Cuando se hace clic en la tercera imagen de detalle
+                $("#detailImageThree").click(function () {
+                    var newImageSrc = $(this).attr("src");
+                    $("#mainImage").attr("src", newImageSrc);
+                });
+            });
         </script>
         <jsp:include page="/Views/Shared/footerBody.jsp" />
     </body>
