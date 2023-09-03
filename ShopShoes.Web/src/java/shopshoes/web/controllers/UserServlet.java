@@ -282,8 +282,10 @@ public class UserServlet extends HttpServlet {
                 String remitente = "shopshoesofficial23@gmail.com";
                 String claveemail = "tpkdisggvorihafg";
                 String asunto = "Cambio de contraseña";
-                String cuerpo = "Se cambio tu contraseña. Se cambio tu contraseña, tal como lo pediste. Si no fuiste tu quien solicito el cambio,"
-                        + " tenemos algunos consejos para ayudarte a mantener segura tu cuenta. Para mas informacion, consulta https://support.google.com/accounts/answer/46526?hl=es-419";
+                
+                String cuerpo = "<div style='background-color:black;color:white;padding:20px;'>"
+                        + "<h1>Se cambio tu contraseña.</h1><br> <p>Se cambio tu contraseña, tal como lo pediste.</p><br> <p>Si no fuiste tu quien solicito el cambio,"
+                        + " tenemos algunos consejos para ayudarte a mantener segura tu cuenta. Para mas informacion, consulta https://support.google.com/accounts/answer/46526?hl=es-419</p></div>";
                 
                 Properties props = System.getProperties();
                 props.put("mail.smtp.host", "smtp.gmail.com");
@@ -304,7 +306,7 @@ public class UserServlet extends HttpServlet {
         message.setFrom(new InternetAddress(remitente));
         message.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));   //Se podrían añadir varios de la misma manera
         message.setSubject(asunto);
-        message.setText(cuerpo);
+        message.setContent(cuerpo, "text/html; charset=utf-8");
         Transport transport = session.getTransport("smtp");
         transport.connect("smtp.gmail.com", remitente, claveemail);
         transport.sendMessage(message, message.getAllRecipients());

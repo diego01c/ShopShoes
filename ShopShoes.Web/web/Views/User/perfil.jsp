@@ -11,7 +11,7 @@
     </head>
     <body>
         <jsp:include page="/Views/Shared/headerBody.jsp" />
-        <main class="container">
+      <main class="container">
             <div class="row center-align">
 
                 <div class="col 15 s12">
@@ -76,9 +76,10 @@
                                         <button type="submit" class="waves-effect waves-light btn teal darken-4">
                                             <i class="material-icons right">save</i>Actualizar Cuenta
                                         </button>
-                                        <button type="submit" class="waves-effect waves-light btn teal darken-4">
-                                            <i class="material-icons right">list</i>Regresar
-                                            </a>
+                                        <a href="Sales?accion=compras" 
+                                       title="Crear" class="waves-effect waves-light btn black" style="float: right;">
+                                        <i class="material-icons right">add_shopping_cart</i>Compras
+                                    </a>
                                     </div>
                                 </div>
                             </form>

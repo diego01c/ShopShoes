@@ -106,6 +106,37 @@ public class InventoryDAL {
     }
     
     
+    public static int modificarSalidas(Inventory pInventory) throws Exception 
+    {
+        int result;
+        String sql;
+        try(Connection conn = ComunDB.obtenerConexion();)
+        {
+            sql = "Update Inventory Set Stock = ?, Departures= ?, Profits=?"
+                    + " Where IdProduct = ?";
+            try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
+            {
+                 
+                 ps.setInt(1, pInventory.getStock());
+                 ps.setInt(2, pInventory.getDepartures());
+                ps.setDouble(3, pInventory.getProfits());
+                ps.setInt(4, pInventory.getIdProduct());
+                result = ps.executeUpdate();
+                ps.close();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+        catch(SQLException ex)
+        {
+            throw ex;
+        }
+        return result;
+    }
+    
+    
     public static int eliminar(Inventory pInventory) throws Exception
     {
         int result;

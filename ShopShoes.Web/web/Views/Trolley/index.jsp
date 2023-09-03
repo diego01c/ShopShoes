@@ -1,10 +1,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="shopshoes.entidadesdenegocio.Products"%>
+<%@page import="shopshoes.entidadesdenegocio.Client"%>
 <%@page import="shopshoes.entidadesdenegocio.Trolley"%>
 <%@page import="shopshoes.accesoadatos.TrolleyDAL"%>
+<%@page import="shopshoes.web.utils.*"%>
 <%@page import="java.util.ArrayList"%>
 <% Trolley trolley = (Trolley) request.getAttribute("trolley");%>
-<%ArrayList<Products> products = (ArrayList<Products>) request.getAttribute("products");
+<%ArrayList<Trolley> products = (ArrayList<Trolley>) request.getAttribute("products");
     int numPage = 1;
     int numReg = 10;
     int countReg = 0;
@@ -35,10 +37,28 @@
         <jsp:include page="/Views/Shared/headerBody.jsp" /> 
         <main class="container">
             <div class="row">
+                <%
+                    String visibleorNot = "";
+                    if(products.size() == 0){
+                        visibleorNot= "disabled";
+                    }
+                    if(products.size() != 0){
+                        visibleorNot = "";
+                    }
+                %>
+                <div class="row">
+                    <div class="col s12">
+                        <a href="Direction?accion=index" 
+                                       title="Crear" class="waves-effect waves-light btn black" style="float: right;" <%=visibleorNot%>>
+                                        <i class="material-icons right">add_shopping_cart</i> Pagar
+                                    </a>
+                       
+                    </div>
+                </div>
                 <div class="paginationjs">
                     <div style="overflow: auto;">
                         <%
-                        for(Products product:products)
+                        for(Trolley product:products)
                         {
                            int tempNumPage = numPage;
                            if(numPage > 1)
@@ -52,15 +72,11 @@
                         <div class="col s4">
                             <div class="card white" data-page="<%=tempNumPage%>">
                                 <div class="card-content black-text">
-                                    <span class="card-title"><%=product.getProductName()%></span>
-                                    <center><img src="<%=product.getProductImage()%>" height="200"/></center>
-                                    <%                                        
-                                       Trolley trolleys = new Trolley();
-                                       trolleys.setIdProduct(product.getId());
-                                       Trolley trolleyResult = TrolleyDAL.obtenerPorIdProduct(trolleys);
-                                       int cantidad = trolleyResult.getQuantity();
-                                       double costo = product.getCost();
-                                       double totalCosto = cantidad * costo;
+                                    <span class="card-title"><%=product.getProduct().getProductName()%></span>
+                                    <center><img src="<%=product.getProduct().getProductImage()%>" height="200"/></center>
+                                    <%      
+                                       
+                                       double totalCosto = product.getQuantity() * product.getProduct().getCost();
                                     %>
                                     <div class="row">
                                         <div class="col s6">
@@ -76,7 +92,7 @@
                                             <p>Unidades:</p>
                                         </div>
                                         <div class="col s4">
-                                            <p  name="quantity" id="quantity" readonly ><%=trolleyResult.getQuantity()%></p>
+                                            <p  name="quantity" id="quantity" readonly ><%=product.getQuantity()%></p>
                                         </div>
                                     </div>
                                     <form action="Trolley" method="post" >
@@ -86,7 +102,7 @@
                                             </div>
                                             <div class="col s4">
                                                 <input type="hidden" name="accion" value="delete">
-                                                <input type="hidden" name="idtrolley" value="<%=trolleyResult.getId()%>">
+                                                <input type="hidden" name="idtrolley" value="<%=product.getId()%>">
                                                 <button type="submit" >Delete</button>
                                             </div>
                                         </div>

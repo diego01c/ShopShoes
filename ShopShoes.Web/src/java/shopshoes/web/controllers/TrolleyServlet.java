@@ -103,9 +103,14 @@ public class TrolleyServlet extends HttpServlet {
         try
         {     
             Trolley trolley = obtenerTrolley(request);
+            HttpSession session = (HttpSession) request.getSession();
+            int inicio = (int) session.getAttribute("id_inicio");
+        Client client = new Client();
+        client = ClientDAL.obtenerPorId(inicio);
+        trolley.setIdClient(client.getId());
             ArrayList<Trolley> trolleyss = TrolleyDAL.obtenerPorIdP(trolley);
             // Crear una lista para almacenar los objetos Productos
-            ArrayList<Products> productsList = new ArrayList<>();
+            ArrayList<Trolley> productsList = new ArrayList<>();
 
             // Recorrer la lista de trolleys y obtener los IdProductos
             for (Trolley trolleyssd : trolleyss) {
@@ -115,9 +120,16 @@ public class TrolleyServlet extends HttpServlet {
                 // Aquí podrías hacer una consulta a la base de datos o utilizar algún otro método
                 // para obtener el objeto Producto correspondiente al idProducto
                 Products products = ProductsDAL.obtenerPorId(product);
+                
+                Trolley carrito = new Trolley();
+                carrito.setProduct(products);
+                carrito.setIdClient(trolleyssd.getIdClient());
+                carrito.setIdProduct(trolleyssd.getIdProduct());
+                carrito.setQuantity(trolleyssd.getQuantity());
+                
 
                 if (products != null) {
-                    productsList.add(products);
+                    productsList.add(carrito);
                 }
             }
             Products product = new Products();
@@ -160,6 +172,11 @@ public class TrolleyServlet extends HttpServlet {
         try
         {
             Trolley trolley = obtenerTrolley(request);
+            HttpSession session = (HttpSession) request.getSession();
+            int inicio = (int) session.getAttribute("id_inicio");
+        Client client = new Client();
+        client = ClientDAL.obtenerPorId(inicio);
+        trolley.setIdClient(client.getId());
             int validar = TrolleyDAL.obtenerIdPorIdProduct(trolley);
             if(validar == 0)
             {
@@ -177,6 +194,7 @@ public class TrolleyServlet extends HttpServlet {
             if(validar!=0)
             {
                 Trolley trResul = TrolleyDAL.obtenerPorIdProduct(trolley);
+                trResul.setIdClient(client.getId());
                 int QuantityA = trolley.getQuantity();
                 int QuantityB = trResul.getQuantity();
                 int quantityF = QuantityA + QuantityB;               
