@@ -31,7 +31,11 @@ private JFrame currentChildForm;
             if (currentChildForm != null)
             {
                 contenedor.remove(currentChildForm);
+                contenedor.revalidate();
+    contenedor.repaint();
+    contenedor.removeAll();
             }
+            
             currentChildForm = childForm;
             //End
             childForm.setSize(contenedor.getSize());
@@ -75,6 +79,7 @@ private JFrame currentChildForm;
         btnCategoria.setText("CATEGORIAS");
         btnCategoria.setBorderPainted(false);
         btnCategoria.setContentAreaFilled(false);
+        btnCategoria.setFocusPainted(false);
         btnCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCategoriaActionPerformed(evt);
@@ -86,6 +91,7 @@ private JFrame currentChildForm;
         btnMetodo.setText("METODOS");
         btnMetodo.setBorderPainted(false);
         btnMetodo.setContentAreaFilled(false);
+        btnMetodo.setFocusPainted(false);
         btnMetodo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMetodoActionPerformed(evt);
@@ -97,6 +103,7 @@ private JFrame currentChildForm;
         btnRoles.setText("ROLES");
         btnRoles.setBorderPainted(false);
         btnRoles.setContentAreaFilled(false);
+        btnRoles.setFocusPainted(false);
         btnRoles.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRolesActionPerformed(evt);
@@ -108,6 +115,7 @@ private JFrame currentChildForm;
         btnInventario.setText("INVENTARIO");
         btnInventario.setBorderPainted(false);
         btnInventario.setContentAreaFilled(false);
+        btnInventario.setFocusPainted(false);
         btnInventario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInventarioActionPerformed(evt);
@@ -119,6 +127,7 @@ private JFrame currentChildForm;
         btnAdmin.setText("ADMINISTRADOR");
         btnAdmin.setBorderPainted(false);
         btnAdmin.setContentAreaFilled(false);
+        btnAdmin.setFocusPainted(false);
         btnAdmin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAdminActionPerformed(evt);
@@ -199,31 +208,35 @@ private JFrame currentChildForm;
 
     private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
         // TODO add your handling code here:
+        currentChildForm = new FrmAdministrator();
        OpenChildForm(new FrmAdministrator());
+       
     }//GEN-LAST:event_btnAdminActionPerformed
 
     private void btnCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriaActionPerformed
-        // TODO add your handling code here:
-        FrmCategories categoria = new FrmCategories();
-        categoria.setVisible(true);
+currentChildForm = new FrmCategories();
+        OpenChildForm(new FrmCategories());
+        
     }//GEN-LAST:event_btnCategoriaActionPerformed
 
     private void btnMetodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMetodoActionPerformed
         // TODO add your handling code here:
-        FrmPaymentMethods pago = new FrmPaymentMethods();
-        pago.setVisible(true);
+        currentChildForm = new FrmPaymentMethods();
+        OpenChildForm(new FrmPaymentMethods());
+        
+       
     }//GEN-LAST:event_btnMetodoActionPerformed
 
     private void btnRolesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRolesActionPerformed
-        // TODO add your handling code here:
-        FrmRoles rol = new FrmRoles();
-        rol.setVisible(true);
+       currentChildForm = new FrmRoles();
+        OpenChildForm(new FrmRoles());
+       
     }//GEN-LAST:event_btnRolesActionPerformed
 
     private void btnInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioActionPerformed
-        // TODO add your handling code here:
-        FrmInventory inventario = new FrmInventory();
-        inventario.setVisible(true);
+       currentChildForm = new FrmInventory();
+        OpenChildForm(new FrmInventory());
+       
     }//GEN-LAST:event_btnInventarioActionPerformed
 
     /**
