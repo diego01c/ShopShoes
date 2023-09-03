@@ -9,19 +9,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import shopshoes.entidadesdenegocio.Direction;
 import shopshoes.entidadesdenegocio.Sales;
 
 /**
  *
  * @author alexg
  */
-public class SalesDAL {
+public class DirectionDAL {
     static String obtenerCampos()
     {
-        return "p.Id, p.IdTrolley, p.IdPaymentMethod, p.IdDirection, p.Total";
+        return "p.Id, p.IdClient, p.Country, p.City, p.Phone, p.Email";
     }
     
-    private static String obtenerSelect(Sales pSales)
+    private static String obtenerSelect(Direction pSales)
     {
         String sql;
         sql = "Select ";
@@ -30,11 +31,11 @@ public class SalesDAL {
         {
             sql += "Top " + pSales.getTop_aux() + " ";
         }
-        sql += (obtenerCampos() + " From Sales p");
+        sql += (obtenerCampos() + " From Direction p");
         return sql;
     }
     
-    private static String agregarOrderBy(Sales pSales)
+    private static String agregarOrderBy(Direction pSales)
     {
         String sql = " Order by p.Id Desc";
         if(pSales.getTop_aux()> 0 && 
@@ -45,21 +46,22 @@ public class SalesDAL {
         return sql;
     }
     
-    public static int crear(Sales pSales) throws Exception
+    public static int crear(Direction pSales) throws Exception
     {
         int result;
         String sql;
             try(Connection conn = ComunDB.obtenerConexion();)
             {
-                sql = "Insert Into Sales(IdTrolley, IdPaymentMethod, IdDirection, Total) "
-                        + "Values(?,?,?,?)";
+                sql = "Insert Into Direction(IdClient, Country, City, Phone, Email) "
+                        + "Values(?,?,?,?,?)";
                 try(PreparedStatement st = 
                     ComunDB.createPreparedStatement(conn, sql);)
                 {
-                    st.setInt(1, pSales.getIdTrolley());
-                    st.setInt(2, pSales.getIdPaymentMethod());
-                    st.setInt(3, pSales.getIdDirection());
-                    st.setDouble(4, pSales.getTotal());
+                    st.setInt(1, pSales.getIdClient());
+                    st.setString(2, pSales.getCountry());
+                    st.setString(3, pSales.getCity());
+                    st.setString(4, pSales.getPhone());
+                    st.setString(5, pSales.getEmail());
                     result = st.executeUpdate();
                     st.close();
                 }
@@ -104,27 +106,28 @@ public class SalesDAL {
         return result;
     }
     
-    static int asignarDatosResultSet(Sales pSales, ResultSet pResultSet, int pIndex) throws Exception {
+    static int asignarDatosResultSet(Direction pSales, ResultSet pResultSet, int pIndex) throws Exception {
         //  SELECT u.Id(indice 1), u.IdRol(indice 2), u.Nombre(indice 3), u.Apellido(indice 4), u.Login(indice 5), 
         // u.Estatus(indice 6), u.FechaRegistro(indice 7) * FROM Usuario
         pIndex++;
         pSales.setId(pResultSet.getInt(pIndex)); // index 1
         pIndex++;
-        pSales.setIdDirection(pResultSet.getInt(pIndex)); // index 2
+        pSales.setIdClient(pResultSet.getInt(pIndex)); // index 2
         pIndex++;
-        pSales.setIdPaymentMethod(pResultSet.getInt(pIndex)); // index 3
+        pSales.setCountry(pResultSet.getString(pIndex)); // index 3
         pIndex++;
-        pSales.setIdTrolley(pResultSet.getInt(pIndex)); // index 4
-       
+        pSales.setCity(pResultSet.getString(pIndex)); // index 3
+       pIndex++;
+        pSales.setPhone(pResultSet.getString(pIndex)); // index 3
         pIndex++;
-        pSales.setTotal(pResultSet.getInt(pIndex)); // index 6
+        pSales.setEmail(pResultSet.getString(pIndex)); // index 3
         return pIndex;
     }
 
-     private static void obtenerDatos(PreparedStatement pPS, ArrayList<Sales> pSales) throws Exception {
+     private static void obtenerDatos(PreparedStatement pPS, ArrayList<Direction> pSales) throws Exception {
         try (ResultSet resultSet = ComunDB.obtenerResulSet(pPS);) { // obtener el ResultSet desde la clase ComunDB
             while (resultSet.next()) { // Recorrer cada una de la fila que regresa la consulta  SELECT de la tabla Usuario
-                Sales sales = new Sales();
+                Direction sales = new Direction();
                 // Llenar las propiedaddes de la Entidad Usuario con los datos obtenidos de la fila en el ResultSet
                 asignarDatosResultSet(sales, resultSet, 0);
                 pSales.add(sales); // agregar la entidad Usuario al ArrayList de Usuario
@@ -136,17 +139,18 @@ public class SalesDAL {
     }
      
  
-    public static Sales obtenerPorId(Sales pSales) throws Exception
+    public static Direction obtenerPorId(Direction pSales) throws Exception
     {
-        Sales sale = new Sales();
-        ArrayList<Sales> sales = new ArrayList();
+        Direction sale = new Direction();
+        ArrayList<Direction> sales = new ArrayList();
         try(Connection conn = ComunDB.obtenerConexion();)
         {
-            String sql = obtenerSelect(pSales);
-            sql += " Where Id = ?";
+            
+            String sql = "Select Top 1 * From Direction where IdClient = ? Order By Id Desc ";
             try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
             {
-                ps.setInt(1, pSales.getId());
+                ps.setInt(1, pSales.getIdClient());
+               
                 obtenerDatos(ps, sales);
                 ps.close();
             }
@@ -165,57 +169,7 @@ public class SalesDAL {
         }
         return sale;
     }
-    
-    public static ArrayList<Sales> obtenerPorIdA(Sales pSales) throws Exception
-    {
-        Sales sale = new Sales();
-        ArrayList<Sales> sales = new ArrayList();
-        try(Connection conn = ComunDB.obtenerConexion();)
-        {
-           
-            String sql = "select s.Id, s.IdDirection, s.IdPaymentMethod, s.IdTrolley, s.Total from Sales as s inner join Trolley as t on s.IdTrolley=t.Id where t.IdClient=?";
-            try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
-            {
-                ps.setInt(1, pSales.getTrolley().getIdClient());
-                obtenerDatos(ps, sales);
-                ps.close();
-            }
-            catch(Exception ex)
-            {
-                throw ex;
-            }
-        }
-        catch(SQLException ex)
-        {
-            throw ex;
-        }
-       
-        return sales;
-    }
 
     
-    public static ArrayList<Sales> obtenerTodos() throws Exception
-    {
-        ArrayList<Sales> sales = new ArrayList();
-        try(Connection conn = ComunDB.obtenerConexion();)
-        {
-            String sql = obtenerSelect(new Sales());
-            sql += agregarOrderBy(new Sales());
-            try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
-            {
-                obtenerDatos(ps, sales);
-                ps.close();
-            }
-            catch(Exception ex)
-            {
-                throw ex;
-            }
-        }
-        catch(SQLException ex)
-        {
-            throw ex;
-        }
-        
-        return sales;
-    }
+  
 }

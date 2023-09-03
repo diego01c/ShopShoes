@@ -81,7 +81,7 @@ public class TrolleyDAL {
         try(Connection conn = ComunDB.obtenerConexion();)
         {
             sql = "Update Trolley Set IdClient = ?, IdProduct = ?, Quantity = ?, StatusTrolley = ?"
-                    + " Where Id = ?";
+                    + " Where Id = ? AND StatusTrolley=1 AND IdClient=?";
             try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
             {
                 ps.setInt(1, pTrolley.getIdClient());
@@ -89,6 +89,7 @@ public class TrolleyDAL {
                 ps.setInt(3, pTrolley.getQuantity());
                 ps.setBoolean(4, true);
                 ps.setInt(5, pTrolley.getId());
+                ps.setInt(6, pTrolley.getIdClient());
                 result = ps.executeUpdate();
                 ps.close();
             }
@@ -172,7 +173,7 @@ public class TrolleyDAL {
             sql += " Where Id = ?";
             try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
             {
-                ps.setInt(1, pTrolley.getIdClient());
+                ps.setInt(1, pTrolley.getId());
                 obtenerDatos(ps, trolley);
                 ps.close();
             }
@@ -191,6 +192,37 @@ public class TrolleyDAL {
         }
         return Trolley;
     }
+    
+    
+     public static int Desactivar(Trolley pTrolley) throws Exception
+    {
+        
+        int result = 0;
+        String sql;
+        try(Connection conn = ComunDB.obtenerConexion();)
+        {
+            sql = "Update Trolley Set StatusTrolley = 0"
+                    + " Where Id = ?";
+            try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
+            {
+                ps.setInt(1, pTrolley.getId());
+                result = ps.executeUpdate();
+                ps.close();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            
+        
+        }catch(Exception ex){
+            
+        }
+        
+        return result;
+    }
+     
+     
     public static ArrayList<Trolley> obtenerPorIdP(Trolley pTrolley) throws Exception
     {
         Trolley Trolley = new Trolley();
@@ -198,7 +230,7 @@ public class TrolleyDAL {
         try(Connection conn = ComunDB.obtenerConexion();)
         {
             String sql = obtenerSelect(pTrolley);
-            sql += " Where IdClient = ?";
+            sql += " Where IdClient = ? AND StatusTrolley = 1";
             try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
             {
                 ps.setInt(1, pTrolley.getIdClient());
@@ -223,11 +255,12 @@ public class TrolleyDAL {
         try(Connection conn = ComunDB.obtenerConexion();)
         {
             String sql = obtenerSelect(pTrolley);
-            sql += " Where IdProduct = ? and StatusTrolley = ?";
+            sql += " Where IdProduct = ? and StatusTrolley = ? and IdClient = ?";
             try(PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);)
             {
                 ps.setInt(1, pTrolley.getIdProduct());
                 ps.setBoolean(2, true);
+                ps.setInt(3, pTrolley.getIdClient());
                 obtenerDatos(ps, trolley);
                 ps.close();
             }
@@ -314,7 +347,33 @@ public class TrolleyDAL {
         int idProduct = 0;
         try (Connection conn = ComunDB.obtenerConexion())
         {
-            String sql = "SELECT IdProduct FROM Trolley WHERE IdProduct = ?";
+            String sql = "SELECT IdProduct FROM Trolley WHERE IdProduct = ? AND StatusTrolley=1 AND IdClient=?";
+            try (PreparedStatement ps = conn.prepareStatement(sql))
+            {
+                ps.setInt(1, pTrolley.getIdProduct());
+                ps.setInt(2, pTrolley.getIdClient());
+                try (ResultSet rs = ps.executeQuery())
+                {
+                    if (rs.next())
+                    {
+                        idProduct = rs.getInt("IdProduct");
+                    }
+                }
+            }
+        }
+        catch (SQLException ex)
+        {
+            throw ex;
+        }
+        return idProduct;
+    }
+    
+    public static int obtenerIdPorIdProductB(Trolley pTrolley) throws Exception
+    {
+        int idProduct = 0;
+        try (Connection conn = ComunDB.obtenerConexion())
+        {
+            String sql = "SELECT IdProduct FROM Trolley WHERE IdProduct = ? AND StatusTrolley=0";
             try (PreparedStatement ps = conn.prepareStatement(sql))
             {
                 ps.setInt(1, pTrolley.getIdProduct());

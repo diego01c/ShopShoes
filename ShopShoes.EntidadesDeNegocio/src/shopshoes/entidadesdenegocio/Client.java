@@ -85,6 +85,7 @@ public class Client {
     public void setTop_aux(int top_aux) {
         this.top_aux = top_aux;
     }
+
     
 
     

@@ -3,8 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group name="ShopShoes">
-            <file>file:/C:/Users/alexg/OneDrive/Documentos/Proyectos%20java/ShopShoes/ShopShoes.Web/web/Views/Products/details.jsp</file>
-            <file>file:/C:/Users/alexg/OneDrive/Documentos/Proyectos%20java/ShopShoes/ShopShoes.Web/web/Views/Shared/headerBody.jsp</file>
+            <file>file:/C:/Users/MINEDUCYT/Documents/ShopShoes/ShopShoes.Web/src/java/shopshoes/web/controllers/SalesServlet.java</file>
+            <file>file:/C:/Users/MINEDUCYT/Documents/ShopShoes/ShopShoes.Web/src/java/shopshoes/web/controllers/DirectionServlet.java</file>
+            <file>file:/C:/Users/MINEDUCYT/Documents/ShopShoes/ShopShoes.Web/web/Views/Direction/index.jsp</file>
+            <file>file:/C:/Users/MINEDUCYT/Documents/ShopShoes/ShopShoes.Web/src/java/shopshoes/web/controllers/TrolleyServlet.java</file>
+            <file>file:/C:/Users/MINEDUCYT/Documents/ShopShoes/ShopShoes.Web/web/Views/Sales/index.jsp</file>
+            <file>file:/C:/Users/MINEDUCYT/Documents/ShopShoes/ShopShoes.Web/web/Views/Sales/compras.jsp</file>
+            <file>file:/C:/Users/MINEDUCYT/Documents/ShopShoes/ShopShoes.Web/web/Views/Trolley/index.jsp</file>
         </group>
     </open-files>
 </project-private>
