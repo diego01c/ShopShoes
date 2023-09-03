@@ -7,7 +7,6 @@
 
     </head>
     <body>
-        <jsp:include page="/Views/Shared/headerBody.jsp" />  
         <main class="container"> 
             <div class="row">
                 <div class="col l12 s12">
@@ -16,6 +15,6 @@
                 </div>
             </div>            
         </main>
-        <jsp:include page="/Views/Shared/footerBody.jsp" />      
+        
     </body>
 </html>

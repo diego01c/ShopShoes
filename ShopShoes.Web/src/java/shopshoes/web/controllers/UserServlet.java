@@ -218,8 +218,8 @@ public class UserServlet extends HttpServlet {
                     int result_ = ClientDAL.crear(client);
                     if (result_ != 0) {
                         if (result != 0) {
-                            request.setAttribute("accion", "index");
-                            doGetRequestCreate(request, response);
+                            request.setAttribute("accion", "login");
+                            doGetRequestLogin(request, response);
                         } else {
                             Utilidad.enviarError("Error al Guardar el Regisgtro", request, response);
                         }
