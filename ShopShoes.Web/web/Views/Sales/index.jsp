@@ -89,16 +89,15 @@
 
                                 <div class="row">
                                     <div class="input-field col s6">
-                                        <i class="material-icons prefix">account_circle</i>
                                         <input type="text" id="inputNumero" name ="UserName" required 
-                                               class="validate" maxlength="19" >
-                                        <label for="inputNumero">Número Tarjeta</label>
+                                               class="validate" maxlength="19" style="border: 1px solid black; border-radius: 10px;" >
+                                        <label for="inputNumero" style="background-color:#ffffff; margin-left: 10px; width: 120px">Número Tarjeta</label>
 
                                     </div>
 
                                     <div class="input-field col s6">
-                                        <label for="inputNombre">Nombre</label>
-                                        <input type="text" id="inputNombre" maxlength="19" autocomplete="off">
+                                        <label for="inputNombre" style="background-color:#ffffff; margin-left: 10px; width: 50px">Nombre</label>
+                                        <input type="text" id="inputNombre" maxlength="19" autocomplete="off"  style="border: 1px solid black; border-radius: 10px;">
                                     </div>
                                 </div>
 
@@ -107,13 +106,13 @@
 
                                         <label for="selectMes">Expiracion</label>
 
-                                        <input type="month" min="2023-01" value="2023-09"id="monthS">
+                                        <input type="month" min="2023-01" value="2023-09"id="monthS" style="width: 250px; margin-top: 20px">
 
                                     </div>
 
                                     <div class="input-field col s6">
-                                        <label for="inputCCV">CCV</label>
-                                        <input type="text" id="inputCCV" maxlength="3">
+                                        <label for="inputCCV" style="background-color:#ffffff; margin-left: 10px; width: 20px">CCV</label>
+                                        <input type="text" id="inputCCV" maxlength="3" style="border: 1px solid black; border-radius: 10px;">
                                     </div>
 
 
@@ -127,10 +126,13 @@
                         <div class="row">
                             <div class="col 112 s12">
                                 <button type="submit" class="waves-effect waves-light btn black">
-                                    <i class="material-icons right">save</i>Pagar
+                                    <i class="material-icons right"></i>Pagar
                                 </button>
 
                             </div>
+                        </div>
+                        <div class="row">
+                            
                         </div>
                         </form>
                     </div>

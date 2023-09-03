@@ -59,55 +59,52 @@ public class TrolleyServlet extends HttpServlet {
         }
         trolley.setId(Integer.parseInt(Utilidad.getParameter(request, "idtrolley", "0")));
         trolley.setIdProduct(Integer.parseInt(Utilidad.getParameter(request, "idProduct",
-                    "0")));
+                "0")));
         trolley.setQuantity(Integer.parseInt(Utilidad.getParameter(request, "quantity",
-                    "0")));
-        trolley.setStatusTrolley((byte)1);
-        if(accion.equals("create") == false)
-        {
+                "0")));
+        trolley.setStatusTrolley((byte) 1);
+        if (accion.equals("create") == false) {
             //Obtiene el parametro de Id del request y asigna el valor a la propiedad 
             //Id de la instancia
-            trolley.setStatusTrolley((byte)1);
+            trolley.setStatusTrolley((byte) 1);
             trolley.setIdProduct(Integer.parseInt(Utilidad.getParameter(request, "id",
                     "0")));
         }
-        if(accion.equals("index"))
-        {
-            trolley.setTop_aux(Integer.parseInt(Utilidad.getParameter(request, 
+        if (accion.equals("index")) {
+            trolley.setTop_aux(Integer.parseInt(Utilidad.getParameter(request,
                     "TopAux", "10")));
-            trolley.setTop_aux(trolley.getTop_aux() == 0 ? Integer.MAX_VALUE: trolley.getTop_aux());        }
-    return trolley;
+            trolley.setTop_aux(trolley.getTop_aux() == 0 ? Integer.MAX_VALUE : trolley.getTop_aux());
+        }
+        return trolley;
     }
-    private Products obtenerProduct(HttpServletRequest request)
-    {
+
+    private Products obtenerProduct(HttpServletRequest request) {
         String accion = Utilidad.getParameter(request, "accion", "index");
         Products product = new Products();
-        if(accion.equals("create") == false)
-        {
+        if (accion.equals("create") == false) {
             //Obtiene el parametro de Id del request y asigna el valor a la propiedad 
             //Id de la instancia
             product.setIdCategory(Integer.parseInt(Utilidad.getParameter(request, "id",
                     "0")));
         }
         product.setProductName(Utilidad.getParameter(request, "ProductName", ""));
-        if(accion.equals("index"))
-        {
-            product.setTopAux(Integer.parseInt(Utilidad.getParameter(request, 
+        if (accion.equals("index")) {
+            product.setTopAux(Integer.parseInt(Utilidad.getParameter(request,
                     "TopAux", "10")));
-            product.setTopAux(product.getTopAux() == 0 ? Integer.MAX_VALUE: product.getTopAux());
+            product.setTopAux(product.getTopAux() == 0 ? Integer.MAX_VALUE : product.getTopAux());
         }
         return product;
     }
+
     protected void doGetRequestIndex(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try
-        {     
+        try {
             Trolley trolley = obtenerTrolley(request);
             HttpSession session = (HttpSession) request.getSession();
             int inicio = (int) session.getAttribute("id_inicio");
-        Client client = new Client();
-        client = ClientDAL.obtenerPorId(inicio);
-        trolley.setIdClient(client.getId());
+            Client client = new Client();
+            client = ClientDAL.obtenerPorId(inicio);
+            trolley.setIdClient(client.getId());
             ArrayList<Trolley> trolleyss = TrolleyDAL.obtenerPorIdP(trolley);
             // Crear una lista para almacenar los objetos Productos
             ArrayList<Trolley> productsList = new ArrayList<>();
@@ -120,13 +117,13 @@ public class TrolleyServlet extends HttpServlet {
                 // Aquí podrías hacer una consulta a la base de datos o utilizar algún otro método
                 // para obtener el objeto Producto correspondiente al idProducto
                 Products products = ProductsDAL.obtenerPorId(product);
-                
+
                 Trolley carrito = new Trolley();
                 carrito.setProduct(products);
+                carrito.setId(trolleyssd.getId());
                 carrito.setIdClient(trolleyssd.getIdClient());
                 carrito.setIdProduct(trolleyssd.getIdProduct());
                 carrito.setQuantity(trolleyssd.getQuantity());
-                
 
                 if (products != null) {
                     productsList.add(carrito);
@@ -137,16 +134,14 @@ public class TrolleyServlet extends HttpServlet {
             request.setAttribute("products", productsList);
             request.setAttribute("TopAux", product.getTopAux());
             request.getRequestDispatcher("Views/Trolley/index.jsp").forward(request, response);
-        }
-        catch(Exception ex)
-        {
+        } catch (Exception ex) {
             Utilidad.enviarError(ex.getMessage(), request, response);
         }
     }
-        protected void doPostRequestIndex(HttpServletRequest request, HttpServletResponse response)
+
+    protected void doPostRequestIndex(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try
-        {
+        try {
             Trolley trolley = obtenerTrolley(request);
             Products product = obtenerProduct(request);
             int c = trolley.getIdProduct();
@@ -155,108 +150,86 @@ public class TrolleyServlet extends HttpServlet {
             request.setAttribute("products", products);
             request.setAttribute("TopAux", product.getTopAux());
             request.getRequestDispatcher("Views/Products/index.jsp").forward(request, response);
-        }
-        catch(Exception ex)
-        {
+        } catch (Exception ex) {
             Utilidad.enviarError(ex.getMessage(), request, response);
         }
-    }    
-        
-         protected void doGetRequestCreate(HttpServletRequest request, HttpServletResponse response)
+    }
+
+    protected void doGetRequestCreate(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            request.getRequestDispatcher("Views/Trolley/create.jsp")
-                    .forward(request, response);
-    }   
+        request.getRequestDispatcher("Views/Trolley/create.jsp")
+                .forward(request, response);
+    }
+
     protected void doPostRequestCreate(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try
-        {
+        try {
             Trolley trolley = obtenerTrolley(request);
             HttpSession session = (HttpSession) request.getSession();
             int inicio = (int) session.getAttribute("id_inicio");
-        Client client = new Client();
-        client = ClientDAL.obtenerPorId(inicio);
-        trolley.setIdClient(client.getId());
+            Client client = new Client();
+            client = ClientDAL.obtenerPorId(inicio);
+            trolley.setIdClient(client.getId());
             int validar = TrolleyDAL.obtenerIdPorIdProduct(trolley);
-            if(validar == 0)
-            {
+            if (validar == 0) {
                 int result = TrolleyDAL.crear(trolley);
-                if(result != 0)
-                {
+                if (result != 0) {
                     request.setAttribute("accion", "index");
                     doGetRequestIndex(request, response);
-                }
-                else
-                {
+                } else {
                     Utilidad.enviarError("Error al Guardar el Regisgtro", request, response);
                 }
             }
-            if(validar!=0)
-            {
+            if (validar != 0) {
                 Trolley trResul = TrolleyDAL.obtenerPorIdProduct(trolley);
                 trResul.setIdClient(client.getId());
                 int QuantityA = trolley.getQuantity();
                 int QuantityB = trResul.getQuantity();
-                int quantityF = QuantityA + QuantityB;               
+                int quantityF = QuantityA + QuantityB;
                 Inventory inventory = new Inventory();
                 inventory.setIdProduct(trResul.getIdProduct());
                 Inventory inventoryResul = InventoryDAL.obtenerPorIdProduct(inventory);
-                if(inventoryResul.getStock()==0)
-                {
+                if (inventoryResul.getStock() == 0) {
                     TrolleyDAL.eliminar(trResul);
                 }
 
-                    if(quantityF > inventoryResul.getStock())
-                    {
-                        trResul.setQuantity(inventoryResul.getStock());
-                        int trResulF = TrolleyDAL.modificar(trResul);
-                        if(trResulF == 1)
-                        {
-                            request.setAttribute("accion", "index");
-                            doGetRequestIndex(request, response);
-                        }
+                if (quantityF > inventoryResul.getStock()) {
+                    trResul.setQuantity(inventoryResul.getStock());
+                    int trResulF = TrolleyDAL.modificar(trResul);
+                    if (trResulF == 1) {
+                        request.setAttribute("accion", "index");
+                        doGetRequestIndex(request, response);
                     }
-                    else if(quantityF < inventoryResul.getStock())
-                    {
-                        trResul.setQuantity(quantityF);
-                        int trResult = TrolleyDAL.modificar(trResul);
-                        if(trResult != 0)
-                        {
-                            request.setAttribute("accion", "index");
-                            doGetRequestIndex(request, response);
-                        }
-                    }    
+                } else if (quantityF < inventoryResul.getStock()) {
+                    trResul.setQuantity(quantityF);
+                    int trResult = TrolleyDAL.modificar(trResul);
+                    if (trResult != 0) {
+                        request.setAttribute("accion", "index");
+                        doGetRequestIndex(request, response);
+                    }
+                }
             }
-        }
-        catch(Exception ex)
-        {
-            Utilidad.enviarError(ex.getMessage(), request, response);
-        }
-    }        
-    protected void doPostRequestDelete(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try
-        {
-            Trolley trolley = obtenerTrolley(request);
-            int result = TrolleyDAL.eliminar(trolley);
-            if(result != 0)
-            {
-                request.setAttribute("accion", "index");
-                doGetRequestIndex(request, response);
-            }
-            else
-            {
-                Utilidad.enviarError("Error al Eliminar el Regisgtro", request, response);
-            }
-
-        }
-        catch(Exception ex)
-        {
+        } catch (Exception ex) {
             Utilidad.enviarError(ex.getMessage(), request, response);
         }
     }
- 
-    
+
+    protected void doPostRequestDelete(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            Trolley trolley = obtenerTrolley(request);
+            int result = TrolleyDAL.eliminar(trolley);
+            if (result != 0) {
+                request.setAttribute("accion", "index");
+                doGetRequestIndex(request, response);
+            } else {
+                Utilidad.enviarError("Error al Eliminar el Regisgtro", request, response);
+            }
+
+        } catch (Exception ex) {
+            Utilidad.enviarError(ex.getMessage(), request, response);
+        }
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -270,11 +243,10 @@ public class TrolleyServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                SessionUser.authorize(request, response, () -> {
-            String accion = Utilidad.getParameter(request, 
+        SessionUser.authorize(request, response, () -> {
+            String accion = Utilidad.getParameter(request,
                     "accion", "index");
-            switch(accion)
-            {
+            switch (accion) {
                 case "index":
                     request.setAttribute("accion", accion);
                     doGetRequestIndex(request, response);
@@ -302,27 +274,26 @@ public class TrolleyServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         String accion = Utilidad.getParameter(request, 
-                    "accion", "index");
-            switch(accion)
-            {
-                case "index":
-                    request.setAttribute("accion", accion);
-                    doPostRequestIndex(request, response);
-                    break;
-                case "create":
-                    request.setAttribute("accion", accion);
-                    doPostRequestCreate(request, response);
-                    break;
-                case "delete":
-                    request.setAttribute("accion", accion);
-                    doPostRequestDelete(request, response);
-                    break;
-                default:
-                    request.setAttribute("accion", accion);
-                    doGetRequestIndex(request, response);
-                    break;
-            }
+        String accion = Utilidad.getParameter(request,
+                "accion", "index");
+        switch (accion) {
+            case "index":
+                request.setAttribute("accion", accion);
+                doPostRequestIndex(request, response);
+                break;
+            case "create":
+                request.setAttribute("accion", accion);
+                doPostRequestCreate(request, response);
+                break;
+            case "delete":
+                request.setAttribute("accion", accion);
+                doPostRequestDelete(request, response);
+                break;
+            default:
+                request.setAttribute("accion", accion);
+                doGetRequestIndex(request, response);
+                break;
+        }
     }
 
     /**

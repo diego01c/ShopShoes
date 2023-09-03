@@ -2,7 +2,9 @@
 <%@page import="shopshoes.entidadesdenegocio.Products"%>
 <%@page import="shopshoes.entidadesdenegocio.Client"%>
 <%@page import="shopshoes.entidadesdenegocio.Trolley"%>
+<%@page import="shopshoes.entidadesdenegocio.Inventory"%>
 <%@page import="shopshoes.accesoadatos.TrolleyDAL"%>
+<%@page import="shopshoes.accesoadatos.InventoryDAL"%>
 <%@page import="shopshoes.web.utils.*"%>
 <%@page import="java.util.ArrayList"%>
 <% Trolley trolley = (Trolley) request.getAttribute("trolley");%>
@@ -46,13 +48,13 @@
                         visibleorNot = "";
                     }
                 %>
-                <div class="row">
+                <div class="row" style="margin-top: 1%">
                     <div class="col s12">
                         <a href="Direction?accion=index" 
-                                       title="Crear" class="waves-effect waves-light btn black" style="float: right;" <%=visibleorNot%>>
-                                        <i class="material-icons right">add_shopping_cart</i> Pagar
-                                    </a>
-                       
+                           title="Crear" class="waves-effect waves-light btn black" style="float: right;" <%=visibleorNot%>>
+                            <i class="material-icons right"></i> Pagar
+                        </a>
+
                     </div>
                 </div>
                 <div class="paginationjs">
@@ -74,11 +76,10 @@
                                 <div class="card-content black-text">
                                     <span class="card-title"><%=product.getProduct().getProductName()%></span>
                                     <center><img src="<%=product.getProduct().getProductImage()%>" height="200"/></center>
-                                    <%      
-                                       
-                                       double totalCosto = product.getQuantity() * product.getProduct().getCost();
-                                    %>
-                                    <div class="row">
+                                        <%                                        
+                                           double totalCosto = product.getQuantity() * product.getProduct().getCost();
+                                        %>
+                                    <div class="row " style="margin-top:1%;">
                                         <div class="col s6">
                                             <p>Costo Total:</p>
                                         </div>
@@ -86,24 +87,27 @@
                                             <p>$<%=totalCosto%></p> 
                                         </div>
                                     </div>
-
+                                    <%Inventory inventory = new Inventory();
+                                    inventory.setIdProduct(product.getIdProduct());
+                                    Inventory inventoryResult = InventoryDAL.obtenerPorIdProduct(inventory);
+                                    int productStock = inventoryResult.getStock();%>
                                     <div class="row">
                                         <div class="col s6">
                                             <p>Unidades:</p>
+
                                         </div>
                                         <div class="col s4">
                                             <p  name="quantity" id="quantity" readonly ><%=product.getQuantity()%></p>
+
                                         </div>
+                                        <p  class="grey-text"style="font-size:15px; float:right;">Disponibles: <%=productStock%></p>
                                     </div>
                                     <form action="Trolley" method="post" >
-                                        <div class="row">
-                                            <div class="col s6">
-                                                <p></p>
-                                            </div>
-                                            <div class="col s4">
+                                        <div class="row" style="margin-top:1%">
+                                            <div class="col s12">
                                                 <input type="hidden" name="accion" value="delete">
                                                 <input type="hidden" name="idtrolley" value="<%=product.getId()%>">
-                                                <button type="submit" >Delete</button>
+                                                <button type="submit" class="waves-effect waves-light btn black" style="width: 100%" >Delete</button>
                                             </div>
                                         </div>
                                     </form>                              

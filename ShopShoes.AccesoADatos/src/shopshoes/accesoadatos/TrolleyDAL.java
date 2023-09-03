@@ -417,4 +417,20 @@ public class TrolleyDAL {
         
         return trolley;
     }
+    public static int contarRegistrosActivos() throws Exception {
+      int count = 0;
+      String sql = "SELECT COUNT(*) FROM Trolley WHERE StatusTrolley = 1";
+
+      try (Connection conn = ComunDB.obtenerConexion();
+           PreparedStatement ps = conn.prepareStatement(sql);
+           ResultSet rs = ps.executeQuery()) {
+          if (rs.next()) {
+              count = rs.getInt(1);
+          }
+      } catch (SQLException ex) {
+          throw ex;
+      }
+
+      return count;
+  }
 }

@@ -9,7 +9,7 @@
     </head>
     <body>
         <jsp:include page="/Views/Shared/headerBody.jsp" />
-        <main>
+        <main style="margin-left: 15%;margin-right: 15%; margin-top: 5%">
             <h5>Cambiar Password</h5>
             <form action="User" method="post" onsubmit="return validarFormulario()">
                 <input type="hidden" name="accion" 
@@ -17,29 +17,29 @@
                 <input type="hidden" name="id" value="<%=usuario.getId()%>">
                  <input type="hidden" id="txtLo" name ="Mail" required 
                                class="validate" maxlength="25" 
-                               value="<%=usuario.getMail()%>" readonly>
+                               value="<%=usuario.getMail()%>" readonly style="border: 1px solid black; border-radius: 10px;">
                 <div class="row">
                     <div class="input-field col 14 s12">
                         <input type="text" id="txtLogin" name ="UserName" required 
                                class="validate" maxlength="25" 
-                               value="<%=usuario.getUserName()%>" readonly>
-                        <label for="txtLogin">Login</label>
+                               value="<%=usuario.getUserName()%>" readonly style="border: 1px solid black; border-radius: 10px;">
+                        <label for="txtLogin" style="background-color:#ffffff; margin-left: 10px; width: 50px">Login</label>
                     </div>
                     <div class="input-field col 14 s12">
                         <input type="password" id="txtPassActual" name ="passwordActual" required 
-                               class="validate" minlength="5" maxlength="32">
-                        <label for="txtPassActual">Password Actual</label>
+                               class="validate" minlength="5" maxlength="32" style="border: 1px solid black; border-radius: 10px;">
+                        <label for="txtPassActual" style="background-color:#ffffff; margin-left: 10px;width: 120px">Password Actual</label>
                     </div>
                     <div class="input-field col 14 s12">
                         <input type="password" id="txtPassword" name ="Pass" required 
-                               class="validate" minlength="5" maxlength="32">
-                        <label for="txtPassword">Password</label>
+                               class="validate" minlength="5" maxlength="32" style="border: 1px solid black; border-radius: 10px;">
+                        <label for="txtPassword" style="background-color:#ffffff; margin-left: 10px;width: 70px">Password</label>
                     </div>
                     <div class="input-field col 14 s12">
                         <input type="password" id="txtConfirmPassword_aux" 
                                name ="confirmPassword_aux" required class="validate" 
-                               minlength="5" maxlength="32">
-                        <label for="txtConfirmPassword_aux">Password</label>
+                               minlength="5" maxlength="32" style="border: 1px solid black; border-radius: 10px;">
+                        <label for="txtConfirmPassword_aux" style="background-color:#ffffff; margin-left: 10px;width: 70px">Password</label>
                         <span id="txtConfirmPassword_aux_error" 
                               style="color:red;font-weight: bold" class="helper-text">
                         </span>
@@ -47,13 +47,13 @@
                                   
                 </div>
                 <div class="row">
-                    <div class="col 112 s12">
-                        <button type="submit" class="waves-effect waves-light btn blue">
-                            <i class="material-icons right">swap_horiz</i>Cambiar Password
-                        </button>
-                        <a href="Home" class="waves-effect waves-light btn blue">
-                            <i class="material-icons right">list</i>Inicio
+                    <div class="col 112 s12 right-align">
+                        <a href="Home" class="waves-effect waves-light btn black-text" style="background-color: white; border:2px solid black">
+                            <i class="material-icons right"></i>Cancelar
                         </a>
+                        <button type="submit" class="waves-effect waves-light btn grey darken-4">
+                            <i class="material-icons right"></i>Cambiar Password
+                        </button>   
                     </div>
                 </div>
             </form>

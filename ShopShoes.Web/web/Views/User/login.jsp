@@ -36,14 +36,14 @@
                                value="<%=request.getAttribute("accion")%>">
                         <div class="row">
                             <div class="input-field col 15 s12">
-                                <input class="white-text" type="text" id="txtLogin" name="UserName"
-                                       required class="validate" maxlength="25" style="border: 1px solid grey; border-radius: 10px;">
+                                <input class="black-text" type="text" id="txtLogin" name="UserName"
+                                       required class="validate" maxlength="25" style="border: 1px solid grey; border-radius: 10px; ">
                                 <label for="txtLogin" style="background-color:#ffffff; margin-left: 10px;">Login</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col 15 s12">
-                                <input class="white-text" type="password" id="txtPassword" name="Pass"
+                                <input class="black-text" type="password" id="txtPassword" name="Pass"
                                        required class="validate" minlength="5" style="border: 1px solid grey; border-radius: 10px;">
                                 <label for="txtPassword" style="background-color:#ffffff; margin-left: 10px;">Password</label>
                             </div>
