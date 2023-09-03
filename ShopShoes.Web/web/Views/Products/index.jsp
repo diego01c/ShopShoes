@@ -51,13 +51,12 @@
                                 <div class="card-content black-text">
                                     <span class="card-title"><%=product.getProductName()%></span>
                                     <center><img src="<%=product.getProductImage()%>" height="200"/></center>
-
-                                    <p>$<%=product.getCost()%></p>
+                                    <p class="red-text">$<%=product.getCost()%></p>
                                 </div>
                                 <div class="card-action">
                                     <a href="Products?accion=details&id=<%=product.getId()%>" 
-                                       title="Añadir" class="btn-floating btn-large waves-effect waves-light purple">
-                                        <i class="material-icons">add_shopping_cart</i>
+                                       title="Añadir" class="btn-large btn-large waves-effect grey darken-4" style="width: 100%">
+                                        <i class="material-icons"></i>Comprar
                                     </a>
                                 </div>
                             </div>

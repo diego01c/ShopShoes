@@ -23,74 +23,58 @@
 
         }
     </style>
-    <body class="back-image1">
-
-        <div class="row center-align">
+    <body style="background-color:#ffffff; margin-top: 10%">
+        <div class="row center-align" >
             <div class="col s12 m4 12">
-
             </div>
             <div class="col s12 m4 18">
-                <div class="card login">
-                    <div class="card-content white-text">
-                        <h5>INICIAR SESION</h5>
-                        <form action="User?accion=login" method="post">
-                            <input type="hidden" name="accion" 
-                                   value="<%=request.getAttribute("accion")%>">
-                            <div class="row">
-                                <div class="input-field col 15 s12">
-                                    <i class="material-icons prefix">account_circle</i>
-                                    <input class="white-text" type="text" id="txtLogin" name="UserName"
-                                           required class="validate" maxlength="25">
-                                    <label for="txtLogin">Login</label>
-                                </div>
+                <div class="card-content white-text">
+                    <h5 class="black-text">INICIAR SESION</h5>
+                    <h6 class="black-text">O registrate para acceder</h6>
+                    <form action="User?accion=login" method="post">
+                        <input type="hidden" name="accion" 
+                               value="<%=request.getAttribute("accion")%>">
+                        <div class="row">
+                            <div class="input-field col 15 s12">
+                                <input class="white-text" type="text" id="txtLogin" name="UserName"
+                                       required class="validate" maxlength="25" style="border: 1px solid grey; border-radius: 10px;">
+                                <label for="txtLogin" style="background-color:#ffffff; margin-left: 10px;">Login</label>
                             </div>
-                            <div class="row">
-                                <div class="input-field col 15 s12">
-                                    <i class="material-icons prefix">enhanced_encryption</i>
-                                    <input class="white-text" type="password" id="txtPassword" name="Pass"
-                                           required class="validate" minlength="5">
-                                    <label for="txtPassword">Password</label>
-                                </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col 15 s12">
+                                <input class="white-text" type="password" id="txtPassword" name="Pass"
+                                       required class="validate" minlength="5" style="border: 1px solid grey; border-radius: 10px;">
+                                <label for="txtPassword" style="background-color:#ffffff; margin-left: 10px;">Password</label>
                             </div>
-                            <div class="row">
-                                <div class="col 112 s12">
-                                    <button type="submit" class="waves-effect waves-light btn teal darken-4">
-                                        <i class="material-icons right">send</i>Iniciar Sesion
-                                    </button>
-                                </div>
+                        </div>
+                        <div class="row">
+                            <div class="col 112 s12">
+                                <a href="User?accion=crearcuenta" 
+                                   title="Crear" class="waves-effect waves-light btn black-text"  style="float:left; background-color: white; border: 1px solid black" >
+                                    Registrarme
+                                </a>
+                                <button type="submit" class="waves-effect waves-light btn grey darken-4" style="float:right;">
+                                    <i class="material-icons right"></i>Iniciar Sesion
+                                </button>
                             </div>
-                            <%
-                              if(request.getAttribute("error") != null)
-                                {
-                            %>
-                            <div class="row">
-                                <div class="col 112 s12">
-                                    <span style="color:red;font-weight:bold">
-                                        <%= request.getAttribute("error") %>
-                                    </span>
-                                </div>
+                        </div>
+                        <%
+                          if(request.getAttribute("error") != null)
+                            {
+                        %>
+                        <div class="row">
+                            <div class="col 112 s12">
+                                <span style="color:red;font-weight:bold">
+                                    <%= request.getAttribute("error") %>
+                                </span>
                             </div>
-                            <%}%>
-                            <div class="row">
-                                <div class="col s6 center-align">
-                                    <p class="white-text text-accent-4">
-                                        ¿No tienes cuenta?
-                                    </p>
-                                </div>
-                                <div class="col s6">
-                                    <a href="User?accion=crearcuenta" 
-                                       title="Crear" class="waves-effect waves-light btn transparent">
-                                        Crear Cuenta
-                                    </a>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-
+                        </div>
+                        <%}%>                      
+                    </form>
                 </div>
             </div>
             <div class="col s12 m4 12">
-
             </div>
         </div>
 

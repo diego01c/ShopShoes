@@ -30,12 +30,13 @@
     <a href="#" data-target="slide-out" class="sidenav-trigger" ><i class="material-icons" style="color: black; font-size: 50px;">dehaze</i></a>
     <ul id="slide-out" class="sidenav">
         <% if (SessionUser.isAuth(request)) {  %> 
-       <li><a href="Home">Inicio</a></li>
-       <li><a href="Category">Categorias</a></li>
-       <li><a href="User?accion=crearcuenta">CrearCuenta</a></li>
-       <li><a href="User?accion=cambiarpass">Cambiar password</a></li>
-       <li><a href="User?accion=perfil"><%=session.getAttribute("user")%></a></li>
-       <li><a href="User?accion=login">Cerrar sesión</a></li>
+       <li style="height: 5%"><a href="Home">Inicio</a></li>
+       <li style="height: 5%"><a href="Category">Categorias</a></li>
+       <li style="height: 5%"><a href="User?accion=crearcuenta">CrearCuenta</a></li>
+       <li style="height: 5%"><a href="User?accion=cambiarpass">Cambiar password</a></li>
+       <li style="height: 5%"><a href="User?accion=perfil"><%=session.getAttribute("user")%></a></li>
+       <li style="height: 70%"></li>
+       <li style="height: 5%"><a href="User?accion=login">Cerrar sesión</a></li>
         <%}%>
     </ul>
 </div>
