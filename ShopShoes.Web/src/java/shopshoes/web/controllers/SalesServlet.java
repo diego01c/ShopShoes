@@ -74,6 +74,7 @@ public class SalesServlet extends HttpServlet {
                 
                 direccion = DirectionDAL.obtenerPorId(direccion_);
                 compra.setIdDirection(direccion.getId());
+
                 compra.setIdPaymentMethod(1);
                 compra.setIdTrolley(trolleyssd.getId());
                 Products product = new Products();

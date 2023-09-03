@@ -49,13 +49,13 @@
                         <div class="col s4">
                             <div class="card white" data-page="<%=tempNumPage%>">
                                 <div class="card-content black-text">
-                                    <span class="card-title"><%=category.getCategoryName()%></span>
+                                    <span class="card-title"></span>
                                     <center><img src="<%=category.getCategoryImage()%>" height="200"/></center>
                                 </div>
                                 <div class="card-action">
                                     <a href="Products?accion=index&id=<%=category.getId()%>" 
-                                       title="Añadir" class="btn-floating btn-large waves-effect waves-light purple">
-                                        <i class="material-icons">remove_red_eye</i>
+                                       title="Añadir" class="btn-large btn-large waves-effect grey darken-4" style="width: 100%">
+                                        <i class="material-icons"></i><%=category.getCategoryName()%>
                                     </a>
                                 </div>
                             </div>
