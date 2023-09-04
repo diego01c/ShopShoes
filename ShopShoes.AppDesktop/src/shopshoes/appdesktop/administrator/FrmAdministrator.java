@@ -13,6 +13,7 @@ import java.util.Random;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import rojerusan.RSTableMetro;
 import shopshoes.accesoadatos.AdministratorDAL;
 import shopshoes.accesoadatos.PaymentMethodDAL;
 import shopshoes.accesoadatos.UsersDAL;
@@ -42,7 +43,7 @@ public class FrmAdministrator extends javax.swing.JFrame {
     }
 
     private void CargarTabla() {
-        this.tblAdministradores = new JTable(modelo);
+        tblAdministradores.setModel(modelo);
         tblAdministradores.setDefaultRenderer(Object.class, new TablaImagen());
 
         modelo.setRowCount(0);
@@ -72,7 +73,7 @@ public class FrmAdministrator extends javax.swing.JFrame {
                 this.modelo.addRow(fila);
 
                 this.tblAdministradores.updateUI();
-                this.jScrollPane1.setViewportView(tblAdministradores);
+                this.jScrollPane2.setViewportView(tblAdministradores);
             }
         } catch (Exception ex) {
 
@@ -89,7 +90,8 @@ public class FrmAdministrator extends javax.swing.JFrame {
     
 
     private void Buscar() {
-        this.tblAdministradores = new JTable(modelo);
+        //this.tblAdministradores = new JTable(modelo);
+        tblAdministradores.setModel(modelo);
         tblAdministradores.setDefaultRenderer(Object.class, new TablaImagen());
 
         modelo.setRowCount(0);
@@ -121,7 +123,7 @@ public class FrmAdministrator extends javax.swing.JFrame {
                 this.modelo.addRow(fila);
 
                 this.tblAdministradores.updateUI();
-                this.jScrollPane1.setViewportView(tblAdministradores);
+                this.jScrollPane2.setViewportView(tblAdministradores);
             }
         } catch (Exception ex) {
 
@@ -138,36 +140,18 @@ public class FrmAdministrator extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblAdministradores = new javax.swing.JTable();
         LIMPIAR = new javax.swing.JButton();
         btnCargar = new javax.swing.JButton();
         txtName = new javax.swing.JTextField();
         txtLast = new javax.swing.JTextField();
         btnNuevo = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblAdministradores = new rojerusan.RSTableMetro();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
-
-        tblAdministradores.setBackground(new java.awt.Color(153, 153, 153));
-        tblAdministradores.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        tblAdministradores.setGridColor(new java.awt.Color(153, 153, 153));
-        tblAdministradores.setSelectionBackground(new java.awt.Color(153, 153, 153));
-        tblAdministradores.setSelectionForeground(new java.awt.Color(255, 255, 255));
-        tblAdministradores.setShowGrid(false);
-        jScrollPane1.setViewportView(tblAdministradores);
 
         LIMPIAR.setBackground(new java.awt.Color(0, 0, 0));
         LIMPIAR.setForeground(new java.awt.Color(255, 255, 255));
@@ -221,35 +205,66 @@ public class FrmAdministrator extends javax.swing.JFrame {
             }
         });
 
+        tblAdministradores.setBackground(new java.awt.Color(153, 153, 153));
+        tblAdministradores.setForeground(new java.awt.Color(255, 255, 255));
+        tblAdministradores.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tblAdministradores.setAltoHead(35);
+        tblAdministradores.setColorBackgoundHead(new java.awt.Color(0, 0, 0));
+        tblAdministradores.setColorBordeFilas(new java.awt.Color(153, 153, 153));
+        tblAdministradores.setColorFilasBackgound1(new java.awt.Color(153, 153, 153));
+        tblAdministradores.setColorFilasBackgound2(new java.awt.Color(153, 153, 153));
+        tblAdministradores.setColorFilasForeground1(new java.awt.Color(255, 255, 255));
+        tblAdministradores.setColorFilasForeground2(new java.awt.Color(255, 255, 255));
+        tblAdministradores.setColorSelBackgound(new java.awt.Color(255, 255, 255));
+        tblAdministradores.setFuenteFilas(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        tblAdministradores.setFuenteFilasSelect(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        tblAdministradores.setFuenteHead(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tblAdministradores.setGridColor(new java.awt.Color(153, 153, 153));
+        tblAdministradores.setGrosorBordeFilas(0);
+        tblAdministradores.setGrosorBordeHead(0);
+        tblAdministradores.setRowHeight(30);
+        tblAdministradores.setSelectionBackground(new java.awt.Color(0, 0, 0));
+        tblAdministradores.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        jScrollPane2.setViewportView(tblAdministradores);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(28, 28, 28)
-                            .addComponent(LIMPIAR, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(32, 32, 32)
-                            .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnCargar))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 695, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(LIMPIAR, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(225, 225, 225)
+                        .addComponent(btnCargar))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(txtLast, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(38, 38, 38)
-                        .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2))
                 .addContainerGap(68, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtLast, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -341,8 +356,8 @@ public class FrmAdministrator extends javax.swing.JFrame {
     private javax.swing.JButton btnCargar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblAdministradores;
+    private javax.swing.JScrollPane jScrollPane2;
+    private rojerusan.RSTableMetro tblAdministradores;
     private javax.swing.JTextField txtLast;
     private javax.swing.JTextField txtName;
     // End of variables declaration//GEN-END:variables

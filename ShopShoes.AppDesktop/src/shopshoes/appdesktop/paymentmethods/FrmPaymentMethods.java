@@ -37,7 +37,7 @@ public class FrmPaymentMethods extends javax.swing.JFrame {
     }
 
     private void CargarTabla() {
-        this.tblMetodos = new JTable(modelo);
+       tblMetodos.setModel(modelo);
         tblMetodos.setDefaultRenderer(Object.class, new TablaImagen());
 
         modelo.setRowCount(0);
@@ -61,7 +61,7 @@ public class FrmPaymentMethods extends javax.swing.JFrame {
                 this.modelo.addRow(fila);
 
                 this.tblMetodos.updateUI();
-                this.jScrollPane1.setViewportView(tblMetodos);
+                this.jScrollPane2.setViewportView(tblMetodos);
             }
         } catch (Exception ex) {
 
@@ -80,7 +80,7 @@ public class FrmPaymentMethods extends javax.swing.JFrame {
     
 
     private void Buscar() {
-       this.tblMetodos = new JTable(modelo);
+       tblMetodos.setModel(modelo);
         tblMetodos.setDefaultRenderer(Object.class, new TablaImagen());
 
         modelo.setRowCount(0);
@@ -104,7 +104,7 @@ public class FrmPaymentMethods extends javax.swing.JFrame {
                 this.modelo.addRow(fila);
 
                 this.tblMetodos.updateUI();
-                this.jScrollPane1.setViewportView(tblMetodos);
+                this.jScrollPane2.setViewportView(tblMetodos);
             }
         } catch (Exception ex) {
 
@@ -121,31 +121,18 @@ public class FrmPaymentMethods extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblMetodos = new javax.swing.JTable();
         txtNombre = new javax.swing.JTextField();
         btnNuevo = new javax.swing.JButton();
         btnActu = new javax.swing.JButton();
         btnVer = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
         btnCargar = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblMetodos = new rojerusan.RSTableMetro();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
-
-        tblMetodos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(tblMetodos);
 
         txtNombre.setBackground(new java.awt.Color(153, 153, 153));
         txtNombre.setForeground(new java.awt.Color(255, 255, 255));
@@ -206,34 +193,65 @@ public class FrmPaymentMethods extends javax.swing.JFrame {
             }
         });
 
+        tblMetodos.setBackground(new java.awt.Color(153, 153, 153));
+        tblMetodos.setForeground(new java.awt.Color(255, 255, 255));
+        tblMetodos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tblMetodos.setAltoHead(35);
+        tblMetodos.setColorBackgoundHead(new java.awt.Color(0, 0, 0));
+        tblMetodos.setColorBordeFilas(new java.awt.Color(153, 153, 153));
+        tblMetodos.setColorFilasBackgound1(new java.awt.Color(153, 153, 153));
+        tblMetodos.setColorFilasBackgound2(new java.awt.Color(153, 153, 153));
+        tblMetodos.setColorFilasForeground1(new java.awt.Color(255, 255, 255));
+        tblMetodos.setColorFilasForeground2(new java.awt.Color(255, 255, 255));
+        tblMetodos.setColorSelBackgound(new java.awt.Color(255, 255, 255));
+        tblMetodos.setFuenteFilas(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        tblMetodos.setFuenteFilasSelect(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        tblMetodos.setFuenteHead(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tblMetodos.setGridColor(new java.awt.Color(153, 153, 153));
+        tblMetodos.setGrosorBordeFilas(0);
+        tblMetodos.setGrosorBordeHead(0);
+        tblMetodos.setRowHeight(30);
+        tblMetodos.setSelectionBackground(new java.awt.Color(0, 0, 0));
+        tblMetodos.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        jScrollPane2.setViewportView(tblMetodos);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(btnActu)
-                            .addGap(27, 27, 27)
-                            .addComponent(btnVer, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnCargar))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 695, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnActu)
+                        .addGap(27, 27, 27)
+                        .addComponent(btnVer, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(146, 146, 146)
+                        .addComponent(btnCargar)))
                 .addContainerGap(144, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
                 .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -343,8 +361,8 @@ public class FrmPaymentMethods extends javax.swing.JFrame {
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnVer;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblMetodos;
+    private javax.swing.JScrollPane jScrollPane2;
+    private rojerusan.RSTableMetro tblMetodos;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }

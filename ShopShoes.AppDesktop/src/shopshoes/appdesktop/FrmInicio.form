@@ -104,13 +104,16 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="btnCategories" alignment="0" max="32767" attributes="0"/>
-                  <Component id="btnRoles" alignment="0" max="32767" attributes="0"/>
                   <Component id="btnInventario" alignment="0" max="32767" attributes="0"/>
                   <Component id="btnAdmin" alignment="0" max="32767" attributes="0"/>
                   <Component id="btnMetodos" alignment="1" max="32767" attributes="0"/>
+                  <Component id="btnRoles" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace pref="11" max="32767" attributes="0"/>
-                      <Component id="btnCerrarSesion" min="-2" pref="218" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="btnCerrarSesion" alignment="1" min="-2" pref="218" max="-2" attributes="0"/>
+                          <Component id="btnCerrarSesion1" alignment="1" min="-2" pref="218" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -119,6 +122,8 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
+                      <Component id="btnCerrarSesion1" min="-2" pref="41" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                       <Component id="btnAdmin" min="-2" pref="56" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnCategories" min="-2" pref="52" max="-2" attributes="0"/>
@@ -128,7 +133,7 @@
                       <Component id="btnRoles" min="-2" pref="56" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnInventario" min="-2" pref="61" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="107" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
                       <Component id="btnCerrarSesion" min="-2" pref="41" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                   </Group>
@@ -147,13 +152,13 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="2" name="C:\Users\MINEDUCYT\Downloads\categorias_.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="             CATEGORIAS"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
                     <MatteColorBorder/>
                   </Border>
                 </Property>
                 <Property name="focusPainted" type="boolean" value="false"/>
+                <Property name="label" type="java.lang.String" value="                  CATEGORIAS"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCategoriesActionPerformed"/>
@@ -193,13 +198,13 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="2" name="C:\Users\MINEDUCYT\Downloads\roles_.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="                        ROLES"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
                     <MatteColorBorder/>
                   </Border>
                 </Property>
                 <Property name="focusPainted" type="boolean" value="false"/>
+                <Property name="label" type="java.lang.String" value="                             ROLES"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRolesActionPerformed"/>
@@ -216,13 +221,13 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="2" name="C:\Users\MINEDUCYT\Downloads\inventario_.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="              INVENTARIO"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
                     <MatteColorBorder/>
                   </Border>
                 </Property>
                 <Property name="focusPainted" type="boolean" value="false"/>
+                <Property name="label" type="java.lang.String" value="                    INVENTARIO"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInventarioActionPerformed"/>
@@ -239,7 +244,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="2" name="C:\Users\MINEDUCYT\Downloads\admin_.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="        ADMINISTRADOR"/>
+                <Property name="text" type="java.lang.String" value="           ADMINISTRADOR"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
                     <MatteColorBorder/>
@@ -263,6 +268,26 @@
                 <Property name="borderPainted" type="boolean" value="false"/>
                 <Property name="doubleBuffered" type="boolean" value="true"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCerrarSesionActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnCerrarSesion1">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="33" green="33" red="33" type="rgb"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="INICIO"/>
+                <Property name="borderPainted" type="boolean" value="false"/>
+                <Property name="doubleBuffered" type="boolean" value="true"/>
+                <Property name="focusPainted" type="boolean" value="false"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCerrarSesion1ActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

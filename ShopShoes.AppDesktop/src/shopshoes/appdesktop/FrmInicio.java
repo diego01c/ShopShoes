@@ -30,6 +30,12 @@ private JButton currentBtn;
      */
     public FrmInicio() {
         initComponents();
+        this.setExtendedState(FrmInicio.MAXIMIZED_BOTH);
+         disableButton();
+        currentChildForm = new Home();
+       OpenChildForm(new Home());
+       lblPantalla.setText("INICIO");
+      
     }
     
      private void OpenChildForm(JFrame childForm)
@@ -73,7 +79,8 @@ private JButton currentBtn;
             // Botón0
             currentBtn = null;
             currentBtn = (JButton) senderBtn;
-            currentBtn.setBackground(new Color(100, 100, 100, 128));
+            //currentBtn.setBackground(new Color(100, 100, 100, 128));
+            currentBtn.setBackground(new Color(50, 50, 50));
             currentBtn.setForeground(color);
            Border bordeIzquierdo = BorderFactory.createMatteBorder(0, 5, 0, 0, color); // Ajusta el color y el ancho del borde izquierdo
         
@@ -135,6 +142,7 @@ private JButton currentBtn;
         btnInventario = new javax.swing.JButton();
         btnAdmin = new javax.swing.JButton();
         btnCerrarSesion = new javax.swing.JButton();
+        btnCerrarSesion1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         lblPantalla = new javax.swing.JLabel();
 
@@ -160,9 +168,9 @@ private JButton currentBtn;
         btnCategories.setBackground(new java.awt.Color(0, 0, 0));
         btnCategories.setForeground(new java.awt.Color(255, 255, 255));
         btnCategories.setIcon(new javax.swing.ImageIcon("C:\\Users\\MINEDUCYT\\Downloads\\categorias_.png")); // NOI18N
-        btnCategories.setText("             CATEGORIAS");
         btnCategories.setBorder(new javax.swing.border.MatteBorder(null));
         btnCategories.setFocusPainted(false);
+        btnCategories.setLabel("                  CATEGORIAS");
         btnCategories.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCategoriesActionPerformed(evt);
@@ -184,9 +192,9 @@ private JButton currentBtn;
         btnRoles.setBackground(new java.awt.Color(0, 0, 0));
         btnRoles.setForeground(new java.awt.Color(255, 255, 255));
         btnRoles.setIcon(new javax.swing.ImageIcon("C:\\Users\\MINEDUCYT\\Downloads\\roles_.png")); // NOI18N
-        btnRoles.setText("                        ROLES");
         btnRoles.setBorder(new javax.swing.border.MatteBorder(null));
         btnRoles.setFocusPainted(false);
+        btnRoles.setLabel("                             ROLES");
         btnRoles.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRolesActionPerformed(evt);
@@ -196,9 +204,9 @@ private JButton currentBtn;
         btnInventario.setBackground(new java.awt.Color(0, 0, 0));
         btnInventario.setForeground(new java.awt.Color(255, 255, 255));
         btnInventario.setIcon(new javax.swing.ImageIcon("C:\\Users\\MINEDUCYT\\Downloads\\inventario_.png")); // NOI18N
-        btnInventario.setText("              INVENTARIO");
         btnInventario.setBorder(new javax.swing.border.MatteBorder(null));
         btnInventario.setFocusPainted(false);
+        btnInventario.setLabel("                    INVENTARIO");
         btnInventario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInventarioActionPerformed(evt);
@@ -208,7 +216,7 @@ private JButton currentBtn;
         btnAdmin.setBackground(new java.awt.Color(0, 0, 0));
         btnAdmin.setForeground(new java.awt.Color(255, 255, 255));
         btnAdmin.setIcon(new javax.swing.ImageIcon("C:\\Users\\MINEDUCYT\\Downloads\\admin_.png")); // NOI18N
-        btnAdmin.setText("        ADMINISTRADOR");
+        btnAdmin.setText("           ADMINISTRADOR");
         btnAdmin.setBorder(new javax.swing.border.MatteBorder(null));
         btnAdmin.setFocusPainted(false);
         btnAdmin.addActionListener(new java.awt.event.ActionListener() {
@@ -222,25 +230,46 @@ private JButton currentBtn;
         btnCerrarSesion.setText("CERRAR SESION");
         btnCerrarSesion.setBorderPainted(false);
         btnCerrarSesion.setDoubleBuffered(true);
+        btnCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarSesionActionPerformed(evt);
+            }
+        });
+
+        btnCerrarSesion1.setBackground(new java.awt.Color(51, 51, 51));
+        btnCerrarSesion1.setForeground(new java.awt.Color(255, 255, 255));
+        btnCerrarSesion1.setText("INICIO");
+        btnCerrarSesion1.setBorderPainted(false);
+        btnCerrarSesion1.setDoubleBuffered(true);
+        btnCerrarSesion1.setFocusPainted(false);
+        btnCerrarSesion1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarSesion1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btnCategories, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnRoles, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnInventario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnMetodos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnRoles, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(11, Short.MAX_VALUE)
-                .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCerrarSesion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCerrarSesion1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCerrarSesion1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
                 .addComponent(btnAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnCategories, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -250,7 +279,7 @@ private JButton currentBtn;
                 .addComponent(btnRoles, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(107, 107, 107)
+                .addGap(61, 61, 61)
                 .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18))
         );
@@ -322,7 +351,7 @@ private JButton currentBtn;
 
     private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
         // TODO add your handling code here:
-        activateButton(evt.getSource(), RGBColors.color2);
+        activateButton(evt.getSource(), new Color(192, 128, 192));
         currentChildForm = new FrmAdministrator();
        OpenChildForm(new FrmAdministrator());
        lblPantalla.setText("ADMINISTRADOR");
@@ -360,6 +389,21 @@ private JButton currentBtn;
        OpenChildForm(new FrmInventory());
        lblPantalla.setText("INVENTARIO");
     }//GEN-LAST:event_btnInventarioActionPerformed
+
+    private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
+        // TODO add your handling code here:
+        FrmLogin login = new FrmLogin();
+        login.setVisible(true);
+              this.setVisible(false);
+    }//GEN-LAST:event_btnCerrarSesionActionPerformed
+
+    private void btnCerrarSesion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesion1ActionPerformed
+        // TODO add your handling code here:
+         disableButton();
+        currentChildForm = new Home();
+       OpenChildForm(new Home());
+       lblPantalla.setText("INICIO");
+    }//GEN-LAST:event_btnCerrarSesion1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -401,6 +445,7 @@ private JButton currentBtn;
     private javax.swing.JButton btnAdmin;
     private javax.swing.JButton btnCategories;
     private javax.swing.JButton btnCerrarSesion;
+    private javax.swing.JButton btnCerrarSesion1;
     private javax.swing.JButton btnInventario;
     private javax.swing.JButton btnMetodos;
     private javax.swing.JButton btnRoles;

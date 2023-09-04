@@ -46,7 +46,7 @@ public class FrmCategories extends javax.swing.JFrame {
     }
 
     private void CargarTabla() {
-        this.tblCategories = new JTable(modelo);
+        tblCategories.setModel(modelo);
         tblCategories.setDefaultRenderer(Object.class, new TablaImagen());
 
         modelo.setRowCount(0);
@@ -68,7 +68,7 @@ public class FrmCategories extends javax.swing.JFrame {
                 this.modelo.addRow(fila);
                
                 this.tblCategories.updateUI();
-                this.jScrollPane3.setViewportView(tblCategories);
+                this.jScrollPane2.setViewportView(tblCategories);
             }
         } catch (Exception ex) {
             Logger.getLogger(FrmCategories.class.getName()).log(Level.SEVERE, null, ex);
@@ -87,7 +87,7 @@ public class FrmCategories extends javax.swing.JFrame {
     
 
     private void BuscarCategoria() {
-        this.tblCategories = new JTable(modelo);
+        tblCategories.setModel(modelo);
         tblCategories.setDefaultRenderer(Object.class, new TablaImagen());
 
         modelo.setRowCount(0);
@@ -108,7 +108,7 @@ public class FrmCategories extends javax.swing.JFrame {
                 this.modelo.addRow(fila);
                 
                 this.tblCategories.updateUI();
-                this.jScrollPane3.setViewportView(tblCategories);
+                this.jScrollPane2.setViewportView(tblCategories);
             }
         } catch (Exception ex) {
             Logger.getLogger(FrmCategories.class.getName()).log(Level.SEVERE, null, ex);
@@ -133,8 +133,8 @@ public class FrmCategories extends javax.swing.JFrame {
         btnBuscar = new javax.swing.JButton();
         btnVer = new javax.swing.JButton();
         btnActu = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tblCategories = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblCategories = new rojerusan.RSTableMetro();
 
         tblCategorias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -212,6 +212,8 @@ public class FrmCategories extends javax.swing.JFrame {
             }
         });
 
+        tblCategories.setBackground(new java.awt.Color(153, 153, 153));
+        tblCategories.setForeground(new java.awt.Color(255, 255, 255));
         tblCategories.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -223,15 +225,24 @@ public class FrmCategories extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tblCategories.setRowHeight(100);
-        tblCategories.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tblCategories.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tblCategories.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblCategoriesMouseClicked(evt);
-            }
-        });
-        jScrollPane3.setViewportView(tblCategories);
+        tblCategories.setAltoHead(35);
+        tblCategories.setColorBackgoundHead(new java.awt.Color(0, 0, 0));
+        tblCategories.setColorBordeFilas(new java.awt.Color(153, 153, 153));
+        tblCategories.setColorFilasBackgound1(new java.awt.Color(153, 153, 153));
+        tblCategories.setColorFilasBackgound2(new java.awt.Color(153, 153, 153));
+        tblCategories.setColorFilasForeground1(new java.awt.Color(255, 255, 255));
+        tblCategories.setColorFilasForeground2(new java.awt.Color(255, 255, 255));
+        tblCategories.setColorSelBackgound(new java.awt.Color(255, 255, 255));
+        tblCategories.setFuenteFilas(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        tblCategories.setFuenteFilasSelect(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        tblCategories.setFuenteHead(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tblCategories.setGridColor(new java.awt.Color(153, 153, 153));
+        tblCategories.setGrosorBordeFilas(0);
+        tblCategories.setGrosorBordeHead(0);
+        tblCategories.setRowHeight(30);
+        tblCategories.setSelectionBackground(new java.awt.Color(0, 0, 0));
+        tblCategories.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        jScrollPane2.setViewportView(tblCategories);
 
         javax.swing.GroupLayout JPanelCategoriasLayout = new javax.swing.GroupLayout(JPanelCategorias);
         JPanelCategorias.setLayout(JPanelCategoriasLayout);
@@ -239,28 +250,27 @@ public class FrmCategories extends javax.swing.JFrame {
             JPanelCategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JPanelCategoriasLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addGroup(JPanelCategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(JPanelCategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jScrollPane3)
-                        .addGroup(JPanelCategoriasLayout.createSequentialGroup()
-                            .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(24, 24, 24)
-                            .addComponent(btnModificar)
-                            .addGap(28, 28, 28)
-                            .addComponent(btnVer)
-                            .addGap(32, 32, 32)
-                            .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(63, 63, 63)
-                            .addComponent(btnActu, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(JPanelCategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2)
+                    .addGroup(JPanelCategoriasLayout.createSequentialGroup()
+                        .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24)
+                        .addComponent(btnModificar)
+                        .addGap(28, 28, 28)
+                        .addComponent(btnVer)
+                        .addGap(32, 32, 32)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(63, 63, 63)
+                        .addComponent(btnActu, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(131, Short.MAX_VALUE))
         );
         JPanelCategoriasLayout.setVerticalGroup(
             JPanelCategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JPanelCategoriasLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52)
+                .addGap(23, 23, 23)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addGroup(JPanelCategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -323,11 +333,6 @@ public class FrmCategories extends javax.swing.JFrame {
         CargarTabla();
     }//GEN-LAST:event_btnActuActionPerformed
 
-    private void tblCategoriesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCategoriesMouseClicked
-        // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "");
-    }//GEN-LAST:event_tblCategoriesMouseClicked
-
     /**
      * @param args the command line arguments
      */
@@ -374,9 +379,9 @@ public class FrmCategories extends javax.swing.JFrame {
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnVer;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tblCategorias;
-    private javax.swing.JTable tblCategories;
+    private rojerusan.RSTableMetro tblCategories;
     private javax.swing.JTextField txtName;
     // End of variables declaration//GEN-END:variables
 
