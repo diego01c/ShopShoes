@@ -27,14 +27,7 @@ public class FrmLogin extends javax.swing.JFrame {
     
     private void Imagenes(){
         try{
-             Image image = null;
-            URL url = getClass().getResource("/img/shopshoe.png");
-           image = ImageIO.read(url);
-
-            ImageIcon img = new ImageIcon(image);
-            Image imgEscalada = img.getImage().getScaledInstance(lblP.getWidth(), lblP.getHeight(), Image.SCALE_SMOOTH);
-            Icon img_ = new ImageIcon(imgEscalada);
-            lblP.setIcon(img_);
+           
             
             Image image1 = null;
             URL url1 = getClass().getResource("/img/user.png");
@@ -179,21 +172,23 @@ public class FrmLogin extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(0, 0, 0));
 
+        lblP.setIcon(new javax.swing.ImageIcon("C:\\Users\\MINEDUCYT\\Downloads\\logohopInicio.png")); // NOI18N
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(138, Short.MAX_VALUE)
-                .addComponent(lblP, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(109, 109, 109))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(199, 199, 199)
+                .addComponent(lblP)
+                .addContainerGap(210, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(89, 89, 89)
+                .addGap(96, 96, 96)
                 .addComponent(lblP, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(113, Short.MAX_VALUE))
+                .addContainerGap(106, Short.MAX_VALUE))
         );
 
         lbl1.setIcon(new javax.swing.ImageIcon("C:\\Users\\MINEDUCYT\\Downloads\\pass.png")); // NOI18N
