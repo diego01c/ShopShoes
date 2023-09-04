@@ -48,12 +48,16 @@
                         %>
                         <div class="col s4">
                             <div class="card white" data-page="<%=tempNumPage%>">
-                                <div class="card-content black-text">
-                                    <span class="card-title"><%=product.getProductName()%></span>
-                                    <center><img src="<%=product.getProductImage()%>" height="200"/></center>
-                                    <p class="red-text">$<%=product.getCost()%></p>
+                                <div class="card-content black-text" >                                  
+                                    <center>
+                                        <img src="<%=product.getProductImage()%>" style="height: 100%; width: 100%"/>
+                                        <h6 class="black-text "><%=product.getProductName()%></h6>
+                                    </center>
+                                    <p class="red-text right">$<%=product.getCost()%></p>
                                 </div>
                                 <div class="card-action">
+                                    
+
                                     <a href="Products?accion=details&id=<%=product.getId()%>" 
                                        title="Añadir" class="btn-large btn-large waves-effect grey darken-4" style="width: 100%">
                                         <i class="material-icons"></i>Comprar

@@ -50,7 +50,7 @@
                             <div class="card white" data-page="<%=tempNumPage%>">
                                 <div class="card-content black-text">
                                     <span class="card-title"></span>
-                                    <center><img src="<%=category.getCategoryImage()%>" height="200"/></center>
+                                    <center><img src="<%=category.getCategoryImage()%>" style="height: 100%; width: 100%"/></center>
                                 </div>
                                 <div class="card-action">
                                     <a href="Products?accion=index&id=<%=category.getId()%>" 

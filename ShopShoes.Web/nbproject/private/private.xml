@@ -2,6 +2,23 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group name="ShopShoes"/>
+        <group name="ShopShoes">
+            <file>file:/C:/Users/alexg/OneDrive/Documentos/Proyectos%20Java/ShopShoes/ShopShoes.Web/web/Views/User/login.jsp</file>
+            <file>file:/C:/Users/alexg/OneDrive/Documentos/Proyectos%20Java/ShopShoes/ShopShoes.Web/web/Views/Shared/headerBody.jsp</file>
+            <file>file:/C:/Users/alexg/OneDrive/Documentos/Proyectos%20Java/ShopShoes/ShopShoes.Web/web/Views/Sales/index.jsp</file>
+            <file>file:/C:/Users/alexg/OneDrive/Documentos/Proyectos%20Java/ShopShoes/ShopShoes.Web/web/Views/User/crearcuenta.jsp</file>
+            <file>file:/C:/Users/alexg/OneDrive/Documentos/Proyectos%20Java/ShopShoes/ShopShoes.Web/src/java/shopshoes/web/controllers/TrolleyServlet.java</file>
+            <file>file:/C:/Users/alexg/OneDrive/Documentos/Proyectos%20Java/ShopShoes/ShopShoes.Web/web/Views/Direction/index.jsp</file>
+            <file>file:/C:/Users/alexg/OneDrive/Documentos/Proyectos%20Java/ShopShoes/ShopShoes.Web/src/java/shopshoes/web/utils/Utilidad.java</file>
+            <file>file:/C:/Users/alexg/OneDrive/Documentos/Proyectos%20Java/ShopShoes/ShopShoes.Web/web/Views/Products/index.jsp</file>
+            <file>file:/C:/Users/alexg/OneDrive/Documentos/Proyectos%20Java/ShopShoes/ShopShoes.Web/web/Views/Category/index.jsp</file>
+            <file>file:/C:/Users/alexg/OneDrive/Documentos/Proyectos%20Java/ShopShoes/ShopShoes.Web/web/Views/Sales/compras.jsp</file>
+            <file>file:/C:/Users/alexg/OneDrive/Documentos/Proyectos%20Java/ShopShoes/ShopShoes.Web/web/Views/Trolley/index.jsp</file>
+            <file>file:/C:/Users/alexg/OneDrive/Documentos/Proyectos%20Java/ShopShoes/ShopShoes.Web/web/Views/User/perfil.jsp</file>
+            <file>file:/C:/Users/alexg/OneDrive/Documentos/Proyectos%20Java/ShopShoes/ShopShoes.Web/web/Views/User/cambiarpass.jsp</file>
+            <file>file:/C:/Users/alexg/OneDrive/Documentos/Proyectos%20Java/ShopShoes/ShopShoes.Web/web/Views/Products/details.jsp</file>
+            <file>file:/C:/Users/alexg/OneDrive/Documentos/Proyectos%20Java/ShopShoes/ShopShoes.Web/src/java/shopshoes/web/controllers/UserServlet.java</file>
+            <file>file:/C:/Users/alexg/OneDrive/Documentos/Proyectos%20Java/ShopShoes/ShopShoes.Web/web/wwwroot/lib/materialize/css/materialize.css</file>
+        </group>
     </open-files>
 </project-private>

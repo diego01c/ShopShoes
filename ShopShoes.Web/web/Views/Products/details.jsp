@@ -34,10 +34,10 @@
                         <div class="col s6" style="margin-left: 30px;" >
                             <div class="row">
                                 <div class="col s1 center-align" > 
-                                    <img src="<%=product.getProductImage()%>" height="100" id="detailImage" />  
-                                    <img src="<%=product.getDetailImageOne()%>" height="100" id="detailImageOne"style="margin-top: 10px" />  
-                                    <img src="<%=product.getDetailImageTwo()%>" height="100" id="detailImageTwo" style="margin-top: 10px"/>
-                                    <img src="<%=product.getDetailImageThree()%>" height="100" id="detailImageThree" style="margin-top: 10px"/>
+                                    <img src="<%=product.getProductImage()%>" height="100" width="85" id="detailImage" />  
+                                    <img src="<%=product.getDetailImageOne()%>" height="100"  width="85"  id="detailImageOne"style="margin-top: 10px" />  
+                                    <img src="<%=product.getDetailImageTwo()%>" height="100"  width="85"  id="detailImageTwo" style="margin-top: 10px"/>
+                                    <img src="<%=product.getDetailImageThree()%>" height="100"   width="85" id="detailImageThree" style="margin-top: 10px"/>
                                 </div>
                                 <div class="col s11">
                                     <center><img src="<%=product.getProductImage()%>" height="500" id="mainImage" /></center>

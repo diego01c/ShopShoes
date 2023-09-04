@@ -32,8 +32,9 @@
     <a href="#" data-target="slide-out" class="sidenav-trigger" ><i class="material-icons" style="color: black; font-size: 50px;">dehaze</i></a>
     <ul id="slide-out" class="sidenav">
         <% if (SessionUser.isAuth(request)) {  %> 
-        <div style="height: 45%">
-            <li style="font-size: 40px;"><center>ShopShoes</center></li>
+        <div style="height: 45%">           
+            <center style="height: 50%"><img src="https://res.cloudinary.com/dcv9tzvbj/image/upload/v1693805842/ShopShoes/Sin_t%C3%ADtulo-1_ycbrmv.png" height="100%"/></center> 
+            <center><h4>ShopShoes</h4></center>
             <li ><a href="Home">Inicio</a></li>
             <li ><a href="Category">Categorias</a></li>
         </div>
